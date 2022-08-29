@@ -1,11 +1,11 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Canadian Geospatial Platform Viewer</title><link rel="shortcut icon" href="./favicon.ico"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="msapplication-config" content="./img/browserconfig.xml"/><meta name="theme-color" content="#ffffff"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="theme-color" content="#ffffff"/><link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat:200,300,400,900|Merriweather" rel="stylesheet"/><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/><link rel="stylesheet" href="css/style.css"/><script src="cgpv-main.js"></script></head><body><div class="header-table"><table><tbody><tr><td><img class="header-logo" alt="logo" src="./img/Logo.png"/></td><td class="header-title"><h1><strong>Add Panels</strong></h1></td></tr><tr><td><a href="./index.html">Main</a><br/></td></tr></tbody></table><table><tbody><tr><td>This page is used to showcase adding panels to the appbar and adding panels and buttons to the navbar.</td></tr></tbody></table></div><div><div class="toolbar"><button class="add-appbar-panel-btn">Add Appbar Panel</button> <button class="add-navbar-panel-btn">Add Navbar Panel</button> <button class="add-navbar-button-btn">Add Navbar Button</button> <button class="add-navbar-button-group-btn">Add Navbar Panel New Group</button></div><div id="mapWM" class="llwp-map" data-lang="en-CA" data-config="{
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Canadian Geospatial Platform Viewer</title><link rel="shortcut icon" href="./favicon.ico"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="msapplication-config" content="./img/browserconfig.xml"/><meta name="theme-color" content="#ffffff"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="theme-color" content="#ffffff"/><link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat:200,300,400,900|Merriweather" rel="stylesheet"/><link rel="stylesheet" href="css/style.css"/><script src="cgpv-main.js"></script></head><body><div class="header-table"><table><tbody><tr><td><img class="header-logo" alt="logo" src="./img/Logo.png"/></td><td class="header-title"><h1><strong>Add Panels</strong></h1></td></tr><tr><td><a href="./index.html">Main</a><br/></td></tr></tbody></table><table><tbody><tr><td>This page is used to showcase adding panels to the appbar and adding panels and buttons to the navbar.</td></tr></tbody></table></div><div><div class="toolbar"><button class="add-appbar-panel-btn">Add Appbar Panel</button> <button class="add-navbar-panel-btn">Add Navbar Panel</button> <button class="add-navbar-button-btn">Add Navbar Button</button> <button class="add-navbar-button-group-btn">Add Navbar Panel New Group</button></div><div id="mapWM" class="llwp-map" data-lang="en-CA" data-config="{
         'map': {
           'interaction': 'dynamic',
-          'initialView': {
+          'viewSettings': {
             'zoom': 4,
-            'center': [60, -100]
+            'center': [-100, 60],
+            'projection': 3857
           },
-          'projection': 3857,
           'basemapOptions': {
             'id': 'transport',
             'shaded': false,
@@ -13,10 +13,13 @@
           }
         },
         'theme': 'dark',
-        'languages': ['en-CA']
-      }"></div><p>This map is in WM projection with an English interface.</p></div><div id="codeSnippet" class="panel"></div><script src="codedoc.js"></script><script>// initialize cgpv and api events, a callback is optional, used if calling api's after the rendering is ready
+        'suportedLanguages': ['en-CA']
+      }"></div><p>This map is in WM projection with an English interface.</p><p><strong>Configuration Snippet:</strong></p><div id="mapWMCS" class="panel"></div></div><p><strong>Code Snippet:</strong></p><div id="codeSnippet" class="panel"></div><script src="codedoc.js"></script><script>// initialize cgpv and api events, a callback is optional, used if calling api's after the rendering is ready
       cgpv.init(function () {
         console.log('api is ready');
+
+        //config snippets
+        createConfigSnippet();
 
         //create snippets
         createCodeSnippet();
@@ -29,16 +32,12 @@
         addAppbarPanelBtn.addEventListener('click', function (e) {
           const button = {
             tooltip: 'Test',
-            icon: '<i class="material-icons">apps</i>',
-            variant: 'text',
             tooltipPlacement: 'right',
-            type: 'textWithIcon',
-            children: 'Test',
+            children: cgpv.react.createElement(cgpv.ui.elements.AppsIcon),
           };
 
           const panel = {
             title: 'Test',
-            icon: `<i class="material-icons">apps</i>`,
             content: `<div>Test content</div>`,
             width: 200,
           };
@@ -55,12 +54,12 @@
         addNavbarPanelBtn.addEventListener('click', function (e) {
           const button = {
             tooltip: 'Test',
-            icon: '<i class="material-icons">apps</i>',
+            children: cgpv.react.createElement(cgpv.ui.elements.AppsIcon),
+            tooltipPlacement: 'left',
           };
 
           const panel = {
             title: 'Test',
-            icon: `<i class="material-icons">apps</i>`,
             content: `<div>Test content</div>`,
             width: 200,
           };
@@ -77,7 +76,8 @@
         addNavbarButtonBtn.addEventListener('click', function (e) {
           const button = {
             tooltip: 'Test',
-            icon: '<i class="material-icons">open_in_browser</i>',
+            children: cgpv.react.createElement(cgpv.ui.elements.OpenInBrowserIcon),
+            tooltipPlacement: 'left',
             onClick: function () {
               alert('test function');
             },
@@ -95,12 +95,12 @@
         addNavbarButtonGroupBtn.addEventListener('click', function (e) {
           const button = {
             tooltip: 'Group',
-            icon: '<i class="material-icons">group</i>',
+            tooltipPlacement: 'left',
+            children: cgpv.react.createElement(cgpv.ui.elements.GroupIcon),
           };
 
           const panel = {
             title: 'Group',
-            icon: `<i class="material-icons">group</i>`,
             content: `<div>Test content</div>`,
             width: 400,
           };
