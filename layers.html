@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Canadian Geospatial Platform Viewer</title><link rel="shortcut icon" href="./favicon.ico"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="msapplication-config" content="./img/browserconfig.xml"/><meta name="theme-color" content="#ffffff"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="theme-color" content="#ffffff"/><link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat:200,300,400,900|Merriweather" rel="stylesheet"/><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/><link rel="stylesheet" href="css/style.css"/><script src="cgpv-main.js"></script></head><body><div class="header-table"><table><tbody><tr><td><img class="header-logo" alt="logo" src="./img/Logo.png"/></td><td class="header-title"><h1><strong>Layers</strong></h1></td></tr></tbody></table><table><tbody><tr><td><a href="./index.html">Main</a><br/><a href="#HLYR1">1. WMS Layer</a><br/><a href="#HLYR2">2. XYZ Tiles Layer</a><br/><a href="#HLYR3">3. Esri Dynamic Servive Layer</a><br/><a href="#HLYR4">4. Esri Feature Servive Layer</a><br/><a href="#HLYR5">5. GeoJSON Layer</a><br/><a href="#HLYR6">6. WFS Layer</a><br/><a href="#HLYR7">7. OGC API Feature Layer</a><br/><a href="#HLYR8">8. GeoCore UUID Layer</a></td></tr></tbody></table><table><tbody><tr><td>This page is used to showcase how the viewer may show different layer types</td></tr></tbody></table></div><div><div><h3 id="HLYR1">1.WMS Layer</h3><h3><a href="#top">Top of the page</a></h3><div id="LYR1" class="llwp-map" data-lang="en" data-config="{
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Canadian Geospatial Platform Viewer</title><link rel="shortcut icon" href="./favicon.ico"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="msapplication-config" content="./img/browserconfig.xml"/><meta name="theme-color" content="#ffffff"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="theme-color" content="#ffffff"/><link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat:200,300,400,900|Merriweather" rel="stylesheet"/><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/><link rel="stylesheet" href="css/style.css"/><script src="cgpv-main.js"></script></head><body><div class="header-table"><table><tbody><tr><td><img class="header-logo" alt="logo" src="./img/Logo.png"/></td><td class="header-title"><h1><strong>Layers</strong></h1></td></tr></tbody></table><table><tbody><tr><td><a href="./index.html">Main</a><br/><a href="#HLYR1">1. WMS Layer</a><br/><a href="#HLYR2">2. XYZ Tiles Layer</a><br/><a href="#HLYR3">3. Esri Dynamic Servive Layer</a><br/><a href="#HLYR4">4. Esri Feature Servive Layer</a><br/><a href="#HLYR5">5. GeoJSON Layer</a><br/><a href="#HLYR6">6. WFS Layer</a><br/><a href="#HLYR7">7. OGC API Feature Layer</a><br/><a href="#HLYR8">8. GeoCore UUID Layer</a></td></tr></tbody></table><table><tbody><tr><td>This page is used to showcase how the viewer may show different layer types</td></tr></tbody></table></div><div class="toolbar"><button class="test-btn">Test Refresh</button></div><div><div><h3 id="HLYR1">1.WMS Layer</h3><h3><a href="#top">Top of the page</a></h3><div id="LYR1" class="llwp-map" data-lang="en" data-config="{
             'map': {
               'interaction': 'dynamic',
               'viewSettings': {
@@ -17,6 +17,7 @@
                   'layerName': { 'en': 'Root' },
                   'metadataAccessPath': { 'en': 'https://ows.mundialis.de/services/service' },
                   'geoviewLayerType': 'ogcWms',
+                  'initialSettings': { 'visible': false },
                   'listOfLayerEntryConfig': [
                     {
                       'entryType': 'group',
@@ -38,6 +39,7 @@
                   'layerName': { 'en': 'Topographic OSM WMS' },
                   'metadataAccessPath': { 'en': 'https://ows.mundialis.de/services/service' },
                   'geoviewLayerType': 'ogcWms',
+                  'initialSettings': { 'visible': false },
                   'listOfLayerEntryConfig': [
                     {
                       'layerId': 'OSM-WMS'
@@ -202,40 +204,40 @@
         },
         'theme': 'dark',
         'suportedLanguages': ['en-CA']
-      }"></div><p>This map has one GeoJSON layer added from configuration. and another geoJSON layer can be added/removed by clicking the buttons</p><button id="add-geojson">Add GeoJSON Layer</button><button id="remove-geojson">Remove GeoJSON Layer</button><br/><label id="new-layer-id-label">Added Layer ID :</label><label id="new-layer-id"></label><p><strong>Configuration Snippet:</strong></p><div id="LYR5CS" class="panel"></div></div><div><h3 id="HLYR6">6. WFS Layer</h3><h3><a href="#top">Top of the page</a></h3><div><h3 id="HLYR6">6. WFS Layer</h3><h3><a href="#top">Top of the page</a></h3><div id="LYR6" class="llwp-map" data-lang="en" data-config="{
-          'map': {
-            'interaction': 'dynamic',
-            'viewSettings': {
-              'zoom': 8,
-              'center': [-71.370748, 42.001058],
-              'projection': 3857
-            },
-            'basemapOptions': {
-              'id': 'transport',
-              'shaded': false,
-              'labeled': true
-            },
-            'listOfGeoviewLayerConfig': [
-              {
-                'layerId': 'wfsLYR6',
-                'layerName': {
-                  'en': 'Airport data'
-                },
-                'metadataAccessPath': {
-                  'en': 'https://giswebservices.massgis.state.ma.us/geoserver/wfs'
-                },
-                'geoviewLayerType': 'ogcWfs',
-                'listOfLayerEntryConfig': [
-                  {
-                    'layerId': 'GISDATA.AIRPORTS_PT'
-                  }
-                ]
-              }
-            ]
+      }"></div><p>This map has one GeoJSON layer added from configuration. and another geoJSON layer can be added/removed by clicking the buttons</p><button id="add-geojson">Add GeoJSON Layer</button><button id="remove-geojson">Remove GeoJSON Layer</button><br/><label id="new-layer-id-label">Added Layer ID :</label><label id="new-layer-id"></label><p><strong>Configuration Snippet:</strong></p><div id="LYR5CS" class="panel"></div></div><div><h3 id="HLYR6">6. WFS Layer</h3><h3><a href="#top">Top of the page</a></h3><div id="LYR6" class="llwp-map" data-lang="en" data-config="{
+        'map': {
+          'interaction': 'dynamic',
+          'viewSettings': {
+            'zoom': 8,
+            'center': [-71.370748, 42.001058],
+            'projection': 3857
           },
-          'theme': 'dark',
-          'suportedLanguages': ['en-CA']
-        }"></div><p>This map has a WFS layer added from configuration.</p><p><strong>Configuration Snippet:</strong></p><div id="LYR6CS" class="panel"></div></div><p>This map has a WFS layer added from configuration.</p><p><strong>Configuration Snippet:</strong></p><div id="LYR6CS" class="panel"></div></div><div><h3 id="HLYR7">7. OGC API Feature Layer</h3><h3><a href="#top">Top of the page</a></h3><div id="LYR7" class="llwp-map" data-lang="en" data-config="{
+          'basemapOptions': {
+            'id': 'transport',
+            'shaded': false,
+            'labeled': true
+          },
+          'listOfGeoviewLayerConfig': [
+            {
+              'layerId': 'wfsLYR6',
+              'layerName': {
+                'en': 'Airport data'
+              },
+              'metadataAccessPath': {
+                'en': 'https://giswebservices.massgis.state.ma.us/geoserver/wfs'
+              },
+              'geoviewLayerType': 'ogcWfs',
+              'listOfLayerEntryConfig': [
+                {
+                  'layerId': 'GISDATA.AIRPORTS_PT'
+                }
+              ]
+            }
+          ]
+        },
+        'theme': 'dark',
+        'suportedLanguages': ['en-CA']
+      }"></div><p>This map has a WFS layer added from configuration.</p><p><strong>Configuration Snippet:</strong></p><div id="LYR6CS" class="panel"></div></div><div><h3 id="HLYR7">7. OGC API Feature Layer</h3><h3><a href="#top">Top of the page</a></h3><div id="LYR7" class="llwp-map" data-lang="en" data-config="{
           'map': {
             'interaction': 'dynamic',
             'viewSettings': {
@@ -337,6 +339,14 @@
         cgpv.api.map('LYR5').layer.removeLayerById(document.getElementById('new-layer-id').innerText);
         document.getElementById('new-layer-id').innerText = '';
       });
+
+        // get addPolyline button element for WM map
+        var testBtn = document.getElementsByClassName('test-btn')[0];
+
+        // add event handler to the add polyline button
+        testBtn.addEventListener('click', function (e) {
+          cgpv.api.event.emit(cgpv.types.mapViewProjectionPayload(cgpv.api.eventNames.MAP.EVENT_MAP_VIEW_PROJECTION_CHANGE, 'LYR1', 3978));
+        });
 
       /*
       //add legend to WMS layer
