@@ -1,0 +1,45 @@
+{
+  "map": {
+    "interaction": "dynamic",
+    "initialView": {
+      "zoom": 4,
+      "center": [60, -100]
+    },
+    "projection": 3978,
+    "basemapOptions": {
+      "id": "transport",
+      "shaded": false,
+      "labeled": true
+    },
+    "layers": [
+      {
+        "id": "wmsMSI",
+        "name": {
+          "en": "Probability of permanent snow and ice (94% or more)",
+          "fr": "Probabilité de neige et glace permanente (94% ou plus)"
+        },
+        "url": {
+          "en": "https://datacube.services.geo.ca/ows/msi",
+          "fr": "https://datacube.services.geo.ca/ows/msi"
+        },
+        "layerType": "ogcWms",
+        "layerEntries": [
+          {
+            "id": "msi-94-or-more"
+          }
+        ]
+      }
+    ]
+  },
+  "theme": "dark",
+  "appBar": {
+    "about": {
+      "en": "# An example of a markdown",
+      "fr": "# Un exemple de markdown"
+    }
+  },
+  "components": ["appbar", "navbar", "northArrow"],
+  "corePackages": ["overview-map", "basemap-panel", "details-panel", "layers-panel"],
+  "externalPackages": [],
+  "languages": ["en-CA"]
+}
