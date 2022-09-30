@@ -106,12 +106,12 @@
     ]
   },
   "theme": "dark",
-  "components": ["appbar", "navbar", "north-arrow", "overview-map"],
+  "components": ["app-bar", "nav-bar", "north-arrow", "overview-map"],
   "corePackages": ["basemap-panel"],
   "externalPackages": [],
   "serviceUrls": {
     "keys": "https://geocore.api.geo.ca"
   },
-  "suportedLanguages": ["en-CA", "fr-CA"],
+  "suportedLanguages": ["en", "fr"],
   "version": "1.0"
 }
