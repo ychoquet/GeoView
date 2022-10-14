@@ -29,7 +29,7 @@ metadataAccessPath attribute whose value is passed as an attribute of the mapLay
 <li><a href="AbstractGeoViewRaster.html" class="tsd-signature-type" data-tsd-kind="Class">AbstractGeoViewRaster</a></li>
 <li><a href="AbstractGeoViewVector.html" class="tsd-signature-type" data-tsd-kind="Class">AbstractGeoViewVector</a></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L92">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:92</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L92">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:92</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -62,6 +62,7 @@ metadataAccessPath attribute whose value is passed as an attribute of the mapLay
 <a href="AbstractGeoViewLayer.html#getBounds" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Bounds</span></a>
 <a href="AbstractGeoViewLayer.html#getFeatureInfo" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Feature<wbr/>Info</span></a>
 <a href="AbstractGeoViewLayer.html#getFeatureInfoAtCoordinate" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Feature<wbr/>Info<wbr/>At<wbr/>Coordinate</span></a>
+<a href="AbstractGeoViewLayer.html#getFeatureInfoAtLongLat" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Feature<wbr/>Info<wbr/>At<wbr/>Long<wbr/>Lat</span></a>
 <a href="AbstractGeoViewLayer.html#getFeatureInfoAtPixel" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Feature<wbr/>Info<wbr/>At<wbr/>Pixel</span></a>
 <a href="AbstractGeoViewLayer.html#getFeatureInfoUsingBBox" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Feature<wbr/>Info<wbr/>UsingBBox</span></a>
 <a href="AbstractGeoViewLayer.html#getFeatureInfoUsingPolygon" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Feature<wbr/>Info<wbr/>Using<wbr/>Polygon</span></a>
@@ -113,7 +114,7 @@ metadataAccessPath attribute whose value is passed as an attribute of the mapLay
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="AbstractGeoViewLayer.html" class="tsd-signature-type" data-tsd-kind="Class">AbstractGeoViewLayer</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L143">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:143</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L143">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:143</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="activeLayer" class="tsd-anchor"></a>
@@ -122,14 +123,14 @@ metadataAccessPath attribute whose value is passed as an attribute of the mapLay
 <div class="tsd-comment tsd-typography"><p>The layer Identifier that is used to get and set layer&#39;s settings.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L128">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:128</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L128">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:128</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="attributions" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>attributions</span><a href="#attributions" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">attributions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 <div class="tsd-comment tsd-typography"><p>Attribution used in the OpenLayer source.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L134">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:134</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L134">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:134</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="gvLayers" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>gv<wbr/>Layers</span><a href="#gvLayers" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">gv<wbr/>Layers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BaseLayer</span><span class="tsd-signature-symbol"> = null</span></div>
@@ -137,7 +138,7 @@ metadataAccessPath attribute whose value is passed as an attribute of the mapLay
 have not been created.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L125">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:125</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L125">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:125</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="layerId" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>layer<wbr/>Id</span><a href="#layerId" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">layer<wbr/>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -145,14 +146,14 @@ have not been created.</p>
 If its value is undefined, a unique value is generated.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L102">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:102</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L102">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:102</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="layerLoadError" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>layer<wbr/>Load<wbr/>Error</span><a href="#layerLoadError" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">layer<wbr/>Load<wbr/>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>consoleMessage<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>layer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 <div class="tsd-comment tsd-typography"><p>Name of listOfLayerEntryConfig that did not load.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L119">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:119</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L119">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:119</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="layerName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>layer<wbr/>Name</span><a href="#layerName" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">layer<wbr/>Name<span class="tsd-signature-symbol">:</span> <a href="../types/TypeLocalizedString.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLocalizedString</a><span class="tsd-signature-symbol"> = ...</span></div>
@@ -160,7 +161,7 @@ If its value is undefined, a unique value is generated.</p>
 undefined, a default value is generated.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L107">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:107</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L107">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:107</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="listOfLayerEntryConfig" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>list<wbr/>Of<wbr/>Layer<wbr/>Entry<wbr/>Config</span><a href="#listOfLayerEntryConfig" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">list<wbr/>Of<wbr/>Layer<wbr/>Entry<wbr/>Config<span class="tsd-signature-symbol">:</span> <a href="../types/TypeListOfLayerEntryConfig.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListOfLayerEntryConfig</a><span class="tsd-signature-symbol"> = []</span></div>
@@ -168,33 +169,33 @@ undefined, a default value is generated.</p>
 configuration does not provide a value, we use an empty array instead of an undefined attribute.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L116">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:116</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L116">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:116</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="mapId" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>map<wbr/>Id</span><a href="#mapId" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">map<wbr/>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>The unique identifier of the map on which the GeoView layer will be drawn.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L94">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:94</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L94">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:94</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="metadata" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>metadata</span><a href="#metadata" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../types/TypeJsonObject.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeJsonObject</a><span class="tsd-signature-symbol"> = null</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L131">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:131</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L131">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:131</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="metadataAccessPath" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>metadata<wbr/>Access<wbr/>Path</span><a href="#metadataAccessPath" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">metadata<wbr/>Access<wbr/>Path<span class="tsd-signature-symbol">:</span> <a href="../types/TypeLocalizedString.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLocalizedString</a><span class="tsd-signature-symbol"> = ...</span></div>
 <div class="tsd-comment tsd-typography"><p>The GeoView layer metadataAccessPath. The name attribute is optional</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L110">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:110</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L110">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:110</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="type" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>type</span><a href="#type" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">type<span class="tsd-signature-symbol">:</span> <a href="../types/TypeGeoviewLayerType.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeGeoviewLayerType</a></div>
 <div class="tsd-comment tsd-typography"><p>The type of GeoView layer that is instantiated.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L97">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:97</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L97">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:97</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="addFieldEntryToSourceFeatureInfo" class="tsd-anchor"></a>
@@ -226,7 +227,7 @@ configuration does not provide a value, we use an empty array instead of an unde
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L711">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:711</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L724">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:724</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="createGeoViewLayers" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>create<wbr/>Geo<wbr/>View<wbr/>Layers</span><a href="#createGeoViewLayers" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -251,7 +252,7 @@ the details-panel.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L172">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:172</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L172">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:172</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private"><a id="createLayerGroup" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>create<wbr/>Layer<wbr/>Group</span><a href="#createLayerGroup" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
@@ -269,7 +270,7 @@ the details-panel.</p>
 <h5>layerEntryConfig: <a href="../types/TypeLayerEntryConfig.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLayerEntryConfig</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">LayerGroup</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L497">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:497</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L510">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:510</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="getAdditionalServiceDefinition" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>get<wbr/>Additional<wbr/>Service<wbr/>Definition</span><a href="#getAdditionalServiceDefinition" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
@@ -281,7 +282,7 @@ If the GeoView layer does not have a service definition, this method does nothin
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L202">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:202</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L202">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:202</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getBounds" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Bounds</span><a href="#getBounds" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -304,7 +305,7 @@ the active layer is null.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Extent</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L553">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:553</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L566">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:566</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getFeatureInfo" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Feature<wbr/>Info</span><a href="#getFeatureInfo" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -332,7 +333,7 @@ the active layer is null.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/TypeFeatureInfoResult.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeFeatureInfoResult</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L381">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:381</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L381">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:381</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="getFeatureInfoAtCoordinate" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <code class="tsd-tag ts-flagAbstract">Abstract</code> <span>get<wbr/>Feature<wbr/>Info<wbr/>At<wbr/>Coordinate</span><a href="#getFeatureInfoAtCoordinate" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
@@ -356,7 +357,31 @@ the active layer is null.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/TypeFeatureInfoResult.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeFeatureInfoResult</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L430">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:430</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L433">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:433</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="getFeatureInfoAtLongLat" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <code class="tsd-tag ts-flagAbstract">Abstract</code> <span>get<wbr/>Feature<wbr/>Info<wbr/>At<wbr/>Long<wbr/>Lat</span><a href="#getFeatureInfoAtLongLat" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+<li class="tsd-signature tsd-anchor-link" id="getFeatureInfoAtLongLat.getFeatureInfoAtLongLat-1">get<wbr/>Feature<wbr/>Info<wbr/>At<wbr/>Long<wbr/>Lat<span class="tsd-signature-symbol">(</span>location<span class="tsd-signature-symbol">: </span><a href="../types/Coordinate.html" class="tsd-signature-type" data-tsd-kind="Type alias">Coordinate</a>, layerConfig<span class="tsd-signature-symbol">: </span><a href="../types/TypeLayerEntryConfig.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLayerEntryConfig</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/TypeFeatureInfoResult.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeFeatureInfoResult</a><span class="tsd-signature-symbol">&gt;</span><a href="#getFeatureInfoAtLongLat.getFeatureInfoAtLongLat-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><hr>
+<p>Return feature information for all the features around the provided longitude latitude.</p>
+
+<h3>Returns</h3><p>The feature info table.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>location: <a href="../types/Coordinate.html" class="tsd-signature-type" data-tsd-kind="Type alias">Coordinate</a></h5>
+<div class="tsd-comment tsd-typography"><p>The coordinate that will be used by the query.</p>
+</div></li>
+<li>
+<h5>layerConfig: <a href="../types/TypeLayerEntryConfig.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLayerEntryConfig</a></h5>
+<div class="tsd-comment tsd-typography"><p>The layer configuration.</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/TypeFeatureInfoResult.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeFeatureInfoResult</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L443">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:443</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="getFeatureInfoAtPixel" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <code class="tsd-tag ts-flagAbstract">Abstract</code> <span>get<wbr/>Feature<wbr/>Info<wbr/>At<wbr/>Pixel</span><a href="#getFeatureInfoAtPixel" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
@@ -380,7 +405,7 @@ the active layer is null.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/TypeFeatureInfoResult.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeFeatureInfoResult</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L420">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:420</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L423">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:423</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="getFeatureInfoUsingBBox" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <code class="tsd-tag ts-flagAbstract">Abstract</code> <span>get<wbr/>Feature<wbr/>Info<wbr/>UsingBBox</span><a href="#getFeatureInfoUsingBBox" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
@@ -404,7 +429,7 @@ the active layer is null.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/TypeFeatureInfoResult.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeFeatureInfoResult</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L440">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:440</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L453">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:453</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="getFeatureInfoUsingPolygon" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <code class="tsd-tag ts-flagAbstract">Abstract</code> <span>get<wbr/>Feature<wbr/>Info<wbr/>Using<wbr/>Polygon</span><a href="#getFeatureInfoUsingPolygon" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
@@ -428,7 +453,7 @@ the active layer is null.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/TypeFeatureInfoResult.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeFeatureInfoResult</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L450">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:450</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L463">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:463</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getLayerConfig" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Layer<wbr/>Config</span><a href="#getLayerConfig" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -448,7 +473,7 @@ the active layer is null.</p>
 <h5>listOfLayerEntryConfig: <a href="../types/TypeListOfLayerEntryConfig.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListOfLayerEntryConfig</a><span class="tsd-signature-symbol"> = ...</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../types/TypeLayerEntryConfig.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLayerEntryConfig</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L531">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:531</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L544">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:544</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getLegend" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Legend</span><a href="#getLegend" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -470,7 +495,7 @@ configuration&#39;s style is undefined.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../types/TypeLegend.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLegend</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L686">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:686</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L699">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:699</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getMaxZoom" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Max<wbr/>Zoom</span><a href="#getMaxZoom" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -491,7 +516,7 @@ return undefined when the layerId specified is not found or when the layerId is 
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L660">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:660</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L673">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:673</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getMinZoom" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Min<wbr/>Zoom</span><a href="#getMinZoom" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -512,7 +537,7 @@ return undefined when the layerId specified is not found or when the layerId is 
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L635">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:635</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L648">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:648</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getOpacity" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Opacity</span><a href="#getOpacity" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -534,7 +559,7 @@ layer is null.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L581">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:581</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L594">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:594</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="getServiceMetadata" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <code class="tsd-tag ts-flagAbstract">Abstract</code> <span>get<wbr/>Service<wbr/>Metadata</span><a href="#getServiceMetadata" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
@@ -547,7 +572,7 @@ layer is null.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L222">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:222</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L222">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:222</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getVisible" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Visible</span><a href="#getVisible" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -569,7 +594,7 @@ layer is null.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L609">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:609</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L622">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:622</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private"><a id="processDynamicGroupLayer" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>process<wbr/>Dynamic<wbr/>Group<wbr/>Layer</span><a href="#processDynamicGroupLayer" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
@@ -591,7 +616,7 @@ the presence of an isDynamicLayerGroup attribute set to true.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L266">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:266</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L266">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:266</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="processLayerMetadata" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <code class="tsd-tag ts-flagAbstract">Abstract</code> <span>process<wbr/>Layer<wbr/>Metadata</span><a href="#processLayerMetadata" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
@@ -612,7 +637,7 @@ initial settings, fields and aliases).</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L283">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:283</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L283">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:283</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="processListOfLayerEntryConfig" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>process<wbr/>List<wbr/>Of<wbr/>Layer<wbr/>Entry<wbr/>Config</span><a href="#processListOfLayerEntryConfig" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
@@ -632,7 +657,7 @@ initial settings, fields and aliases).</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BaseLayer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L292">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:292</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L292">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:292</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="processListOfLayerEntryMetadata" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>process<wbr/>List<wbr/>Of<wbr/>Layer<wbr/>Entry<wbr/>Metadata</span><a href="#processListOfLayerEntryMetadata" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
@@ -652,7 +677,7 @@ initial settings, fields and aliases).</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L241">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:241</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L241">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:241</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="processOneLayerEntry" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <code class="tsd-tag ts-flagAbstract">Abstract</code> <span>process<wbr/>One<wbr/>Layer<wbr/>Entry</span><a href="#processOneLayerEntry" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
@@ -672,7 +697,7 @@ initial settings, fields and aliases).</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BaseLayer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L370">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:370</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L370">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:370</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="registerToPanels" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>register<wbr/>To<wbr/>Panels</span><a href="#registerToPanels" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
@@ -690,7 +715,7 @@ initial settings, fields and aliases).</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L457">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:457</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L470">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:470</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setActiveLayer" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Active<wbr/>Layer</span><a href="#setActiveLayer" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -708,7 +733,7 @@ can not be found, the active layer remain unchanged.</p>
 <h5>layer: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="../types/TypeLayerEntryConfig.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLayerEntryConfig</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L519">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:519</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L532">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:532</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setBounds" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Bounds</span><a href="#setBounds" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -733,7 +758,7 @@ active layer is null.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L567">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:567</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L580">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:580</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setMaxZoom" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Max<wbr/>Zoom</span><a href="#setMaxZoom" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -754,7 +779,7 @@ does nothing when the layerId specified is not found or when the layerId is unde
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L672">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:672</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L685">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:685</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setMinZoom" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Min<wbr/>Zoom</span><a href="#setMinZoom" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -775,7 +800,7 @@ does nothing when the layerId specified is not found or when the layerId is unde
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L647">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:647</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L660">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:660</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setOpacity" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Opacity</span><a href="#setOpacity" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -799,7 +824,7 @@ null.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L595">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:595</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L608">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:608</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setVisible" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Visible</span><a href="#setVisible" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -823,7 +848,7 @@ layer is null.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L622">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:622</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L635">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:635</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="validateListOfLayerEntryConfig" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <code class="tsd-tag ts-flagAbstract">Abstract</code> <span>validate<wbr/>List<wbr/>Of<wbr/>Layer<wbr/>Entry<wbr/>Config</span><a href="#validateListOfLayerEntryConfig" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
@@ -844,7 +869,7 @@ necessary, additional code can be executed in the child method to complete the l
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="../types/TypeListOfLayerEntryConfig.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListOfLayerEntryConfig</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/c3ae7c7/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L232">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:232</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts#L232">packages/geoview-core/src/geo/layer/geoview-layers/abstract-geoview-layers.ts:232</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -889,6 +914,7 @@ necessary, additional code can be executed in the child method to complete the l
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="AbstractGeoViewLayer.html#getBounds" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Bounds</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="AbstractGeoViewLayer.html#getFeatureInfo" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Feature<wbr/>Info</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="AbstractGeoViewLayer.html#getFeatureInfoAtCoordinate" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Feature<wbr/>Info<wbr/>At<wbr/>Coordinate</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="AbstractGeoViewLayer.html#getFeatureInfoAtLongLat" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Feature<wbr/>Info<wbr/>At<wbr/>Long<wbr/>Lat</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="AbstractGeoViewLayer.html#getFeatureInfoAtPixel" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Feature<wbr/>Info<wbr/>At<wbr/>Pixel</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="AbstractGeoViewLayer.html#getFeatureInfoUsingBBox" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Feature<wbr/>Info<wbr/>UsingBBox</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="AbstractGeoViewLayer.html#getFeatureInfoUsingPolygon" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Feature<wbr/>Info<wbr/>Using<wbr/>Polygon</a></li>
