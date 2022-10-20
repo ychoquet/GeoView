@@ -13,13 +13,22 @@
 <li><a href="../modules.html">geoview-core</a></li>
 <li><a href="TypeGeoviewLayerConfig.html">TypeGeoviewLayerConfig</a></li></ul>
 <h1>Type alias TypeGeoviewLayerConfig</h1></div>
-<div class="tsd-signature">Type<wbr/>Geoview<wbr/>Layer<wbr/>Config<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>geoviewLayerType<span class="tsd-signature-symbol">: </span><a href="TypeGeoviewLayerType.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeGeoviewLayerType</a><span class="tsd-signature-symbol">; </span>initialSettings<span class="tsd-signature-symbol">?: </span><a href="TypeLayerInitialSettings.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLayerInitialSettings</a><span class="tsd-signature-symbol">; </span>layerId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>layerName<span class="tsd-signature-symbol">?: </span><a href="TypeLocalizedString.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLocalizedString</a><span class="tsd-signature-symbol">; </span>listOfLayerEntryConfig<span class="tsd-signature-symbol">: </span><a href="TypeListOfLayerEntryConfig.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListOfLayerEntryConfig</a><span class="tsd-signature-symbol">; </span>metadataAccessPath<span class="tsd-signature-symbol">?: </span><a href="TypeLocalizedString.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLocalizedString</a><span class="tsd-signature-symbol"> }</span></div>
+<div class="tsd-signature">Type<wbr/>Geoview<wbr/>Layer<wbr/>Config<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>geoviewLayerId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>geoviewLayerName<span class="tsd-signature-symbol">?: </span><a href="TypeLocalizedString.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLocalizedString</a><span class="tsd-signature-symbol">; </span>geoviewLayerType<span class="tsd-signature-symbol">: </span><a href="TypeGeoviewLayerType.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeGeoviewLayerType</a><span class="tsd-signature-symbol">; </span>initialSettings<span class="tsd-signature-symbol">?: </span><a href="TypeLayerInitialSettings.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLayerInitialSettings</a><span class="tsd-signature-symbol">; </span>listOfLayerEntryConfig<span class="tsd-signature-symbol">: </span><a href="TypeListOfLayerEntryConfig.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListOfLayerEntryConfig</a><span class="tsd-signature-symbol">; </span>metadataAccessPath<span class="tsd-signature-symbol">?: </span><a href="TypeLocalizedString.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLocalizedString</a><span class="tsd-signature-symbol"> }</span></div>
 <div class="tsd-comment tsd-typography"><hr>
 <p> Definition of a single Geoview layer configuration.</p>
 </div>
 <div class="tsd-type-declaration">
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
+<li class="tsd-parameter">
+<h5>geoview<wbr/>Layer<wbr/>Id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>The GeoView layer identifier.</p>
+</div></li>
+<li class="tsd-parameter">
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> geoview<wbr/>Layer<wbr/>Name<span class="tsd-signature-symbol">?: </span><a href="TypeLocalizedString.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLocalizedString</a></h5>
+<div class="tsd-comment tsd-typography"><p>The display name of the layer (English/French). If it is not present the viewer will make an attempt to scrape this
+information.</p>
+</div></li>
 <li class="tsd-parameter">
 <h5>geoview<wbr/>Layer<wbr/>Type<span class="tsd-signature-symbol">: </span><a href="TypeGeoviewLayerType.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeGeoviewLayerType</a></h5>
 <div class="tsd-comment tsd-typography"><p>Type of GeoView layer.</p>
@@ -30,16 +39,6 @@
 This attribute is allowed only if listOfLayerEntryConfig.length &gt; 1.</p>
 </div></li>
 <li class="tsd-parameter">
-<h5>layer<wbr/>Id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>The id of the layer for referencing within the viewer (does not relate directly to any external service). The id will have
-the language extension (id-&#39;lang&#39;).</p>
-</div></li>
-<li class="tsd-parameter">
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> layer<wbr/>Name<span class="tsd-signature-symbol">?: </span><a href="TypeLocalizedString.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeLocalizedString</a></h5>
-<div class="tsd-comment tsd-typography"><p>The display name of the layer (English/French). If it is not present the viewer will make an attempt to scrape this
-information.</p>
-</div></li>
-<li class="tsd-parameter">
 <h5>list<wbr/>Of<wbr/>Layer<wbr/>Entry<wbr/>Config<span class="tsd-signature-symbol">: </span><a href="TypeListOfLayerEntryConfig.html" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListOfLayerEntryConfig</a></h5>
 <div class="tsd-comment tsd-typography"><p>The layer entries to use from the GeoView layer.</p>
 </div></li>
@@ -48,7 +47,7 @@ information.</p>
 <div class="tsd-comment tsd-typography"><p>The GeoView layer access path (English/French).</p>
 </div></li></ul></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/850539d/packages/geoview-core/src/geo/map/map-schema-types.ts#L903">packages/geoview-core/src/geo/map/map-schema-types.ts:903</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/ychoquet/GeoView/blob/795ed38/packages/geoview-core/src/geo/map/map-schema-types.ts#L893">packages/geoview-core/src/geo/map/map-schema-types.ts:893</a></li></ul></aside></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -290,7 +289,6 @@ information.</p>
 <li class="tsd-kind-type-alias"><a href="TypeJsonObject.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Type<wbr/>Json<wbr/>Object</a></li>
 <li class="tsd-kind-type-alias"><a href="TypeJsonValue.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Type<wbr/>Json<wbr/>Value</a></li>
 <li class="tsd-kind-type-alias"><a href="TypeKinfOfSymbolVectorSettings.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Type<wbr/>Kinf<wbr/>Of<wbr/>Symbol<wbr/>Vector<wbr/>Settings</a></li>
-<li class="tsd-kind-type-alias"><a href="TypeLayerBasicInfoConfig.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Type<wbr/>Layer<wbr/>Basic<wbr/>Info<wbr/>Config</a></li>
 <li class="tsd-kind-type-alias"><a href="TypeLayerEntryConfig.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Type<wbr/>Layer<wbr/>Entry<wbr/>Config</a></li>
 <li class="tsd-kind-type-alias"><a href="TypeLayerEntryType.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Type<wbr/>Layer<wbr/>Entry<wbr/>Type</a></li>
 <li class="tsd-kind-type-alias"><a href="TypeLayerInitialSettings.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Type<wbr/>Layer<wbr/>Initial<wbr/>Settings</a></li>
