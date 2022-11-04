@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Canadian Geospatial Platform Viewer</title><link rel="shortcut icon" href="./favicon.ico"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="msapplication-config" content="./img/browserconfig.xml"/><meta name="theme-color" content="#ffffff"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="theme-color" content="#ffffff"/><link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat:200,300,400,900|Merriweather" rel="stylesheet"/><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/><link rel="stylesheet" href="css/style.css"/><script src="cgpv-main.js"></script></head><body><div class="header-table"><table><tbody><tr><td><img class="header-logo" alt="logo" src="./img/Logo.png"/></td><td class="header-title"><h1><strong>Layers</strong></h1></td></tr></tbody></table><table><tbody><tr><td><a href="./index.html">Main</a><br/><a href="#HLYR1">1. WMS Layer</a><br/><a href="#HLYR2">2. XYZ Tiles Layer</a><br/><a href="#HLYR3">3. Esri Dynamic Servive Layer</a><br/><a href="#HLYR4">4. Esri Feature Servive Layer</a><br/><a href="#HLYR5">5. GeoJSON Layer</a><br/><a href="#HLYR6">6. WFS Layer</a><br/><a href="#HLYR7">7. OGC API Feature Layer</a><br/><a href="#HLYR8">8. GeoCore UUID Layer</a></td></tr></tbody></table><table><tbody><tr><td>This page is used to showcase how the viewer may show different layer types</td></tr></tbody></table></div><div class="map-title-holder"><h4 id="HLYR1">1.WMS Layer</h4><a class="ref-link" href="#top">Top</a></div><button class="test-refresh-WMS-btn">Test Refresh WMS</button><div id="LYR1" class="llwp-map" data-lang="en" data-config="{
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Canadian Geospatial Platform Viewer</title><link rel="shortcut icon" href="./favicon.ico"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="msapplication-config" content="./img/browserconfig.xml"/><meta name="theme-color" content="#ffffff"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="theme-color" content="#ffffff"/><link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat:200,300,400,900|Merriweather" rel="stylesheet"/><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/><link rel="stylesheet" href="css/style.css"/><script src="cgpv-main.js"></script></head><body><div class="header-table"><table><tbody><tr><td><img class="header-logo" alt="logo" src="./img/Logo.png"/></td><td class="header-title"><h1><strong>Layers</strong></h1></td></tr></tbody></table><table><tbody><tr><td><a href="./index.html">Main</a><br/><a href="#HLYR1">1. WMS Layer</a><br/><a href="#HLYR2">2. XYZ Tiles Layer</a><br/><a href="#HLYR3">3. Esri Dynamic Service Layer</a><br/><a href="#HLYR4">4. Esri Feature Service Layer</a><br/><a href="#HLYR5">5. GeoJSON Layer</a><br/><a href="#HLYR6">6. WFS Layer</a><br/><a href="#HLYR7">7. OGC API Feature Layer</a><br/><a href="#HLYR8">8. GeoCore UUID Layer</a></td></tr></tbody></table><table><tbody><tr><td>This page is used to showcase how the viewer may show different layer types</td></tr></tbody></table></div><div class="map-title-holder"><h4 id="HLYR1">1.WMS Layer</h4><a class="ref-link" href="#top">Top</a></div><button class="test-refresh-WMS-btn">Test Refresh WMS</button><div id="LYR1" class="llwp-map" data-lang="en" data-config="{
             'map': {
               'interaction': 'dynamic',
               'viewSettings': {
@@ -156,7 +156,7 @@
           'corePackages': [],
           'theme': 'dark',
           'suportedLanguages': ['en']
-        }"></div><button class="Get-esri-feature-Legend">Get Legend</button><div id="esriFeatureLegendsId-table-div"></div><button type="button" class="collapsible">Get Feature Info</button><pre style="height: 20pc; overflow-y: scroll;" id="esriFeatureResultSetId" class="panel">Click on feature on the map</pre><hr/><p>This map has a Esri feature layer added from configuration.</p><button type="button" class="collapsible">Configuration Snippet</button><pre id="LYR4CS" class="panel"></pre><hr/><div class="map-title-holder"><h4 id="HLYR5">5. GeoJSON Layer</h4><a class="ref-link" href="#top">Top</a></div><div id="LYR5" class="llwp-map" data-lang="en" data-config="{
+        }"></div><button class="Get-esri-feature-Legend">Get Legend</button><div id="esriFeatureLegendsId-table-div"></div><button type="button" class="collapsible">Get Feature Info</button><pre style="height: 20pc; overflow-y: scroll;" id="esriFeatureResultSetId" class="panel">Click on feature on the map</pre><hr/><button id="LYR4grid-button" type="button" class="collapsible">Get Data Grid</button><pre id="LYR4grid" style="width: 100%" class="panel"></pre><hr/><p>This map has a Esri feature layer added from configuration.</p><button type="button" class="collapsible">Configuration Snippet</button><pre id="LYR4CS" class="panel"></pre><hr/><div class="map-title-holder"><h4 id="HLYR5">5. GeoJSON Layer</h4><a class="ref-link" href="#top">Top</a></div><div id="LYR5" class="llwp-map" data-lang="en" data-config="{
     'map': {
       'interaction': 'dynamic',
       'viewSettings': {
@@ -308,7 +308,6 @@
     var addGeoJSONButton = document.getElementById('add-geojson');
 
     // add an event listener when a button is clicked
-    // TODO: Repair
     addGeoJSONButton.addEventListener('click', function (e) {
       // adding a geojson layer requires a type of geojson and url
       const layerID = cgpv.api.map('LYR5').layer.addGeoviewLayer(
@@ -484,6 +483,14 @@
     var testRefreshBtn = document.getElementsByClassName('test-refresh-WMS-btn')[0];
     testRefreshBtn.addEventListener('click', function (e) {
       cgpv.api.event.emit(cgpv.types.mapViewProjectionPayload(cgpv.api.eventNames.MAP.EVENT_MAP_VIEW_PROJECTION_CHANGE, 'LYR1', 3978));
+    });
+
+    // ========================================================================================================================
+    // DATA GRID create new tab with a layer's table using the data-grid api, do the same thing in custom div
+    let isOpenLYR4 = false;
+    document.getElementById('LYR4grid-button').addEventListener('click', () => {
+      if (!isOpenLYR4) cgpv.reactDOM.render(cgpv.api.map('LYR4').dataGrid.createDataGrid({ layerId: 'esriFeatureLYR4' }), document.getElementById('LYR4grid'));
+      isOpenLYR4 = !isOpenLYR4;
     });
 
     // ==========================================================================================================================
