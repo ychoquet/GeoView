@@ -57,7 +57,25 @@
                 },
                 'geoviewLayerType': 'esriFeature',
                 'listOfLayerEntryConfig': [
-                  { 'layerId': '0' }
+                  {
+                    'layerId': '0',
+                    'style': {
+                      'Polygon': {
+                        'styleType': 'simple',
+                        'label': 'Polygon label',
+                        'settings': {
+                          'type': 'filledPolygon',
+                          'paternSize': 10,
+                          'paternWidth': 2,
+                          'fillStyle': 'null',
+                          'stroke': {
+                            'color': 'rgba(0,128,128,1)',
+                            'lineStyle': 'shortDash-dot-dot'
+                          }
+                        }
+                      }
+                    }
+                  }
                 ]
               },
               {
