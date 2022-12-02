@@ -38,7 +38,9 @@
     "version": "Access GitHub repo"
   },
   "legend": {
-    "unknown": "Unknown Layer Title"
+    "unknown": "Unknown Layer Title",
+    "remove_layer": "Remove Layer",
+    "expand_legend": "Expand Legend"
   },
   "keyboardnav": {
     "start": "Skip after map element",
@@ -54,9 +56,10 @@
   },
   "validation": {
     "layer": {
-      "loadfailed": "Layer [__param__] failed to load on map __param__. More details are in the console.",
+      "loadfailed": "Layer [__param__] failed to load on map __param__.",
       "notfound": "The sublayer __param__ of the GeoView layer __param__ does not exist on the server",
-      "createtwice": "Can not execute twice the createGeoViewRasterLayers method for the map __param__"
+      "createtwice": "Can not execute twice the createGeoViewRasterLayers method for the map __param__",
+      "usedtwice": "Duplicate use of geoview layer identifier [__param__] on map __param__"
     }
   }
 }
