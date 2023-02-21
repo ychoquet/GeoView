@@ -7,8 +7,11 @@
     "arianavbar": "vertical button group for map navigation",
     "fullscreen": "Full Screen",
     "home": "Reset to initial view",
+    "export": "Export map as PNG",
     "zoomIn": "Zoom in",
-    "zoomOut": "Zoom out"
+    "zoomOut": "Zoom out",
+    "coordinates": "Toggle Coordinates format",
+    "scale": "Toggle between scale and resolution"
   },
   "mapctrl": {
     "rotation": {
@@ -25,7 +28,7 @@
       "toggle": "Toggle minimap"
     },
     "attribution": {
-      "defaultnrcan": "© Her Majesty the King in Right of Canada, as represented by the Minister of Natural Resources"
+      "defaultnrcan": "© His Majesty the King in Right of Canada, as represented by the Minister of Natural Resources"
     },
     "crosshair": "Use <strong>arrows</strong>, <strong>+</strong> and <strong>-</strong> keys to navigation the map, and <strong>Enter</strong> to select."
   },
@@ -48,7 +51,7 @@
     "end": "Skip before map element",
     "focusdialog": {
       "title": "Keyboard Navigation",
-      "main": "If enable, we will keep focus locked on the viewer. To exit, press <strong>CTRL + Q</strong>",
+      "main": "If enable, we will keep focus locked on the viewer.\nTo exit, press <strong>CTRL + Q</strong>",
       "button": {
         "enable": "Enable",
         "skip": "Skip"

@@ -12,135 +12,134 @@
             'labeled': true
           }
         },
-        'components': ['nav-bar'],
+        'components': ['nav-bar', 'footer-bar'],
         'corePackages': [],
         'theme': 'dark',
         'suportedLanguages': ['en']
       }"></div><p></p><button type="button" class="collapsible">Configuration Snippet</button><pre id="mapWMCS" class="panel"></pre><hr/><button type="button" class="collapsible">Code Snippet</button><pre id="codeSnippet" class="panel"></pre><script src="codedoc.js"></script><script>// TODO: for layer.vector.add* add a optional param to specify the geometry group - UPDATE CODE AND SAMPLE
-    function addPolyline(map) {
-      cgpv.api.map(map).layer.vector.setActiveGeometryGroup(document.getElementById('groupname').value);
-      // call an api function to draw a polyline
-      const polyline = cgpv.api.map(map).layer.vector.addPolyline(
-        [
-          [-100, 45],
-          [-105, 50],
-        ],
-        {
-          style: {
-            strokeColor: '#000',
-            strokeWidth: 5,
-            strokeOpacity: 0.8,
-          },
-        }
-      );
-    }
-
-    function addPolygon(map) {
-      cgpv.api.map(map).layer.vector.setActiveGeometryGroup(document.getElementById('groupname').value);
-      // call an api function to draw a polygon
-      const polygon = cgpv.api.map(map).layer.vector.addPolygon(
-        [
+      function addPolyline(map) {
+        cgpv.api.map(map).layer.vector.setActiveGeometryGroup(document.getElementById('groupname').value);
+        // call an api function to draw a polyline
+        const polyline = cgpv.api.map(map).layer.vector.addPolyline(
           [
-            [-109.05, 50],
-            [-109.03, 54],
-            [-102.05, 54],
-            [-102.04, 50],
+            [-100, 45],
+            [-105, 50],
           ],
-        ],
-        {
-          style: {
-            strokeColor: '#000',
-            strokeWidth: 5,
-            strokeOpacity: 0.8,
-          },
-        }
-      );
-    }
-
-    function addCircle(map) {
-      cgpv.api.map(map).layer.vector.setActiveGeometryGroup(document.getElementById('groupname').value);
-      // call an api function to draw a polygon
-      const circle = cgpv.api.map(map).layer.vector.addCircle([-100, 50], 1, {
-        style: {
-          strokeColor: 'red',
-          fillColor: '#f03',
-          fillOpacity: 0.5,
-        },
-      });
-
-    }
-
-    function addCircleMarker(map) {
-      cgpv.api.map(map).layer.vector.setActiveGeometryGroup(document.getElementById('groupname').value);
-      // call an api function to draw a polygon
-      const circleMarker = cgpv.api.map(map).layer.vector.addCircleMarker([-109, 70], 1, {
-        style: {
-          strokeColor: 'red',
-          fillColor: '#f03',
-          fillOpacity: 0.5,
-        },
-      });
-    }
-
-    // initialize cgpv and api events, a callback is optional, used if calling api's after the rendering is ready
-    cgpv.init(function () {
-      let groupNames = [];
-      console.log('api is ready');
-
-      //create snippets
-      createCodeSnippet();
-      createConfigSnippet();
-
-      // get addPolyline button element and add event handler
-      var addPolylineBtn = document.getElementsByClassName('add-polyline-btn')[0];
-      addPolylineBtn.addEventListener('click', function (e) {
-        addPolyline('mapWM');
-      });
-
-      // get addPolygon button element and add event handler
-      var addPolygonBtn = document.getElementsByClassName('add-polygon-btn')[0];
-      addPolygonBtn.addEventListener('click', function (e) {
-        addPolygon('mapWM');
-      });
-
-      // get addCircle button element and add event handler
-      var addCircleBtn = document.getElementsByClassName('add-circle-btn')[0];
-      addCircleBtn.addEventListener('click', function (e) {
-        addCircle('mapWM');
-      });
-
-      // get add circle marker button element and add event handler
-      var addCircleMarkerBtn = document.getElementsByClassName('add-circle-marker-btn')[0];
-      addCircleMarkerBtn.addEventListener('click', function (e) {
-        addCircleMarker('mapWM');
-      });
-
-      // get delete GeomtryGroup button element and add event handler
-      var deleteGeometryGroup = document.getElementsByClassName('delete-group-btn')[0];
-      deleteGeometryGroup.addEventListener('click', function (e) {
-        // call an api function to  delete the geometry group
-        var groupName = document.getElementById('groupname').value ? document.getElementById('groupname').value : '';
-        if (groupName) {
-          const groupIndex = groupNames.findIndex((groupNameFromArray) => groupNameFromArray === groupName);
-          if (groupIndex === -1) document.getElementById('groupname').value = '';
-          else {
-            groupNames.splice(groupIndex, 1);
-            cgpv.api.map('mapWM').layer.vector.deleteGeometryGroup(groupName);
+          {
+            style: {
+              strokeColor: '#000',
+              strokeWidth: 5,
+              strokeOpacity: 0.8,
+            },
           }
-        } else {
-          cgpv.api.map('mapWM').layer.vector.setActiveGeometryGroup();
-          cgpv.api.map('mapWM').layer.vector.deleteGeometryGroup();
-        }
-        document.getElementById('created-group').textContent = groupNames.join(', ');
-      });
+        );
+      }
 
-      // get create GeomtryFromGroup button element and add event handler
-      var createGeometryFromGroup = document.getElementsByClassName('create-group-btn')[0];
-      createGeometryFromGroup.addEventListener('click', function (e) {
-        // call an api function to  delete the geometry group
-        var name = document.getElementById('groupname').value ? document.getElementById('groupname').value : '';
-        cgpv.api.map('mapWM').layer.vector.createGeometryGroup(name);
-        groupNames.push(name);
-        document.getElementById('created-group').textContent = groupNames.join(', ');
-      });
-    });</script></body></html>
+      function addPolygon(map) {
+        cgpv.api.map(map).layer.vector.setActiveGeometryGroup(document.getElementById('groupname').value);
+        // call an api function to draw a polygon
+        const polygon = cgpv.api.map(map).layer.vector.addPolygon(
+          [
+            [
+              [-109.05, 50],
+              [-109.03, 54],
+              [-102.05, 54],
+              [-102.04, 50],
+            ],
+          ],
+          {
+            style: {
+              strokeColor: '#000',
+              strokeWidth: 5,
+              strokeOpacity: 0.8,
+            },
+          }
+        );
+      }
+
+      function addCircle(map) {
+        cgpv.api.map(map).layer.vector.setActiveGeometryGroup(document.getElementById('groupname').value);
+        // call an api function to draw a polygon
+        const circle = cgpv.api.map(map).layer.vector.addCircle([-100, 50], 1, {
+          style: {
+            strokeColor: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+          },
+        });
+      }
+
+      function addCircleMarker(map) {
+        cgpv.api.map(map).layer.vector.setActiveGeometryGroup(document.getElementById('groupname').value);
+        // call an api function to draw a polygon
+        const circleMarker = cgpv.api.map(map).layer.vector.addCircleMarker([-109, 70], 1, {
+          style: {
+            strokeColor: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+          },
+        });
+      }
+
+      // initialize cgpv and api events, a callback is optional, used if calling api's after the rendering is ready
+      cgpv.init(function () {
+        let groupNames = [];
+        console.log('api is ready');
+
+        //create snippets
+        createCodeSnippet();
+        createConfigSnippet();
+
+        // get addPolyline button element and add event handler
+        var addPolylineBtn = document.getElementsByClassName('add-polyline-btn')[0];
+        addPolylineBtn.addEventListener('click', function (e) {
+          addPolyline('mapWM');
+        });
+
+        // get addPolygon button element and add event handler
+        var addPolygonBtn = document.getElementsByClassName('add-polygon-btn')[0];
+        addPolygonBtn.addEventListener('click', function (e) {
+          addPolygon('mapWM');
+        });
+
+        // get addCircle button element and add event handler
+        var addCircleBtn = document.getElementsByClassName('add-circle-btn')[0];
+        addCircleBtn.addEventListener('click', function (e) {
+          addCircle('mapWM');
+        });
+
+        // get add circle marker button element and add event handler
+        var addCircleMarkerBtn = document.getElementsByClassName('add-circle-marker-btn')[0];
+        addCircleMarkerBtn.addEventListener('click', function (e) {
+          addCircleMarker('mapWM');
+        });
+
+        // get delete GeomtryGroup button element and add event handler
+        var deleteGeometryGroup = document.getElementsByClassName('delete-group-btn')[0];
+        deleteGeometryGroup.addEventListener('click', function (e) {
+          // call an api function to  delete the geometry group
+          var groupName = document.getElementById('groupname').value ? document.getElementById('groupname').value : '';
+          if (groupName) {
+            const groupIndex = groupNames.findIndex((groupNameFromArray) => groupNameFromArray === groupName);
+            if (groupIndex === -1) document.getElementById('groupname').value = '';
+            else {
+              groupNames.splice(groupIndex, 1);
+              cgpv.api.map('mapWM').layer.vector.deleteGeometryGroup(groupName);
+            }
+          } else {
+            cgpv.api.map('mapWM').layer.vector.setActiveGeometryGroup();
+            cgpv.api.map('mapWM').layer.vector.deleteGeometryGroup();
+          }
+          document.getElementById('created-group').textContent = groupNames.join(', ');
+        });
+
+        // get create GeomtryFromGroup button element and add event handler
+        var createGeometryFromGroup = document.getElementsByClassName('create-group-btn')[0];
+        createGeometryFromGroup.addEventListener('click', function (e) {
+          // call an api function to  delete the geometry group
+          var name = document.getElementById('groupname').value ? document.getElementById('groupname').value : '';
+          cgpv.api.map('mapWM').layer.vector.createGeometryGroup(name);
+          groupNames.push(name);
+          document.getElementById('created-group').textContent = groupNames.join(', ');
+        });
+      });</script></body></html>
