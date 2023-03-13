@@ -45,7 +45,11 @@
     "remove_layer": "Remove Layer",
     "opacity": "Opacity",
     "expand_legend": "Expand Legend",
-    "toggle_cluster": "Toggle Clustering"
+    "toggle_cluster": "Toggle Clustering",
+    "toggle_opacity" : "Toggle Opacity"
+  },
+  "datagrid": {
+    "exportJson": "Download GeoJSON"
   },
   "keyboardnav": {
     "start": "Skip after map element",
