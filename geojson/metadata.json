@@ -102,6 +102,47 @@
       }
     },
     {
+      "layerId": "downstream-analysis/execution",
+      "layerName": { "en": "Downstream Analysis" },
+      "source": {
+        "dataAccessPath": { "en": "http://132.156.9.48:30102/processes/" },
+        "postSettings": {
+          "header": {
+            "accept": "application/json",
+            "Content-Type": "application/json"
+          },
+          "data": {
+            "inputs": {
+              "inSRID": 4326,
+              "lat": 45.1823,
+              "long": -72.0556,
+              "outSRID": 4326
+            }
+          }
+        },
+        "featureInfo": {
+          "queryable": "true"
+        }
+      },
+      "initialSettings": {
+        "visible": true,
+        "extent": [-177.29275972275843, 34.301384132573055, -9.977229778239453, 84.400481529465]
+      },
+      "style": {
+        "LineString": {
+          "styleType": "simple",
+          "label": "Downstream Analysis",
+          "settings": {
+            "type": "lineString",
+            "stroke": {
+              "color": "rgba(255,0,0,1)",
+              "lineStyle": "shortDash-dot-dot"
+            }
+          }
+        }
+      }
+    },
+    {
       "layerId": "icon_points.json",
       "layerName": { "en": "Icons" },
       "source": {
