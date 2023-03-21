@@ -14,27 +14,142 @@
         'listOfGeoviewLayerConfig': [
           {
             'geoviewLayerId': 'wmsLYR1-Root',
-            'geoviewLayerName': { 'en': 'Hydro Test' },
-            'geoviewLayerType': 'GeoJSON',
+            'geoviewLayerName': { 'en': 'QGis Test' },
+            'metadataAccessPath': { 'en': 'https://qgis-stage.services.geo.ca/dev/nrcan/landcover_2010_15_20_en' },
+            'geoviewLayerType': 'ogcWms',
             'listOfLayerEntryConfig': [
               {
-                'layerId': 'downstream-analysis/execution',
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=1',
                 'source': {
-                  'dataAccessPath': { 'en': 'http://132.156.9.48:30102/processes/' },
-                  'postSettings': {
-                    'header': {
-                      'accept': 'application/json',
-                      'Content-Type': 'application/json'
-                    },
-                    'data': {
-                      'inputs': {
-                        'inSRID': 4326,
-                        'lat': 45.1823,
-                        'long': -72.0556,
-                        'outSRID': 4326
-                      }
-                    }
-                  }
+                  'style': '1',
+                  'serverType': 'qgis'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=2',
+                'source': {
+                  'style': '2'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=3',
+                'source': {
+                  'style': '3'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=4',
+                'source': {
+                  'style': '4'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=5',
+                'source': {
+                  'style': '5'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=6',
+                'source': {
+                  'style': '6'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=7',
+                'source': {
+                  'style': '7'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=8',
+                'source': {
+                  'style': '8'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=9',
+                'source': {
+                  'style': '9'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=10',
+                'source': {
+                  'style': '10'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=11',
+                'source': {
+                  'style': '11'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=12',
+                'source': {
+                  'style': '12'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=13',
+                'source': {
+                  'style': '13'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=14',
+                'source': {
+                  'style': '14'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=15',
+                'source': {
+                  'style': '15'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=16',
+                'source': {
+                  'style': '16'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=17',
+                'source': {
+                  'style': '17'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=18',
+                'source': {
+                  'style': '18'
+                }
+              },
+              {
+                'layerId': 'landcover_2015_19classes',
+                'layerPathEnding': 'style=19',
+                'source': {
+                  'style': '19'
                 }
               }
             ]

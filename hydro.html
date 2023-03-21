@@ -446,7 +446,7 @@
         const layerID = cgpv.api.map('LYR5').layer.addGeoviewLayer(
           {
             geoviewLayerId: 'GeoJsonProcess',
-            metadataAccessPath: { 'en': './geojson/metadata.json' },
+            metadataAccessPath: { 'en': './geojson/hydro-metadata.json' },
             geoviewLayerName: {
               en: 'Downstream Analysis',
               fr: 'Analyse en aval',
@@ -456,18 +456,11 @@
               {
                 'layerId': 'execution',
                 'source': {
-                  'dataAccessPath': { 'en': 'http://132.156.9.48:30102/processes/downstream-analysis/' },
                   'postSettings': {
-                    'header': {
-                      'accept': 'application/json',
-                      'Content-Type': 'application/json'
-                    },
                     'data': {
                       'inputs': {
-                        'inSRID': 4326,
                         'lat': lat,
                         'long': long,
-                        'outSRID': 4326
                       }
                     }
                   }

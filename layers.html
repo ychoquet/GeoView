@@ -1063,7 +1063,7 @@
               tableZoomTo = document.createElement('button');
               tableZoomTo.innerText = 'Zoom To Feature';
               tableZoomTo.addEventListener('click', function (e) {
-                cgpv.api.map(mapId).zoomToExtent(row.extent, { padding: [100, 100, 100, 100], maxZoom: 20 });
+                cgpv.api.map(mapId).zoomToExtent(row.extent);
                 addBoundsPolygon(mapId, row.extent);
               });
               tableData.appendChild(tableZoomTo);
@@ -1357,37 +1357,32 @@
         // adding a geojson layer requires a type of geojson and url
         const layerID = cgpv.api.map('LYR5').layer.addGeoviewLayer(
           {
-            geoviewLayerId: 'GeoJsonProcess',
-            metadataAccessPath: { 'en': './geojson/metadata.json' },
+            geoviewLayerId: 'geoJsonSample',
             geoviewLayerName: {
-              en: 'Downstream Analysis',
-              fr: 'Analyse en aval',
+              en: 'Historical Flood',
+              fr: 'Inondation Historique',
             },
             geoviewLayerType: 'GeoJSON',
-            'listOfLayerEntryConfig': [
+            listOfLayerEntryConfig: [
               {
-                'layerId': 'downstream-analysis/execution',
-                'source': {
-                  'dataAccessPath': { 'en': 'http://132.156.9.48:30102/processes/' },
-                  'postSettings': {
-                    'header': {
-                      'accept': 'application/json',
-                      'Content-Type': 'application/json'
-                    },
-                    'data': {
-                      'inputs': {
-                        'inSRID': 4326,
-                        'lat': 45.1823,
-                        'long': -72.0556,
-                        'outSRID': 4326
-                      }
-                    }
-                  }
-                }
-              }
+                layerId: 'historical_flood_0.geojson',
+                layerName: { en: 'Map', fr: 'Carte' },
+                source: {
+                  dataAccessPath: {
+                    en: './geojson/',
+                    fr: './geojson/',
+                  },
+                  featureInfo: {
+                    queryable: true,
+                    nameField: { en: 'comment_en', fr: 'comment_fr' },
+                    outfields: { en: 'comment_en,death_en_1,end_date,death_en_1', fr: 'comment_fr,death_fr_1,end_date,death_en_1' },
+                    aliasFields: { en: 'comment_en,death_en_1,end_date,death_en_1', fr: 'comment_fr,death_fr_1,end_date,death_en_1' },
+                  },
+                },
+              },
             ],
           },
-          ['en']
+          ['en', 'fr']
         );
         document.getElementById('new-layer-id-label').innerText = layerID;
         cgpv.api.event.once(
