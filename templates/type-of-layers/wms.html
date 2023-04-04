@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="./img/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat:200,300,400,900|Merriweather" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      table.info, th.info, td.info, th.infoCol1, td.infoCol1 {
+        border: 1px solid black;
+      }
+      th.info, td.info, th.infoCol1, td.infoCol1 {
+        padding: 15px;
+        width: 15%;
+      }
+      th.info, th.infoCol1, td.infoCol1 {
+        text-align: left;
+        font-weight: bold;
+        font-size: 15px;
+      }
+      </style>
+  </head>
+
+  <body>
+    <div class="header-table">
+      <table>
+        <tbody>
+          <tr>
+            <td><img class="header-logo" alt="logo" src="./img/Logo.png" /></td>
+            <td class="header-title">
+              <h1><strong>Layers</strong></h1>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <a href="./index.html">Main</a><br />
+              <a href="./type-of-layers.html">Type Of Layers</a><br />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>This page is used to showcase how the viewer may show WMS layer types</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="map-title-holder">
+      <h4 id="HLYR1">1.WMS Layer</h4>
+      <a class="ref-link" href="#top">Top</a>
+    </div>
+    <button class="test-refresh-WMS-btn">Test Refresh WMS</button>
+    <div
+      id="LYR1"
+      class="llwp-map"
+      triggerReadyCallback="true"
+      data-lang="en"
+      data-config="{
+            'map': {
+              'interaction': 'dynamic',
+              'viewSettings': {
+                'zoom': 4,
+                'center': [-100, 60],
+                'projection': 3857
+              },
+              'basemapOptions': {
+                'basemapId': 'transport',
+                'shaded': false,
+                'labeled': true
+              },
+              'listOfGeoviewLayerConfig': [
+                {
+                  'geoviewLayerId': 'wmsLYR1-Root',
+                  'geoviewLayerName': { 'en': 'Weather Group' },
+                  'metadataAccessPath': { 'en': 'https://geo.weather.gc.ca/geomet' },
+                  'geoviewLayerType': 'ogcWms',
+                  'listOfLayerEntryConfig': [
+                    {
+                      'entryType': 'group',
+                      'layerId': 'wmsLYR1-Group',
+                      'layerName': { 'en': 'Group' },
+                      'listOfLayerEntryConfig': [
+                        {
+                          'layerId': 'CURRENT_CONDITIONS',
+                          'source': {
+                            'featureInfo': {
+                              'queryable': true,
+                              'nameField': { 'en': 'plain_text', 'fr': 'plain_texte' },
+                              'fieldTypes': 'string',
+                              'outfields': { 'en': 'plain_text', 'fr': 'plain_texte' },
+                              'aliasFields':  { 'en': 'Forcast', 'fr': 'Prévision' }
+                            }
+                          }
+                        },
+                        {
+                          'layerId': 'CGSL.ETA_ICEC',
+                          'layerName': { 'en': 'Ice Cover' }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  'geoviewLayerId': 'wmsLYR1-msi',
+                  'geoviewLayerName': { 'en': 'MSI' },
+                  'metadataAccessPath': { 'en': 'https://datacube.services.geo.ca/ows/msi' },
+                  'geoviewLayerType': 'ogcWms',
+                  'listOfLayerEntryConfig': [
+                    {
+                      'layerId': 'msi-94-or-more',
+                      'layerName': { 'en': 'Permanent Snow' },
+                      'source': {
+                        'style': 'msi-binary',
+                        'featureInfo': {
+                          'queryable': true,
+                          'nameField': { 'en': 'band-0-pixel-value', 'fr': 'band-0-pixel-value' },
+                          'fieldTypes': 'number',
+                          'outfields': { 'en': 'band-0-pixel-value', 'fr': 'band-0-pixel-value' },
+                          'aliasFields':  { 'en': 'Pixel value', 'fr': 'Valeur du pixel' }
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  'geoviewLayerId': 'Hydro',
+                  'geoviewLayerName': { 'en': 'Hydro' },
+                  'metadataAccessPath': { 'en': 'https://maps.geogratis.gc.ca/wms/hydro_network_en' },
+                  'geoviewLayerType': 'ogcWms',
+                  'listOfLayerEntryConfig': [
+                    {
+                      'layerId': 'hydro_network',
+                      'layerName': { 'en': 'hydro_network' }
+                    }
+                  ]
+                }
+              ]
+            },
+            'components': ['overview-map', 'nav-bar', 'footer-bar'],
+            'corePackages': [],
+            'theme': 'dark',
+            'suportedLanguages': ['en']
+          }"
+    ></div>
+    <button type="button" class="collapsible">Visibility and filters</button>
+    <pre style="height: 20pc; overflow-y: scroll" id="layer1-buttons-div" class="panel"></pre>
+    <button class="collapsible">Get Legend</button>
+    <pre style="height: 20pc; overflow-y: scroll" id="wmsLegendsId-table-div" class="panel"></pre>
+    <button type="button" class="collapsible">Get Feature Info</button>
+    <pre style="height: 20pc; overflow-y: scroll" id="wmsResultSetId" class="panel">Click on feature on the map</pre>
+    <hr />
+    <p>This map has a wms layer added from configuration.</p>
+    <button type="button" class="collapsible">Configuration Snippet</button>
+    <pre id="LYR1CS" class="panel"></pre>
+    <hr />
+
+    <script src="codedoc.js"></script>
+    <script src="code-for-type-of-layer.js"></script>
+    <script>
+      // initialize cgpv and api events, a callback is optional, used if calling api's after the rendering is ready
+      cgpv.init(function (mapId) {
+        console.log(`api is ready for ${mapId}`);
+
+        if (mapId === 'allMaps') {
+          //create snippets
+          createCodeSnippet();
+          createConfigSnippet();
+
+          createTableOfFilter(mapId);
+          api.event.emit({ handlerName: 'LYR1/wmsLegendsId', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
+        }
+      });
+
+      // WMS ======================================================================================================================
+      const featureInfoWmsLayerSet = cgpv.api.createFeatureInfoLayerSet('LYR1', 'wmsResultSetId');
+      cgpv.api.event.on(
+        cgpv.api.eventNames.GET_FEATURE_INFO.ALL_QUERIES_DONE,
+        (payload) => {
+          const { layerSetId, resultSets } = payload;
+          createInfoTable('LYR1', 'wmsResultSetId', resultSets);
+        },
+        'LYR1/wmsResultSetId'
+      );
+
+      const LegendsWmsLayerSet = cgpv.api.createLegendsLayerSet('LYR1', 'wmsLegendsId');
+      cgpv.api.event.on(
+        cgpv.api.eventNames.GET_LEGENDS.ALL_LEGENDS_DONE,
+        (payload) => {
+          const { resultSets } = payload;
+          displayLegend('wmsLegendsId', resultSets);
+        },
+        'LYR1/wmsLegendsId'
+      );
+
+      // ==========================================================================================================================
+      // Test a refresh WMS from projection change
+      var testRefreshBtn = document.getElementsByClassName('test-refresh-WMS-btn')[0];
+      testRefreshBtn.addEventListener('click', function (e) {
+        cgpv.api.event.emit(cgpv.types.mapViewProjectionPayload(cgpv.api.eventNames.MAP.EVENT_MAP_VIEW_PROJECTION_CHANGE, 'LYR1', 3978));
+      });
+    </script>
+  </body>
+</html>
+
