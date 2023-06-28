@@ -49,6 +49,9 @@
     "toggle_opacity": "Basculer le Opacité",
     "zoom_to": "Zoom sur la Couche"
   },
+  "details": {
+    "zoom_to": "Zoom à l'élément"
+  },
   "datagrid": {
     "exportJson": "Télécharger GeoJSON",
     "filterMap": "Filtrer la carte",
@@ -82,5 +85,8 @@
   "geolocator": {
     "search": "Texte à rechercher",
     "errorMessage": "Aucun résultat correspondant à"
+  },
+  "hovertooltip": {
+    "alticon": "Symbol de l'élément sélectionné"
   }
 }

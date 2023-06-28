@@ -35,6 +35,7 @@
                   "en": "band-0-pixel-value",
                   "fr": "band-0-pixel-value"
                 },
+                "fieldTypes": "number",
                 "aliasFields": {
                   "en": "Pixel value",
                   "fr": "Valeur du pixel"
@@ -65,12 +66,12 @@
           "en": "Airport data"
         },
         "metadataAccessPath": {
-          "en": "https://giswebservices.massgis.state.ma.us/geoserver/wfs"
+          "en": "https://geo.weather.gc.ca/geomet?REQUEST=GetCapabilities&VERSION=2.0.0&SERVICE=WFS"
         },
         "geoviewLayerType": "ogcWfs",
         "listOfLayerEntryConfig": [
           {
-            "layerId": "GISDATA.AIRPORTS_PT"
+            "layerId": "ec-msc:CURRENT_CONDITIONS"
           }
         ]
       },
