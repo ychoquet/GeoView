@@ -11,7 +11,8 @@
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
     "coordinates": "Toggle Coordinates format",
-    "scale": "Toggle between scale and resolution"
+    "scale": "Toggle between scale and resolution",
+    "location": "Zoom to my location"
   },
   "mapctrl": {
     "rotation": {
@@ -51,6 +52,12 @@
   },
   "details": {
     "zoom_to": "Zoom to feature"
+  },
+  "lightbox": {
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "download": "Download"
   },
   "datagrid": {
     "exportJson": "Download GeoJSON",

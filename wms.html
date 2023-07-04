@@ -456,16 +456,20 @@
       window.setInterval(() => {
         const layerConfig = cgpv.api.maps.LYR1.layer.registeredLayers['wmsLYR1-spatiotemporel/RADAR_1KM_RSNO'];
         const temporalData = cgpv.api.maps.LYR1.layer.geoviewLayers['wmsLYR1-spatiotemporel'].layerTemporalDimension['wmsLYR1-spatiotemporel/RADAR_1KM_RSNO'];
-        cgpv.api.maps.LYR1.layer.geoviewLayers['wmsLYR1-spatiotemporel'].applyViewFilter(layerConfig, `time=date '${temporalData.range.range[i]}'`);
-        if (++i === temporalData.range.range.length) i = 0;
+        if (temporalData) {
+          cgpv.api.maps.LYR1.layer.geoviewLayers['wmsLYR1-spatiotemporel'].applyViewFilter(layerConfig, `time=date '${temporalData.range.range[i]}'`);
+          if (++i === temporalData.range.range.length) i = 0;
+        }
       }, 2500)
 
       let j = 0;
       window.setInterval(() => {
         const layerConfig = cgpv.api.maps.LYR1.layer.registeredLayers['wmsLYR1-msi/msi-94-or-more'];
         const temporalData = cgpv.api.maps.LYR1.layer.geoviewLayers['wmsLYR1-msi'].layerTemporalDimension['wmsLYR1-msi/msi-94-or-more'];
-        cgpv.api.maps.LYR1.layer.geoviewLayers['wmsLYR1-msi'].applyViewFilter(layerConfig, `time=date '${temporalData.range.range[j]}'`);
-        if (++j === temporalData.range.range.length) j = 0;
+        if (temporalData) {
+          cgpv.api.maps.LYR1.layer.geoviewLayers['wmsLYR1-msi'].applyViewFilter(layerConfig, `time=date '${temporalData.range.range[j]}'`);
+          if (++j === temporalData.range.range.length) j = 0;
+        }
       }, 2500)
 
       // ========================================================================================================================
@@ -475,8 +479,7 @@
         const geoviewLayers = cgpv.api.maps?.LYR1?.layer?.geoviewLayers;
         if (geoviewLayers) {
           const output = Object.keys(cgpv.api.maps?.LYR1?.layer?.geoviewLayers).reduce((outputValue, layerId) => {
-            const layerState = cgpv.api.maps?.LYR1?.layer?.geoviewLayers[layerId].layerState;
-            const stateValue = layerState ? layerState : 'undefined';
+            const stateValue = cgpv.api.maps?.LYR1?.layer?.geoviewLayers[layerId].layerPhase;
             return `${outputValue}${layerId}: ${stateValue}, `;
           }, '(');
           displayField1.textContent = output ? `${output.slice(0, -2)})` : '(undefined)';
@@ -488,8 +491,7 @@
         const geoviewLayers = cgpv.api.maps?.LYR2?.layer?.geoviewLayers;
         if (geoviewLayers) {
           const output = Object.keys(cgpv.api.maps?.LYR2?.layer?.geoviewLayers).reduce((outputValue, layerId) => {
-            const layerState = cgpv.api.maps?.LYR2?.layer?.geoviewLayers[layerId].layerState;
-            const stateValue = layerState ? layerState : 'undefined';
+            const stateValue = cgpv.api.maps?.LYR2?.layer?.geoviewLayers[layerId].layerPhase;
             return `${outputValue}${layerId}: ${stateValue}, `;
           }, '(');
           displayField2.textContent = output ? `${output.slice(0, -2)})` : '(undefined)';
@@ -501,8 +503,7 @@
         const geoviewLayers = cgpv.api.maps?.LYR3?.layer?.geoviewLayers;
         if (geoviewLayers) {
           const output = Object.keys(cgpv.api.maps?.LYR3?.layer?.geoviewLayers).reduce((outputValue, layerId) => {
-            const layerState = cgpv.api.maps?.LYR3?.layer?.geoviewLayers[layerId].layerState;
-            const stateValue = layerState ? layerState : 'undefined';
+            const stateValue = cgpv.api.maps?.LYR3?.layer?.geoviewLayers[layerId].layerPhase;
             return `${outputValue}${layerId}: ${stateValue}, `;
           }, '(');
           displayField3.textContent = output ? `${output.slice(0, -2)})` : '(undefined)';
@@ -514,8 +515,7 @@
         const geoviewLayers = cgpv.api.maps?.LYR4?.layer?.geoviewLayers;
         if (geoviewLayers) {
           const output = Object.keys(cgpv.api.maps?.LYR4?.layer?.geoviewLayers).reduce((outputValue, layerId) => {
-            const layerState = cgpv.api.maps?.LYR4?.layer?.geoviewLayers[layerId].layerState;
-            const stateValue = layerState ? layerState : 'undefined';
+            const stateValue = cgpv.api.maps?.LYR4?.layer?.geoviewLayers[layerId].layerPhase;
             return `${outputValue}${layerId}: ${stateValue}, `;
           }, '(');
           displayField4.textContent = output ? `${output.slice(0, -2)})` : '(undefined)';

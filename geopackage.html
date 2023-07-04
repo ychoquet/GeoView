@@ -26,13 +26,13 @@
             {
               'geoviewLayerId': 'GeoPackageLYR1',
               'geoviewLayerName': {
-                'en': 'Rivers'
+                'en': 'Natural Earth'
               },
               'geoviewLayerType': 'GeoPackage',
               'listOfLayerEntryConfig': [
                 {
-                  'layerId': 'rivers.gpkg',
-                  'layerName': { 'en': 'Rivers' },
+                  'layerId': 'Natural_Earth_QGIS_layers_and_styles.gpkg',
+                  'layerName': { 'en': 'Natural Earth' },
                   'source': {
                     'dataAccessPath': {
                       'en': './geojson'
@@ -134,8 +134,7 @@
         const geoviewLayers = cgpv.api.maps?.LYR1?.layer?.geoviewLayers;
         if (geoviewLayers) {
           const output = Object.keys(cgpv.api.maps?.LYR1?.layer?.geoviewLayers).reduce((outputValue, layerId) => {
-            const layerState = cgpv.api.maps?.LYR1?.layer?.geoviewLayers[layerId].layerState;
-            const stateValue = layerState ? layerState : 'undefined';
+            const stateValue = cgpv.api.maps?.LYR1?.layer?.geoviewLayers[layerId].layerPhase;
             return `${outputValue}${layerId}: ${stateValue}, `;
           }, '(');
           displayField1.textContent = output ? `${output.slice(0, -2)})` : '(undefined)';
