@@ -11,8 +11,7 @@
     "zoomIn": "Zoom avant",
     "zoomOut": "Zoom arrière",
     "coordinates": "Basculer le format des coordonnées",
-    "scale": "Basculer entre l'échelle et la résolution",
-    "location": "Zoom sur ma position"
+    "scale": "Basculer entre l'échelle et la résolution"
   },
   "mapctrl": {
     "rotation": {
@@ -52,12 +51,6 @@
   },
   "details": {
     "zoom_to": "Zoom à l'élément"
-  },
-  "lightbox": {
-    "next": "Prochaine",
-    "previous": "Précédente",
-    "close": "Fermer",
-    "download": "Télécharger"
   },
   "datagrid": {
     "exportJson": "Télécharger GeoJSON",
