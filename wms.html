@@ -91,7 +91,7 @@
                 }
               ]
             },
-            'components': ['overview-map', 'nav-bar', 'footer-bar'],
+            'components': ['overview-map'],
             'corePackages': [],
             'theme': 'dark',
             'suportedLanguages': ['en']
@@ -253,7 +253,7 @@
           }
         ]
       },
-      'components': ['overview-map', 'nav-bar', 'footer-bar'],
+      'components': ['overview-map'],
       'corePackages': [],
       'theme': 'dark',
       'suportedLanguages': ['en']
@@ -288,8 +288,8 @@
           }
         ]
       },
-      'components': ['overview-map', 'nav-bar', 'footer-bar'],
-      'corePackages': [],
+      'components': ['overview-map'],
+      'corePackages': ['layers-panel'],
       'theme': 'dark',
       'suportedLanguages': ['en']
     }"></div><label for="language">Select a layer style:</label> <select name="style" id="style"></select> <button class="collapsible">Get Legend</button><pre style="height: 20pc; overflow-y: scroll" id="LegendsId3-table-pre" class="panel"></pre><button type="button" class="collapsible">Get Feature Info</button><pre style="height: 20pc; overflow-y: scroll" id="ResultSetId3" class="panel">Click on feature on the map</pre><hr/><p>This map has a wms layer added from configuration.</p><button type="button" class="collapsible">Configuration Snippet</button><pre id="LYR3CS" class="panel"></pre><hr/><div class="map-title-holder"><h4 id="HLYR4">4. Automatic group creation from metadata information</h4>&nbsp;<h5 id="HLYR4-state">(undefined)</h5><a class="ref-link" href="#top">Top</a></div><div id="LYR4" class="llwp-map" data-lang="en" data-config="{
@@ -320,7 +320,7 @@
             }
           ]
         },
-        'components': ['overview-map', 'nav-bar', 'footer-bar'],
+        'components': ['overview-map'],
         'corePackages': [],
         'theme': 'dark',
         'suportedLanguages': ['en']
@@ -336,13 +336,9 @@
           createTableOfFilter('LYR1');
           createTableOfFilter('LYR2');
           createTableOfFilter('LYR4');
-          cgpv.api.event.emit({ handlerName: 'LYR1/$LegendsLayerSet$', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
-          cgpv.api.event.emit({ handlerName: 'LYR2/$LegendsLayerSet$', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
-          cgpv.api.event.emit({ handlerName: 'LYR3/$LegendsLayerSet$', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
-          cgpv.api.event.emit({ handlerName: 'LYR4/$LegendsLayerSet$', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
 
           const intervalId = window.setInterval(() => {
-            if (cgpv.api.maps.LYR3?.layer?.geoviewLayers?.['wmsLYR3-Root']?.layerState === 'loaded') {
+            if (cgpv.api.maps.LYR3?.layer?.geoviewLayers?.['wmsLYR3-Root']?.allLayerEntryConfigProcessed()) {
               const lyr3LayerConfig = cgpv.api.maps.LYR3.layer.registeredLayers['wmsLYR3-Root/landcover_2015_19classes'];
               if (Array.isArray(lyr3LayerConfig?.source?.style)) {
                 const dropDownContent = document.getElementById('style');
@@ -373,13 +369,15 @@
 
           const LegendsLayerSet1 = cgpv.api.getLegendsLayerSet('LYR1');
           cgpv.api.event.on(
-            cgpv.api.eventNames.GET_LEGENDS.ALL_LEGENDS_DONE,
+            cgpv.api.eventNames.GET_LEGENDS.LEGENDS_LAYERSET_UPDATED,
             (payload) => {
               const { resultSets } = payload;
               displayLegend('LegendsId1', resultSets);
             },
             'LYR1/$LegendsLayerSet$'
           );
+          // The GET_LEGENDS.TRIGGER event must be triggered after the GET_LEGENDS.LEGENDS_LAYERSET_UPDATED listener is created
+          cgpv.api.event.emit({ handlerName: 'LYR1/$LegendsLayerSet$', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
 
           // ========================================================================================================================
           // Test a refresh WMS from projection change
@@ -401,13 +399,15 @@
 
           const LegendsLayerSet2 = cgpv.api.getLegendsLayerSet('LYR2');
           cgpv.api.event.on(
-            cgpv.api.eventNames.GET_LEGENDS.ALL_LEGENDS_DONE,
+            cgpv.api.eventNames.GET_LEGENDS.LEGENDS_LAYERSET_UPDATED,
             (payload) => {
               const { resultSets } = payload;
               displayLegend('LegendsId2', resultSets);
             },
             'LYR2/$LegendsLayerSet$'
           );
+          // The GET_LEGENDS.TRIGGER event must be triggered after the GET_LEGENDS.LEGENDS_LAYERSET_UPDATED listener is created
+          cgpv.api.event.emit({ handlerName: 'LYR2/$LegendsLayerSet$', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
 
           // LYR3 ===================================================================================================================
           const featureInfoLayerSet3 = cgpv.api.getFeatureInfoLayerSet('LYR3');
@@ -422,24 +422,28 @@
 
           const LegendsLayerSet3 = cgpv.api.getLegendsLayerSet('LYR3');
           cgpv.api.event.on(
-            cgpv.api.eventNames.GET_LEGENDS.ALL_LEGENDS_DONE,
+            cgpv.api.eventNames.GET_LEGENDS.LEGENDS_LAYERSET_UPDATED,
             (payload) => {
               const { resultSets } = payload;
               displayLegend('LegendsId3', resultSets);
             },
             'LYR3/$LegendsLayerSet$'
           );
+          // The GET_LEGENDS.TRIGGER event must be triggered after the GET_LEGENDS.LEGENDS_LAYERSET_UPDATED listener is created
+          cgpv.api.event.emit({ handlerName: 'LYR3/$LegendsLayerSet$', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
 
           //LYR4 ===================================================================================================================
           const LegendsLayerSet4 = cgpv.api.getLegendsLayerSet('LYR4', 'LegendsId4');
           cgpv.api.event.on(
-            cgpv.api.eventNames.GET_LEGENDS.ALL_LEGENDS_DONE,
+            cgpv.api.eventNames.GET_LEGENDS.LEGENDS_LAYERSET_UPDATED,
             (payload) => {
               const { resultSets } = payload;
               displayLegend('LegendsId4', resultSets);
             },
             'LYR4/$LegendsLayerSet$'
           );
+          // The GET_LEGENDS.TRIGGER event must be triggered after the GET_LEGENDS.LEGENDS_LAYERSET_UPDATED listener is created
+          cgpv.api.event.emit({ handlerName: 'LYR4/$LegendsLayerSet$', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
 
           // ========================================================================================================================
           // Test a refresh WMS from projection change
@@ -470,6 +474,9 @@
             }
           }, 2500)
 
+        }
+      });
+
           // ========================================================================================================================
           // Display layer state
           window.setInterval(() => {
@@ -477,8 +484,11 @@
             const geoviewLayers = cgpv.api.maps?.LYR1?.layer?.geoviewLayers;
             if (geoviewLayers) {
               const output = Object.keys(cgpv.api.maps?.LYR1?.layer?.geoviewLayers).reduce((outputValue, layerId) => {
-                const stateValue = cgpv.api.maps?.LYR1?.layer?.geoviewLayers[layerId].layerPhase;
-                return `${outputValue}${layerId}: ${stateValue}, `;
+                const stateValue = cgpv.api.maps?.LYR1?.layer?.geoviewLayers[layerId].allLayerEntryConfigProcessed() ? 'Processed' : 'Not totaly processed';
+                const numberOfErrors = cgpv.api.maps?.LYR1?.layer?.geoviewLayers[layerId].countErrorStatus();
+                let errorIndicator = '';
+                if (numberOfErrors) errorIndicator = numberOfErrors === 1 ? ' (1 error)' : ` (${numberOfErrors} errors)`;
+                return `${outputValue}${layerId}: ${stateValue}${errorIndicator}, `;
               }, '(');
               displayField1.textContent = output ? `${output.slice(0, -2)})` : '(undefined)';
             } else displayField1.textContent = '(undefined)';
@@ -489,8 +499,11 @@
             const geoviewLayers = cgpv.api.maps?.LYR2?.layer?.geoviewLayers;
             if (geoviewLayers) {
               const output = Object.keys(cgpv.api.maps?.LYR2?.layer?.geoviewLayers).reduce((outputValue, layerId) => {
-                const stateValue = cgpv.api.maps?.LYR2?.layer?.geoviewLayers[layerId].layerPhase;
-                return `${outputValue}${layerId}: ${stateValue}, `;
+                const stateValue = cgpv.api.maps?.LYR2?.layer?.geoviewLayers[layerId].allLayerEntryConfigProcessed() ? 'Processed' : 'Not totaly processed';
+                const numberOfErrors = cgpv.api.maps?.LYR2?.layer?.geoviewLayers[layerId].countErrorStatus();
+                let errorIndicator = '';
+                if (numberOfErrors) errorIndicator = numberOfErrors === 1 ? ' (1 error)' : ` (${numberOfErrors} errors)`;
+                return `${outputValue}${layerId}: ${stateValue}${errorIndicator}, `;
               }, '(');
               displayField2.textContent = output ? `${output.slice(0, -2)})` : '(undefined)';
             } else displayField2.textContent = '(undefined)';
@@ -501,8 +514,11 @@
             const geoviewLayers = cgpv.api.maps?.LYR3?.layer?.geoviewLayers;
             if (geoviewLayers) {
               const output = Object.keys(cgpv.api.maps?.LYR3?.layer?.geoviewLayers).reduce((outputValue, layerId) => {
-                const stateValue = cgpv.api.maps?.LYR3?.layer?.geoviewLayers[layerId].layerPhase;
-                return `${outputValue}${layerId}: ${stateValue}, `;
+                const stateValue = cgpv.api.maps?.LYR3?.layer?.geoviewLayers[layerId].allLayerEntryConfigProcessed() ? 'Processed' : 'Not totaly processed';
+                const numberOfErrors = cgpv.api.maps?.LYR3?.layer?.geoviewLayers[layerId].countErrorStatus();
+                let errorIndicator = '';
+                if (numberOfErrors) errorIndicator = numberOfErrors === 1 ? ' (1 error)' : ` (${numberOfErrors} errors)`;
+                return `${outputValue}${layerId}: ${stateValue}${errorIndicator}, `;
               }, '(');
               displayField3.textContent = output ? `${output.slice(0, -2)})` : '(undefined)';
             } else displayField3.textContent = '(undefined)';
@@ -513,11 +529,12 @@
             const geoviewLayers = cgpv.api.maps?.LYR4?.layer?.geoviewLayers;
             if (geoviewLayers) {
               const output = Object.keys(cgpv.api.maps?.LYR4?.layer?.geoviewLayers).reduce((outputValue, layerId) => {
-                const stateValue = cgpv.api.maps?.LYR4?.layer?.geoviewLayers[layerId].layerPhase;
-                return `${outputValue}${layerId}: ${stateValue}, `;
+                const stateValue = cgpv.api.maps?.LYR4?.layer?.geoviewLayers[layerId].allLayerEntryConfigProcessed() ? 'Processed' : 'Not totaly processed';
+                const numberOfErrors = cgpv.api.maps?.LYR4?.layer?.geoviewLayers[layerId].countErrorStatus();
+                let errorIndicator = '';
+                if (numberOfErrors) errorIndicator = numberOfErrors === 1 ? ' (1 error)' : ` (${numberOfErrors} errors)`;
+                return `${outputValue}${layerId}: ${stateValue}${errorIndicator}, `;
               }, '(');
               displayField4.textContent = output ? `${output.slice(0, -2)})` : '(undefined)';
             } else displayField4.textContent = '(undefined)';
-          }, 250);
-        }
-      });</script></body></html>
+          }, 250);</script></body></html>

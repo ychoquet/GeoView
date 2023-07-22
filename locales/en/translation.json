@@ -35,11 +35,13 @@
   },
   "appbar": {
     "export": "Export",
+    "geolocator": "Geolocator",
     "fullscreen": "Full Screen",
     "help": "Help",
     "layers": "Layers",
     "share": "Share",
-    "version": "Access GitHub repo"
+    "version": "About GeoView",
+    "repoLink": "Repo link"
   },
   "legend": {
     "unknown": "Unknown Layer Title",
@@ -52,7 +54,8 @@
   },
   "details": {
     "zoom_to": "Zoom to feature",
-    "select": "Highlight feature on map"
+    "select": "Highlight feature on map",
+    "external_link": "External Link"
   },
   "lightbox": {
     "next": "Next",
@@ -96,5 +99,10 @@
   },
   "hovertooltip": {
     "alticon": "Selected feature icon"
+  },
+  "dataTable": {
+    "icon": "ICON",
+    "zoom": "ZOOM",
+    "exportBtn": "Export"
   }
 }

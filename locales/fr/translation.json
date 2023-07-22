@@ -35,11 +35,13 @@
   },
   "appbar": {
     "export": "Exporter",
+    "geolocator": "Géolocalisation",
     "fullscreen": "Plein écran",
     "help": "Aide",
     "layers": "Couches",
     "share": "Partager",
-    "version": "Accéder au repo sur GitHub"
+    "version": "À propos de GéoView",
+    "repoLink": "Lien repo"
   },
   "legend": {
     "unknown": "Titre de légende inconnu",
@@ -52,7 +54,8 @@
   },
   "details": {
     "zoom_to": "Zoom à l'élément",
-    "select": "Sélectionner l'élément sur la carte"
+    "select": "Sélectionner l'élément sur la carte",
+    "external_link": "Lien externe"
   },
   "lightbox": {
     "next": "Prochaine",
@@ -96,5 +99,10 @@
   },
   "hovertooltip": {
     "alticon": "Symbol de l'élément sélectionné"
+  },
+  "dataTable": {
+    "icon": "ICÔNE",
+    "zoom": "ZOOM",
+    "exportBtn": "Exporter"
   }
 }
