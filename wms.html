@@ -9,7 +9,7 @@
         text-align: left;
         font-weight: bold;
         font-size: 15px;
-      }</style><script src="cgpv-main.js"></script></head><body><div class="header-table"><table><tbody><tr><td><img class="header-logo" alt="logo" src="./img/Logo.png"/></td><td class="header-title"><h1><strong>WMS Layers</strong></h1></td></tr></tbody></table><table><tbody><tr><td><a href="./index.html">Main</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./type-of-layers.html">Type Of Layers</a><br/></td></tr><tr><td><p>This page is used to showcase how the viewer may show WMS layer types</p></td></tr><tr><td><a href="#HLYR1">1. Many WMS Layers</a><br/><a href="#HLYR2">2. All Styles of a WMS Layer</a><br/><a href="#HLYR3">3. Choose from a list of styles</a><br/><a href="#HLYR4">4. Automatic group creation from metadata information</a><br/></td></tr></tbody></table></div><div class="map-title-holder"><h4 id="HLYR1">1. Many WMS Layers</h4>&nbsp;<h5 id="HLYR1-state">(undefined)</h5><a class="ref-link" href="#top">Top</a></div><button class="test-refresh-WMS-btn">Test Refresh WMS</button><div id="LYR1" class="llwp-map" triggerreadycallback="true" data-lang="en" data-config="{
+      }</style><script src="cgpv-main.js"></script></head><body><div class="header-table"><table><tbody><tr><td><img class="header-logo" alt="logo" src="./img/Logo.png"/></td><td class="header-title"><h1><strong>WMS Layers</strong></h1></td></tr></tbody></table><table><tbody><tr><td><a href="./index.html">Main</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./type-of-layers.html">Type Of Layers</a><br/></td></tr><tr><td><p>This page is used to showcase how the viewer may show WMS layer types</p></td></tr><tr><td><a href="#HLYR1">1. Many WMS Layers</a><br/><a href="#HLYR2">2. All Styles of a WMS Layer</a><br/><a href="#HLYR3">3. Choose from a list of styles</a><br/><a href="#HLYR4">4. Automatic group creation from metadata information</a><br/></td></tr></tbody></table></div><div class="map-title-holder"><h4 id="HLYR1">1. Many WMS Layers</h4><a class="ref-link" href="#top">Top</a></div><button class="test-refresh-WMS-btn">Test Refresh WMS</button><div id="LYR1" class="llwp-map" triggerreadycallback="true" data-lang="en" data-config="{
             'map': {
               'interaction': 'dynamic',
               'viewSettings': {
@@ -95,7 +95,7 @@
             'corePackages': [],
             'theme': 'dark',
             'suportedLanguages': ['en']
-          }"></div><button type="button" class="collapsible">Visibility and filters</button><pre style="height: 20pc; overflow-y: scroll" id="layer1-buttons-pre" class="panel"></pre><button class="collapsible">Get Legend</button><pre style="height: 20pc; overflow-y: scroll" id="LegendsId1-table-pre" class="panel"></pre><button type="button" class="collapsible">Get Feature Info</button><pre style="height: 20pc; overflow-y: scroll" id="ResultSetId1" class="panel">Click on feature on the map</pre><hr/><p>This map has a wms layer added from configuration.</p><button type="button" class="collapsible">Configuration Snippet</button><pre id="LYR1CS" class="panel"></pre><hr/><button type="button" class="collapsible">Code Snippet</button><pre id="codeSnippet" class="panel"></pre><div class="map-title-holder"><h4 id="HLYR2">2. All Styles of a WMS Layer</h4>&nbsp;<h5 id="HLYR2-state">(undefined)</h5><a class="ref-link" href="#top">Top</a></div><div id="LYR2" class="llwp-map" data-lang="en" data-config="{
+          }"></div><div id="HLYR1-state"></div><button type="button" class="collapsible">Visibility and filters</button><pre style="height: 20pc; overflow-y: scroll" id="layer1-buttons-pre" class="panel"></pre><button class="collapsible">Get Legend</button><pre style="height: 20pc; overflow-y: scroll" id="LegendsId1-table-pre" class="panel"></pre><button type="button" class="collapsible">Get Feature Info</button><pre style="height: 20pc; overflow-y: scroll" id="ResultSetId1" class="panel">Click on feature on the map</pre><hr/><p>This map has a wms layer added from configuration.</p><button type="button" class="collapsible">Configuration Snippet</button><pre id="LYR1CS" class="panel"></pre><hr/><button type="button" class="collapsible">Code Snippet</button><pre id="codeSnippet" class="panel"></pre><div class="map-title-holder"><h4 id="HLYR2">2. All Styles of a WMS Layer</h4>&nbsp;<h5 id="HLYR2-state">(undefined)</h5><a class="ref-link" href="#top">Top</a></div><div id="LYR2" class="llwp-map" data-lang="en" data-config="{
       'map': {
         'interaction': 'dynamic',
         'viewSettings': {
@@ -367,18 +367,6 @@
             'LYR1/$FeatureInfoLayerSet$'
           );
 
-          const LegendsLayerSet1 = cgpv.api.getLegendsLayerSet('LYR1');
-          cgpv.api.event.on(
-            cgpv.api.eventNames.GET_LEGENDS.LEGENDS_LAYERSET_UPDATED,
-            (payload) => {
-              const { resultSets } = payload;
-              displayLegend('LegendsId1', resultSets);
-            },
-            'LYR1/$LegendsLayerSet$'
-          );
-          // The GET_LEGENDS.TRIGGER event must be triggered after the GET_LEGENDS.LEGENDS_LAYERSET_UPDATED listener is created
-          cgpv.api.event.emit({ handlerName: 'LYR1/$LegendsLayerSet$', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
-
           // ========================================================================================================================
           // Test a refresh WMS from projection change
           var testRefreshBtn = document.getElementsByClassName('test-refresh-WMS-btn')[0];
@@ -477,9 +465,56 @@
         }
       });
 
+          console.log('Begin monitoring');
+          const LegendsLayerSet1 = cgpv.api.getLegendsLayerSet('LYR1');
+          cgpv.api.event.on(
+            cgpv.api.eventNames.GET_LEGENDS.LEGENDS_LAYERSET_UPDATED,
+            (payload) => {
+              const { resultSets } = payload;
+              displayLegend('LegendsId1', resultSets);
+
+              const displayField1 = document.getElementById('HLYR1-state');
+              if (resultSets) {
+                const oldData = document.getElementById(`HLYR1-state-data`);
+                if (oldData) oldData.parentNode.removeChild(oldData);
+                const data = document.createElement('div');
+                data.id = `HLYR1-state-data`;
+                displayField1.appendChild(data);
+
+                Object.keys(resultSets).forEach((key) => {
+                  const addToTable = (field, value, table) => {
+                    const tableRow = document.createElement('tr');
+                    table.appendChild(tableRow);
+                    let tableData = document.createElement('td');
+                    tableData.style = 'width:50%';
+                    tableData.innerText = field
+                    tableRow.appendChild(tableData);
+                    tableData = document.createElement('td');
+                    tableData.style = 'width:50%';
+                    tableData.innerText = value;
+                    tableRow.appendChild(tableData);
+                  }
+                  const h4 = document.createElement('h4');
+                  h4.innerText = key;
+                  data.appendChild(h4);
+                  const table = document.createElement('table');
+                  table.border = '1';
+                  table.style = 'width:50%';
+                  data.appendChild(table);
+                  addToTable('Layer Name', resultSets[key].layerName?.en, table);
+                  addToTable('Layer Status', resultSets[key].layerStatus, table);
+                  addToTable('Layer Phase', resultSets[key].layerPhase, table);
+               });
+              }
+            },
+            'LYR1/$LegendsLayerSet$'
+          );
+          // The GET_LEGENDS.TRIGGER event must be triggered after the GET_LEGENDS.LEGENDS_LAYERSET_UPDATED listener is created
+          cgpv.api.event.emit({ handlerName: 'LYR1/$LegendsLayerSet$', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
+
           // ========================================================================================================================
           // Display layer state
-          window.setInterval(() => {
+          /* window.setInterval(() => {
             const displayField1 = document.getElementById('HLYR1-state');
             const geoviewLayers = cgpv.api.maps?.LYR1?.layer?.geoviewLayers;
             if (geoviewLayers) {
@@ -493,6 +528,7 @@
               displayField1.textContent = output ? `${output.slice(0, -2)})` : '(undefined)';
             } else displayField1.textContent = '(undefined)';
           }, 250)
+          */
 
           window.setInterval(() => {
             const displayField2 = document.getElementById('HLYR2-state');

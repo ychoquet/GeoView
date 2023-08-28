@@ -36,6 +36,8 @@
   "appbar": {
     "export": "Export",
     "geolocator": "Geolocator",
+    "notifications": "Notifications",
+    "no_notifications_available": "No notifications available",
     "fullscreen": "Full Screen",
     "help": "Help",
     "layers": "Layers",
@@ -103,6 +105,8 @@
   "dataTable": {
     "icon": "ICON",
     "zoom": "ZOOM",
-    "exportBtn": "Export"
+    "exportBtn": "Export",
+    "jsonExportBtn": "Download GeoJSON",
+    "downloadAsCSV": "Download as CSV"
   }
 }
