@@ -253,7 +253,7 @@
         const { footerTabs: ft1 } = api.maps[mapIdOne];
 
         const legendOne = api
-          .map(mapIdOne)
+          .maps[mapIdOne]
           .legend.createLegend({ layerIds: ['UC1-Layer1', 'UC1-Layer2', 'UC1-Layer3', 'UC1-Layer4', 'UC1-Layer5'] });
 
         // create new tab and add the LegendComponent to the footer tab
