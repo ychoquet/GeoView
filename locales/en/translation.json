@@ -57,7 +57,13 @@
   "details": {
     "zoom_to": "Zoom to feature",
     "select": "Highlight feature on map",
-    "external_link": "External Link"
+    "external_link": "External Link",
+    "mainDescription": "In order to start, select any visible layer on the map, if you do not see any layers on the map, please ensure to select them in the legend section",
+    "detailsView": "Details View",
+    "selectVisbleLayer": "Select any visible layer on the map to get started",
+    "availableLayers": "Available Layers",
+    "selectedFeature": "Selected Feature"
+
   },
   "lightbox": {
     "next": "Next",
@@ -88,6 +94,10 @@
       "notfound": "The sublayer __param__ of the GeoView layer __param__ does not exist on the server",
       "createtwice": "Can not execute twice the createGeoViewRasterLayers method for the map __param__",
       "usedtwice": "Duplicate use of geoview layer identifier [__param__] on map __param__"
+    },
+    "schema": {
+      "notFound": "A schema error was found, check the console to see what is wrong.",
+      "wrongPath": "Cannot find schema ([__param__])"
     }
   },
   "exportModal": {

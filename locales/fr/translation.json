@@ -57,7 +57,12 @@
   "details": {
     "zoom_to": "Zoom à l'élément",
     "select": "Sélectionner l'élément sur la carte",
-    "external_link": "Lien externe"
+    "external_link": "Lien externe",
+    "mainDescription": "Pour commencer, sélectionnez n'importe quelle couche visible sur la carte. Si vous ne voyez aucune couche sur la carte, assurez-vous de les sélectionner dans la section Légende.",
+    "detailsView": "Vue détaillée",
+    "selectVisbleLayer": "Sélectionnez n'importe quelle couche visible sur la carte pour commencer",
+    "availableLayers": "Couche disponibles",
+    "selectedFeature": "Fonctionnalité Item"
   },
   "lightbox": {
     "next": "Prochaine",
@@ -88,6 +93,10 @@
       "notfound": "La sous couche __param__ de la couche GeoView __param__ n'existe pas sur le sereur",
       "createtwice": "On ne peut exécuter deux fois la méthode createGeoViewRasterLayers pour la carte __param__",
       "usedtwice": "Utilisation en double de l'identifiant de couche geoview [__param__] sur la carte __param__"
+    },
+    "schema": {
+      "notFound": "Une erreur de schéma a été trouvée, vérifiez la console pour voir ce qui ne va pas.",
+      "wrongPath": "Impossible de trouver le schéma ([__param__])"
     }
   },
   "exportModal": {
