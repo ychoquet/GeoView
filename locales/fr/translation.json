@@ -52,7 +52,11 @@
     "expand_legend": "Développer la légende",
     "toggle_cluster": "Basculer le groupement",
     "toggle_opacity": "Basculer le Opacité",
-    "zoom_to": "Zoom sur la Couche"
+    "zoom_to": "Zoom sur la Couche",
+    "overview_title": "Legend Overview",
+    "add_layer": "Add Layer",
+    "selected_legend": "Selected Legend",
+    "sort_layers": "Sort Layers"
   },
   "details": {
     "zoom_to": "Zoom à l'élément",
@@ -62,7 +66,14 @@
     "detailsView": "Vue détaillée",
     "selectVisbleLayer": "Sélectionnez n'importe quelle couche visible sur la carte pour commencer",
     "availableLayers": "Couche disponibles",
-    "selectedFeature": "Fonctionnalité Item"
+    "selectedFeature": "Fonctionnalité Item",
+    "feature": "item",
+    "clickOnMap": "Cliquer sur la carte",
+    "nextFeatureBtn": "Item suivant",
+    "previousFeatureBtn": "Item précédent",
+    "clearAllfeatures": "Déselctionner tout les items",
+    "highlightFeaturesOnMap": "Déselctionner tout les items",
+    "keepFeatureSelected": "Garder l'élément sélectionné"
   },
   "lightbox": {
     "next": "Prochaine",
