@@ -571,8 +571,8 @@
       cgpv.api.event.on(
         cgpv.api.eventNames.GET_FEATURE_INFO.ALL_QUERIES_DONE,
         (payload) => {
-          const { layerSetId, resultSets } = payload;
-          createInfoTable('LYR1', 'ResultSetId1', resultSets);
+          const { layerSetId, resultSets, queryType } = payload;
+          createInfoTable('LYR1', 'ResultSetId1', resultSets, queryType);
         },
         'LYR1/FeatureInfoLayerSet'
       );
@@ -591,8 +591,8 @@
       cgpv.api.event.on(
         cgpv.api.eventNames.GET_FEATURE_INFO.ALL_QUERIES_DONE,
         (payload) => {
-          const { layerSetId, resultSets } = payload;
-          createInfoTable('LYR2', 'ResultSetId2', resultSets);
+          const { layerSetId, resultSets, queryType } = payload;
+          createInfoTable('LYR2', 'ResultSetId2', resultSets, queryType);
         },
         'LYR2/FeatureInfoLayerSet'
       );
@@ -611,8 +611,8 @@
       cgpv.api.event.on(
         cgpv.api.eventNames.GET_FEATURE_INFO.ALL_QUERIES_DONE,
         (payload) => {
-          const { layerSetId, resultSets } = payload;
-          createInfoTable('LYR3', 'ResultSetId3', resultSets);
+          const { layerSetId, resultSets, queryType } = payload;
+          createInfoTable('LYR3', 'ResultSetId3', resultSets, queryType);
         },
         'LYR3/FeatureInfoLayerSet'
       );

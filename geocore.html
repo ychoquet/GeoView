@@ -100,8 +100,8 @@
       cgpv.api.event.on(
         cgpv.api.eventNames.GET_FEATURE_INFO.ALL_QUERIES_DONE,
         (payload) => {
-          const { layerSetId, resultSets } = payload;
-          createInfoTable('LYR1', 'ResultSetId1', resultSets);
+          const { layerSetId, resultSets, queryType } = payload;
+          createInfoTable('LYR1', 'ResultSetId1', resultSets, queryType);
         },
         'LYR1/FeatureInfoLayerSet'
       );
