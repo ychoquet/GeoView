@@ -56,17 +56,18 @@
     "overview_title": "Legend Overview",
     "add_layer": "Add Layer",
     "selected_legend": "Selected Legend",
-    "sort_layers": "Sort Layers"
+    "sort_layers": "Sort Layers",
+    "selected_Layers": "An overview of currrently selected layers",
+    "re-arrange": "re-arrange",
+    "categories_title" : "Categories"
   },
   "details": {
     "zoom_to": "Zoom to feature",
     "select": "Highlight feature on map",
     "external_link": "External Link",
-    "mainDescription": "In order to start, select any visible layer on the map, if you do not see any layers on the map, please ensure to select them in the legend section",
     "detailsView": "Details View",
     "selectVisbleLayer": "Select any visible layer on the map to get started",
     "availableLayers": "Available Layers",
-    "selectedFeature": "Selected Feature",
     "feature": "feature",
     "clickOnMap": "Click on map",
     "nextFeatureBtn": "Next feature",
@@ -80,11 +81,6 @@
     "previous": "Previous",
     "close": "Close",
     "download": "Download"
-  },
-  "datagrid": {
-    "exportJson": "Download GeoJSON",
-    "filterMap": "Filter Map",
-    "stopFilterMap": "Stop Map Filter"
   },
   "keyboardnav": {
     "start": "Skip after map element",
@@ -129,6 +125,10 @@
     "jsonExportBtn": "Download GeoJSON",
     "downloadAsCSV": "Download as CSV",
     "filterMap": "Filter Map",
-    "stopFilterMap": "Stop Filter Map"
+    "stopFilterMap": "Stop Filter Map",
+    "leftPanelHeading": "Available Categories",
+    "rightPanelHeading": "Selected Category",
+    "rowsSelected": "{rowsSelected} of {totalRows} row(s) selected",
+    "rowsFiltered": "{rowsFiltered} of {totalRows} row(s) filtered"
   }
 }
