@@ -421,8 +421,6 @@
         },
         'LYR1/LegendsLayerSet'
       );
-      // The GET_LEGENDS.TRIGGER event must be triggered after the GET_LEGENDS.LEGENDS_LAYERSET_UPDATED listener is created
-      cgpv.api.event.emit({ handlerName: 'LYR1/LegendsLayerSet', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
 
       // ========================================================================================================================
       // Test a refresh WMS from projection change
@@ -455,8 +453,6 @@
         },
         'LYR2/LegendsLayerSet'
       );
-      // The GET_LEGENDS.TRIGGER event must be triggered after the GET_LEGENDS.LEGENDS_LAYERSET_UPDATED listener is created
-      cgpv.api.event.emit({ handlerName: 'LYR2/LegendsLayerSet', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
 
       listenToLegendLayerSetChanges('HLYR2-state', 'LYR2/LegendsLayerSet');
 
@@ -480,8 +476,6 @@
         },
         'LYR3/LegendsLayerSet'
       );
-      // The GET_LEGENDS.TRIGGER event must be triggered after the GET_LEGENDS.LEGENDS_LAYERSET_UPDATED listener is created
-      cgpv.api.event.emit({ handlerName: 'LYR3/LegendsLayerSet', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
 
       listenToLegendLayerSetChanges('HLYR3-state', 'LYR3/LegendsLayerSet');
 
@@ -495,8 +489,6 @@
         },
         'LYR4/LegendsLayerSet'
       );
-      // The GET_LEGENDS.TRIGGER event must be triggered after the GET_LEGENDS.LEGENDS_LAYERSET_UPDATED listener is created
-      cgpv.api.event.emit({ handlerName: 'LYR4/LegendsLayerSet', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
 
       listenToLegendLayerSetChanges('HLYR4-state', 'LYR4/LegendsLayerSet');
 

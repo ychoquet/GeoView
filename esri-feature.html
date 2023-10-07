@@ -149,9 +149,6 @@
           createTableOfFilter('LYR1');
           createTableOfFilter('LYR2');
           createTableOfFilter('LYR3');
-          cgpv.api.event.emit({ handlerName: 'LYR1/LegendsLayerSet', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
-          cgpv.api.event.emit({ handlerName: 'LYR2/LegendsLayerSet', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
-          cgpv.api.event.emit({ handlerName: 'LYR3/LegendsLayerSet', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
 
           const field2 = cgpv.api.maps.LYR2.layer.geoviewLayers['historical-flood'].layerTemporalDimension['historical-flood/0'].field;
           const LYR2_FILTERS = [`${field2} >= date '01/01/2018 05:00:00' and ${field2} <= date '12/31/2019 19:00:00-05:00'`,

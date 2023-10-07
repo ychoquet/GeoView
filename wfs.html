@@ -100,12 +100,10 @@
 
         if (mapId === 'LYR1') {
           createTableOfFilter('LYR1');
-          cgpv.api.event.emit({ handlerName: 'LYR1/LegendsLayerSet', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
         }
 
         if (mapId === 'LYR2') {
           createTableOfFilter('LYR2');
-          cgpv.api.event.emit({ handlerName: 'LYR2/LegendsLayerSet', event: cgpv.api.eventNames.GET_LEGENDS.TRIGGER });
         }
       });
 
