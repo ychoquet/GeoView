@@ -2,7 +2,10 @@
   "general": {
     "close": "Close",
     "open": "Open",
-    "layers": "Layers"
+    "layers": "Layers",
+    "add": "Add",
+    "remove": "Remove",
+    "name": "Name"
   },
   "mapnav": {
     "arianavbar": "vertical button group for map navigation",
@@ -61,7 +64,7 @@
     "sort_layers": "Sort Layers",
     "selected_Layers": "An overview of currrently selected layers",
     "re-arrange": "re-arrange",
-    "categories_title" : "Categories",
+    "categories_title": "Categories",
     "items_available": "items available"
   },
   "details": {
@@ -70,7 +73,7 @@
     "external_link": "External Link",
     "detailsView": "Details View",
     "selectVisbleLayer": "Select any visible layer on the map to get started",
-    "availableLayers": "Available Layers",
+    "availableLayers": "Layers",
     "feature": "feature",
     "clickOnMap": "Click on map",
     "nextFeatureBtn": "Next feature",
@@ -129,10 +132,13 @@
     "downloadAsCSV": "Download as CSV",
     "filterMap": "Filter Map",
     "stopFilterMap": "Stop Filter Map",
-    "leftPanelHeading": "Available Categories",
+    "leftPanelHeading": "Layers",
     "rowsSelected": "{rowsSelected} of {totalRows} row(s) selected",
     "rowsFiltered": "{rowsFiltered} of {totalRows} row(s) filtered",
     "enlargeBtn": "Enlarge",
-    "reduceBtn": "Reduce"
+    "reduceBtn": "Reduce",
+    "features": "feature(s)",
+    "featureFiltered": "features filtered",
+    "images": "Images"
   }
 }
