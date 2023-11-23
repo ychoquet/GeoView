@@ -25,7 +25,6 @@ import {
   TypeLayerGroupEntryConfig,
   TypeListOfLayerEntryConfig,
   TypeListOfLocalizedLanguages,
-  TypeStyleConfig,
 } from '@/geo/map/map-schema-types';
 import { GeoJSON, layerConfigIsGeoJSON } from '@/geo/layer/geoview-layers/vector/geojson';
 import { GeoPackage, layerConfigIsGeoPackage } from '@/geo/layer/geoview-layers/vector/geopackage';
