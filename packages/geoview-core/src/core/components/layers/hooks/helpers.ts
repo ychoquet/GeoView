@@ -62,6 +62,7 @@ export function useLegendHelpers() {
     ];
     const legendLayers: TypeLegendLayer[] = [
       {
+        bounds: undefined,
         layerId: 'testLayerId',
         layerPath: 'testLayerPath',
         layerName: 'TEST--TestLayer1',
@@ -74,6 +75,7 @@ export function useLegendHelpers() {
         items: layerItems,
       },
       {
+        bounds: undefined,
         layerId: 'geojsonLYR5',
         layerPath: 'geojsonLYR5',
         layerName: 'TEST--Layer with groups',
@@ -86,6 +88,7 @@ export function useLegendHelpers() {
         items: [],
       },
       {
+        bounds: undefined,
         layerId: 'chrisLayr1',
         layerPath: 'Chris Sample Parent1',
         layerName: 'TEST--chrisparentlayer1',
@@ -96,6 +99,7 @@ export function useLegendHelpers() {
         querySent: true,
         children: [
           {
+            bounds: undefined,
             layerId: 'chrisChildLayer1',
             layerPath: 'ChrisSampleC3',
             layerName: 'TEST--chrisparentchild1',
@@ -106,6 +110,7 @@ export function useLegendHelpers() {
             querySent: true,
             children: [
               {
+                bounds: undefined,
                 layerId: 'chrisGrandChild1',
                 layerPath: 'Gran ChildChidl2',
                 layerName: 'TEST--chris parent child2',
@@ -118,6 +123,7 @@ export function useLegendHelpers() {
                 items: layerItems,
               },
               {
+                bounds: undefined,
                 layerId: 'chrisGrandChild5',
                 layerPath: 'Gran ChildChidl555',
                 layerName: 'TEST--chris parent child25555',
@@ -130,6 +136,7 @@ export function useLegendHelpers() {
                 items: layerItems,
               },
               {
+                bounds: undefined,
                 layerId: 'chrisGrandChild2',
                 layerPath: 'Grand Child Chidl3',
                 layerName: 'TEST--chris parent child3',
@@ -145,6 +152,7 @@ export function useLegendHelpers() {
             items: [],
           },
           {
+            bounds: undefined,
             layerId: 'chrisChild2',
             layerPath: 'Chris Sample Chidl2',
             layerName: 'TEST--chirslyerss',
@@ -157,6 +165,7 @@ export function useLegendHelpers() {
             items: layerItems,
           },
           {
+            bounds: undefined,
             layerId: 'chrisChild3',
             layerPath: 'Chris Sample Chidl3',
             layerName: 'TEST--chris-child32edd',
