@@ -1443,9 +1443,7 @@ export class GeoviewRenderer {
     layerEntryConfig: TypeVectorTileLayerEntryConfig | TypeVectorLayerEntryConfig
   ): TypeStyleConfig | undefined {
     if (layerEntryConfig.style === undefined) layerEntryConfig.style = {};
-    const styleId = `${this.mapId}/${Layer.getLayerPath(layerEntryConfig)}`;
-    let label = getLocalizedValue(layerEntryConfig.layerName, this.mapId);
-    label = label !== undefined ? label : styleId;
+    const label = getLocalizedValue(layerEntryConfig.layerName, this.mapId) as string;
     if (geometryType === 'Point') {
       const settings: TypeSimpleSymbolVectorConfig = {
         type: 'simpleSymbol',
@@ -1457,7 +1455,7 @@ export class GeoviewRenderer {
         },
         symbol: 'circle',
       };
-      const styleSettings: TypeSimpleStyleConfig = { styleId, styleType: 'simple', label, settings };
+      const styleSettings: TypeSimpleStyleConfig = { styleType: 'simple', label, settings };
       layerEntryConfig.style[geometryType] = styleSettings;
       return layerEntryConfig.style;
     }
@@ -1466,7 +1464,7 @@ export class GeoviewRenderer {
         type: 'lineString',
         stroke: { color: layerEntryConfig.source?.cluster?.settings?.stroke?.color || this.getDefaultColorAndIncrementIndex(1) },
       };
-      const styleSettings: TypeSimpleStyleConfig = { styleId, styleType: 'simple', label, settings };
+      const styleSettings: TypeSimpleStyleConfig = { styleType: 'simple', label, settings };
       layerEntryConfig.style[geometryType] = styleSettings;
       return layerEntryConfig.style;
     }
@@ -1477,7 +1475,7 @@ export class GeoviewRenderer {
         stroke: { color: layerEntryConfig.source?.cluster?.settings?.stroke?.color || this.getDefaultColorAndIncrementIndex(1) },
         fillStyle: 'solid',
       };
-      const styleSettings: TypeSimpleStyleConfig = { styleId, styleType: 'simple', label, settings };
+      const styleSettings: TypeSimpleStyleConfig = { styleType: 'simple', label, settings };
       layerEntryConfig.style[geometryType] = styleSettings;
       return layerEntryConfig.style;
     }

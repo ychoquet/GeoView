@@ -190,7 +190,7 @@ export function LegendItem(props: TypeLegendItemProps): JSX.Element {
   const [WMSStyles, setWMSStyles] = useState<TypeWmsLegendStyle[]>([]);
   const [currentWMSStyle, setCurrentWMSStyle] = useState<string>();
   const [iconType, setIconType] = useState<string | null>(null);
-  const [iconImage, setIconImg] = useState<string | null>(null);
+  const [iconImage, setIconImage] = useState<string | null>(null);
   const [, setIconImageStacked] = useState<string | null>(null);
   const [iconList, setIconList] = useState<string[] | null>(null);
   const [labelList, setLabelList] = useState<string[] | null>(null);
@@ -228,7 +228,7 @@ export function LegendItem(props: TypeLegendItemProps): JSX.Element {
   const getLegendDetails = (layerLegend: TypeLegend) => {
     const { geoviewLayerId } = geoviewLayerInstance;
     if (layerLegend) {
-      if (layerLegend.legend === null) setIconImg('no data');
+      if (layerLegend.legend === null) setIconImage('no data');
       // WMS layers just return a string and get styles
       if (isWmsLegend(layerLegend) || isImageStaticLegend(layerLegend)) {
         if (isWmsLegend(layerLegend) && layerLegend.styles) {
@@ -236,7 +236,7 @@ export function LegendItem(props: TypeLegendItemProps): JSX.Element {
           setCurrentWMSStyle(layerLegend.styles[0].name);
         }
         setIconType('simple');
-        if (layerLegend.legend) setIconImg(layerLegend.legend?.toDataURL());
+        if (layerLegend.legend) setIconImage(layerLegend.legend?.toDataURL());
       } else if (isVectorLegend(layerLegend) && layerLegend.legend) {
         Object.entries(layerLegend.legend).forEach(([, styleRepresentation]) => {
           if (styleRepresentation.arrayOfCanvas) {
@@ -244,7 +244,7 @@ export function LegendItem(props: TypeLegendItemProps): JSX.Element {
             const iconImageList = (styleRepresentation.arrayOfCanvas as HTMLCanvasElement[]).map((canvas) => {
               return canvas.toDataURL();
             });
-            if (iconImageList.length > 0) setIconImg(iconImageList[0]);
+            if (iconImageList.length > 0) setIconImage(iconImageList[0]);
             if (iconImageList.length > 1) setIconImageStacked(iconImageList[1]);
             if (styleRepresentation.defaultCanvas) iconImageList.push(styleRepresentation.defaultCanvas.toDataURL());
             if (styleRepresentation.clusterCanvas) iconImageList.push(styleRepresentation.clusterCanvas.toDataURL());
@@ -290,7 +290,7 @@ export function LegendItem(props: TypeLegendItemProps): JSX.Element {
             }
           } else {
             setIconType('simple');
-            setIconImg((styleRepresentation.defaultCanvas as HTMLCanvasElement).toDataURL());
+            setIconImage((styleRepresentation.defaultCanvas as HTMLCanvasElement).toDataURL());
           }
         });
       } else {

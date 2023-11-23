@@ -338,7 +338,7 @@ export function commonProcessLayerMetadata(
         if (geoviewEntryIsEsriDynamic(layerEntryConfig) || geoviewEntryIsEsriFeature(layerEntryConfig)) {
           if (!layerEntryConfig.style) {
             const renderer = Cast<EsriBaseRenderer>(response.data.drawingInfo?.renderer);
-            if (renderer) layerEntryConfig.style = getStyleFromEsriRenderer(this.mapId, layerEntryConfig, renderer);
+            if (renderer) layerEntryConfig.style = getStyleFromEsriRenderer(renderer);
           }
           this.processFeatureInfoConfig(
             response.data.capabilities as string,

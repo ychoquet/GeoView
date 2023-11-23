@@ -100,33 +100,34 @@ export class LegendEventProcessor extends AbstractEventProcessor {
   static propagateLegendToStore(mapId: string, layerPath: string, legendResultSetsEntry: TypeLegendResultSetsEntry) {
     const layerPathNodes = layerPath.split('/');
     const createNewLegendEntries = (layerPathBeginning: string, currentLevel: number, existingEntries: TypeLegendLayer[]) => {
+      if (layerPathNodes.length === currentLevel) return;
       const entryLayerPath = `${layerPathBeginning}/${layerPathNodes[currentLevel]}`;
       const layerConfig = api.maps[mapId].layer.registeredLayers[entryLayerPath];
       let entryIndex = existingEntries.findIndex((entry) => entry.layerPath === entryLayerPath);
       if (layerEntryIsGroupLayer(layerConfig)) {
         if (entryIndex === -1) {
-          existingEntries.push({
+          const legendLayerEntry: TypeLegendLayer = {
             layerId: layerConfig.layerId,
-            metadataAccessPath: getLocalizedValue(layerConfig.geoviewRootLayer?.metadataAccessPath, mapId),
             layerPath: entryLayerPath,
             layerName: legendResultSetsEntry.data?.layerName ? getLocalizedValue(legendResultSetsEntry.data.layerName, mapId)! : '',
             type: layerConfig.entryType as TypeGeoviewLayerType,
             isVisible: layerConfig.initialSettings?.visible ? layerConfig.initialSettings.visible : 'yes',
             opacity: layerConfig.initialSettings?.opacity ? layerConfig.initialSettings.opacity : 1,
-            items: [] as TypeLegendLayerItem[],
+            layerAttribution: api.maps[mapId].layer.geoviewLayers[layerPathNodes[0]].attributions,
+            metadataAccessPath: getLocalizedValue(layerConfig.geoviewRootLayer?.metadataAccessPath, mapId),
+            items: [] as TypeLegendLayerListItem[],
             children: [] as TypeLegendLayer[],
-          } as TypeLegendLayer);
+          };
+          existingEntries.push(legendLayerEntry);
           entryIndex = existingEntries.length - 1;
         } // else
         // We don't need to update it because basic information of a group node is not supposed to change after its creation.
         // Only the children may change and this is handled by the following call.
         createNewLegendEntries(entryLayerPath, currentLevel + 1, existingEntries[entryIndex].children);
       } else {
-        const newLegendLayer = {
+        const newLegendLayer: TypeLegendLayer = {
           layerId: layerPathNodes[currentLevel],
           layerPath: entryLayerPath,
-          layerAttribution: api.maps[mapId].layer.geoviewLayers[layerPathNodes[0]].attributions,
-          metadataAccessPath: getLocalizedValue(layerConfig.geoviewRootLayer?.metadataAccessPath, mapId),
           layerName: getLocalizedValue(legendResultSetsEntry.data?.layerName, mapId)!,
           layerStatus: legendResultSetsEntry.layerStatus,
           layerPhase: legendResultSetsEntry.layerPhase,
@@ -135,9 +136,12 @@ export class LegendEventProcessor extends AbstractEventProcessor {
           type: legendResultSetsEntry.data?.type,
           isVisible: layerConfig.initialSettings?.visible ? layerConfig.initialSettings.visible : 'yes',
           opacity: layerConfig.initialSettings?.opacity ? layerConfig.initialSettings.opacity : 1,
+          layerAttribution: api.maps[mapId].layer.geoviewLayers[layerPathNodes[0]].attributions,
+          metadataAccessPath: getLocalizedValue(api.maps[mapId].layer.geoviewLayers[layerPathNodes[0]].metadataAccessPath, mapId),
+          items: [] as TypeLegendLayerListItem[],
           children: [] as TypeLegendLayer[],
           icons: LegendEventProcessor.getLayerIconImage(mapId, layerPath, legendResultSetsEntry.data!),
-        } as TypeLegendLayer;
+        };
         newLegendLayer.items = [];
         newLegendLayer.icons?.forEach((legendLayerItem) => {
           if (legendLayerItem.iconList)

@@ -80,8 +80,8 @@ export interface TypeLegendLayer {
   metadataAccessPath?: string;
   order?: number; // useful for ordering layers
   layerName: string;
-  type: TypeGeoviewLayerType;
-  styleConfig?: TypeStyleConfig;
+  type?: TypeGeoviewLayerType;
+  styleConfig?: TypeStyleConfig | null;
   layerStatus?: TypeLayerStatus;
   layerPhase?: string;
   querySent?: boolean;

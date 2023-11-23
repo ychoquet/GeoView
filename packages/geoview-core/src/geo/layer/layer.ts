@@ -26,7 +26,6 @@ import {
   TypeLayerGroupEntryConfig,
   TypeListOfLayerEntryConfig,
   TypeListOfLocalizedLanguages,
-  TypeStyleConfig,
 } from '@/geo/map/map-schema-types';
 import { GeoJSON, layerConfigIsGeoJSON } from '@/geo/layer/geoview-layers/vector/geojson';
 import { GeoPackage, layerConfigIsGeoPackage } from '@/geo/layer/geoview-layers/vector/geopackage';
@@ -40,8 +39,6 @@ import { layerConfigIsXYZTiles, XYZTiles } from '@/geo/layer/geoview-layers/rast
 import { layerConfigIsVectorTiles, VectorTiles } from '@/geo/layer/geoview-layers/raster/vector-tiles';
 
 export type TypeRegisteredLayers = { [layerPath: string]: TypeLayerEntryConfig };
-
-export type TypeRegisteredLayerStyles = { [layerPath: string]: TypeStyleConfig };
 
 type TypeEventHandlerFunctions = {
   addLayer: (payload: PayloadBaseClass) => void;
@@ -57,9 +54,6 @@ type TypeEventHandlerFunctions = {
 export class Layer {
   /** Layers with valid configuration for this map. */
   registeredLayers: TypeRegisteredLayers = {};
-
-  /** Styles associated to layers of this map. */
-  registeredLayerStyles: TypeRegisteredLayerStyles = {};
 
   // variable used to store all added geoview layers
   geoviewLayers: { [geoviewLayerId: string]: AbstractGeoViewLayer } = {};

@@ -8,14 +8,7 @@ import {
   TypeFeatureInfoEntryPartial,
 } from 'geoview-core';
 import { ChartType, GeoChartDatasource } from 'geochart';
-import { queryRecordsByUrl, queryRelatedRecordsByUrl } from 'geoview-core/src/geo/layer/geoview-layers/esri-layer-common';
-import {
-  PluginGeoChartConfig,
-  GeoViewGeoChartConfig,
-  GeoViewGeoChartConfigLayer,
-  GeoViewGeoChartConfigLayerQueryOptions,
-  GeoViewGeoChartConfigLayerQueryOptionClause,
-} from './geochart-types';
+import { PluginGeoChartConfig, GeoViewGeoChartConfig, GeoViewGeoChartConfigLayer } from './geochart-types';
 
 /**
  * Finds, if any, the layer configuration in the plugin configuration that's associated with the layer id given.
