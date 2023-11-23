@@ -132,7 +132,7 @@ export class EsriFeature extends AbstractGeoViewVector {
   }
 
   /** ***************************************************************************************************************************
-   * This method perform specific validation that can only be done by the child of the AbstractGeoViewEsriLayer class.
+   * This method perform specific validation that can only be done by the child of the EsriFeature class.
    *
    * @param {number} esriIndex The index of the current layer in the metadata.
    *

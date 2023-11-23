@@ -278,7 +278,7 @@ export function useLegendHelpers(mapId: string) {
             }
             if (iconDetailsEntry.iconList?.length) iconDetailsEntry.iconImage = iconDetailsEntry.iconList[0].icon;
             if (iconDetailsEntry.iconList && iconDetailsEntry.iconList.length > 1)
-              iconDetailsEntry.iconImgStacked = iconDetailsEntry.iconList[1].icon;
+              iconDetailsEntry.iconImageStacked = iconDetailsEntry.iconList[1].icon;
             iconDetails.push(iconDetailsEntry);
           }
         });

@@ -142,7 +142,7 @@ export class EsriDynamic extends AbstractGeoViewRaster {
   }
 
   /** ***************************************************************************************************************************
-   * This method perform specific validation that can only be done by the child of the AbstractGeoViewEsriLayer class.
+   * This method perform specific validation that can only be done by the child of the EsriDynamic class.
    *
    * @param {number} esriIndex The index of the current layer in the metadata.
    *

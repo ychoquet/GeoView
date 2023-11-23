@@ -1,12 +1,21 @@
-import { TypeLayerEntryConfig, TypeJsonObject } from 'geoview-core';
-import { ChartType, GeoChartDatasource } from 'geochart';
 import {
+  TypeRegisteredLayers,
+  TypeLayerEntryConfig,
+  TypeJsonObject,
   TypeArrayOfLayerData,
   TypeLayerData,
   TypeFeatureInfoEntry,
   TypeFeatureInfoEntryPartial,
-} from 'geoview-core/src/api/events/payloads';
-import { PluginGeoChartConfig, GeoViewGeoChartConfig, GeoViewGeoChartConfigLayer } from './geochart-types';
+} from 'geoview-core';
+import { ChartType, GeoChartDatasource } from 'geochart';
+import { queryRecordsByUrl, queryRelatedRecordsByUrl } from 'geoview-core/src/geo/layer/geoview-layers/esri-layer-common';
+import {
+  PluginGeoChartConfig,
+  GeoViewGeoChartConfig,
+  GeoViewGeoChartConfigLayer,
+  GeoViewGeoChartConfigLayerQueryOptions,
+  GeoViewGeoChartConfigLayerQueryOptionClause,
+} from './geochart-types';
 
 /**
  * Finds, if any, the layer configuration in the plugin configuration that's associated with the layer id given.
@@ -80,7 +89,7 @@ const simplifyTypeFeatureInfoEntries = (entries: TypeFeatureInfoEntryPartial[]):
  */
 export const findLayerDataAndConfigFromQueryResults = (
   config: PluginGeoChartConfig<ChartType>,
-  registeredLayers: { [layerEntryConfigId: string]: TypeLayerEntryConfig },
+  registeredLayers: TypeRegisteredLayers,
   layerDataArray: TypeArrayOfLayerData
 ): [
   GeoViewGeoChartConfig<ChartType> | undefined,

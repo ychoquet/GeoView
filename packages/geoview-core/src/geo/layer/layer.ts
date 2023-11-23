@@ -26,6 +26,7 @@ import {
   TypeLayerGroupEntryConfig,
   TypeListOfLayerEntryConfig,
   TypeListOfLocalizedLanguages,
+  TypeStyleConfig,
 } from '@/geo/map/map-schema-types';
 import { GeoJSON, layerConfigIsGeoJSON } from '@/geo/layer/geoview-layers/vector/geojson';
 import { GeoPackage, layerConfigIsGeoPackage } from '@/geo/layer/geoview-layers/vector/geopackage';
@@ -37,6 +38,10 @@ import { layerConfigIsWFS, WFS } from '@/geo/layer/geoview-layers/vector/wfs';
 import { layerConfigIsOgcFeature, OgcFeature } from '@/geo/layer/geoview-layers/vector/ogc-feature';
 import { layerConfigIsXYZTiles, XYZTiles } from '@/geo/layer/geoview-layers/raster/xyz-tiles';
 import { layerConfigIsVectorTiles, VectorTiles } from '@/geo/layer/geoview-layers/raster/vector-tiles';
+
+export type TypeRegisteredLayers = { [layerPath: string]: TypeLayerEntryConfig };
+
+export type TypeRegisteredLayerStyles = { [layerPath: string]: TypeStyleConfig };
 
 type TypeEventHandlerFunctions = {
   addLayer: (payload: PayloadBaseClass) => void;
@@ -51,8 +56,10 @@ type TypeEventHandlerFunctions = {
  */
 export class Layer {
   /** Layers with valid configuration for this map. */
-  registeredLayers: { [layerEntryConfigId: string]: TypeLayerEntryConfig } = {};
-  // TODO: Refactor - Export the custom type written above as an official type
+  registeredLayers: TypeRegisteredLayers = {};
+
+  /** Styles associated to layers of this map. */
+  registeredLayerStyles: TypeRegisteredLayerStyles = {};
 
   // variable used to store all added geoview layers
   geoviewLayers: { [geoviewLayerId: string]: AbstractGeoViewLayer } = {};
@@ -66,7 +73,7 @@ export class Layer {
   /** used to reference the map id */
   private mapId: string;
 
-  /** used to keep a reference the Layer's event handler functions */
+  /** used to keep a reference to the Layer's event handler functions */
   private eventHandlerFunctions: TypeEventHandlerFunctions;
 
   /** used to keep a reference of highlighted layer */

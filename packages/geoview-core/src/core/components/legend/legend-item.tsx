@@ -191,7 +191,7 @@ export function LegendItem(props: TypeLegendItemProps): JSX.Element {
   const [currentWMSStyle, setCurrentWMSStyle] = useState<string>();
   const [iconType, setIconType] = useState<string | null>(null);
   const [iconImage, setIconImg] = useState<string | null>(null);
-  const [, setIconImgStacked] = useState<string | null>(null);
+  const [, setIconImageStacked] = useState<string | null>(null);
   const [iconList, setIconList] = useState<string[] | null>(null);
   const [labelList, setLabelList] = useState<string[] | null>(null);
   const [geometryLayerConfig, setLayerConfig] = useState<TypeLayerEntryConfig | null>(null);
@@ -245,7 +245,7 @@ export function LegendItem(props: TypeLegendItemProps): JSX.Element {
               return canvas.toDataURL();
             });
             if (iconImageList.length > 0) setIconImg(iconImageList[0]);
-            if (iconImageList.length > 1) setIconImgStacked(iconImageList[1]);
+            if (iconImageList.length > 1) setIconImageStacked(iconImageList[1]);
             if (styleRepresentation.defaultCanvas) iconImageList.push(styleRepresentation.defaultCanvas.toDataURL());
             if (styleRepresentation.clusterCanvas) iconImageList.push(styleRepresentation.clusterCanvas.toDataURL());
             setIconList(iconImageList);

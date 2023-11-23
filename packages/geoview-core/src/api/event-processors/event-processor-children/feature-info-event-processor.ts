@@ -1,33 +1,8 @@
-import { GeoViewStoreType } from '@/core/stores/geoview-store';
 import { AbstractEventProcessor } from '../abstract-event-processor';
-import { EVENT_NAMES } from '@/api/events/event-types';
-import {
-  TypeFeatureInfoResultSets,
-  TypeArrayOfLayerData,
-  payloadIsAllQueriesDone,
-  EventType,
-} from '@/api/events/payloads/get-feature-info-payload';
-import { api } from '@/app';
+import { TypeFeatureInfoResultSets, TypeArrayOfLayerData, EventType } from '@/api/events/payloads/get-feature-info-payload';
 import { getGeoViewStore } from '@/core/stores/stores-managers';
 
 export class FeatureInfoEventProcessor extends AbstractEventProcessor {
-  onInitialize(store: GeoViewStoreType) {
-    const { mapId } = store.getState();
-
-    api.event.on(
-      EVENT_NAMES.GET_FEATURE_INFO.ALL_QUERIES_DONE,
-      (allQueriesPayload) => {
-        if (payloadIsAllQueriesDone(allQueriesPayload)) {
-          store.setState({ featureInfoResultSets: allQueriesPayload.resultSets });
-        }
-      },
-      `${mapId}/FeatureInfoLayerSet`
-    );
-
-    // add to arr of subscriptions so it can be destroyed later
-    this.subscriptionArr.push();
-  }
-
   // **********************************************************
   // Static functions for Typescript files to set store values
   // **********************************************************

@@ -1,7 +1,5 @@
-import { GeoViewStoreType } from '@/core/stores/geoview-store';
 import { AbstractEventProcessor } from '../abstract-event-processor';
-import { EVENT_NAMES } from '@/api/events/event-types';
-import { payloadIsLegendsLayersetUpdated, TypeLegendResultSetsEntry } from '@/api/events/payloads';
+import { TypeLegendResultSetsEntry } from '@/api/events/payloads';
 import {
   isClassBreakStyleConfig,
   isImageStaticLegend,
@@ -19,26 +17,6 @@ import { TypeLegendLayer, TypeLegendLayerIcons, TypeLegendLayerItem, TypeLegendL
 import { api, getLocalizedValue } from '@/app';
 
 export class LegendEventProcessor extends AbstractEventProcessor {
-  onInitialize(store: GeoViewStoreType) {
-    const { mapId } = store.getState();
-
-    api.event.on(
-      EVENT_NAMES.GET_LEGENDS.LEGENDS_LAYERSET_UPDATED,
-      (layerUpdatedPayload) => {
-        if (payloadIsLegendsLayersetUpdated(layerUpdatedPayload)) {
-          const { layerPath, resultSets } = layerUpdatedPayload;
-          const storeResultSets = store.getState().legendResultSets;
-          storeResultSets[layerPath] = resultSets[layerPath];
-          store.setState({ legendResultSets: storeResultSets });
-          LegendEventProcessor.propagateLegendToStore(mapId, layerPath, resultSets[layerPath]);
-        }
-      },
-      `${mapId}/LegendsLayerSet`
-    );
-    // add to arr of subscriptions so it can be destroyed later
-    this.subscriptionArr.push();
-  }
-
   // **********************************************************
   // Static functions for Typescript files to set store values
   // **********************************************************
@@ -109,7 +87,7 @@ export class LegendEventProcessor extends AbstractEventProcessor {
             }
             if (iconDetailsEntry.iconList?.length) iconDetailsEntry.iconImage = iconDetailsEntry.iconList[0].icon;
             if (iconDetailsEntry.iconList && iconDetailsEntry.iconList.length > 1)
-              iconDetailsEntry.iconImgStacked = iconDetailsEntry.iconList[1].icon;
+              iconDetailsEntry.iconImageStacked = iconDetailsEntry.iconList[1].icon;
             iconDetails.push(iconDetailsEntry);
           }
         });

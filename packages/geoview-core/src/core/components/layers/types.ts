@@ -61,7 +61,7 @@ export type TypeLegendLayerItem = {
   iconType?: 'simple' | 'list';
   name?: string;
   iconImage?: string | null;
-  iconImgStacked?: string | null;
+  iconImageStacked?: string | null;
   iconList?: TypeLegendLayerListItem[];
 };
 

@@ -1027,14 +1027,14 @@ export class WMS extends AbstractGeoViewRaster {
   /** ***************************************************************************************************************************
    * Set the style to be used by the wms layer. This methode does nothing if the layer path can't be found.
    *
-   * @param {string} StyleId The style identifier that will be used.
+   * @param {string} wmsStyleId The style identifier that will be used.
    * @param {string | TypeLayerEntryConfig} layerPathOrConfig The layer path to the layer config or a layer config.
    */
-  setStyle(StyleId: string, layerPathOrConfig: string | TypeLayerEntryConfig) {
+  setWmsStyle(wmsStyleId: string, layerPathOrConfig: string | TypeLayerEntryConfig) {
     const layerConfig = Cast<TypeOgcWmsLayerEntryConfig | undefined | null>(
       typeof layerPathOrConfig === 'string' ? this.getLayerConfig(layerPathOrConfig) : layerPathOrConfig
     );
-    if (layerConfig?.olLayer) (layerConfig.olLayer as ImageLayer<ImageWMS>).getSource()?.updateParams({ STYLES: StyleId });
+    if (layerConfig?.olLayer) (layerConfig.olLayer as ImageLayer<ImageWMS>).getSource()?.updateParams({ STYLES: wmsStyleId });
   }
 
   /** ***************************************************************************************************************************

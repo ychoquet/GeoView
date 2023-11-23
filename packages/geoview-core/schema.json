@@ -235,9 +235,6 @@
       "additionalProperties": false,
       "type": "object",
       "properties": {
-        "styleId": {
-          "type": "string"
-        },
         "styleType": {
           "enum": ["simple"]
         },
@@ -254,9 +251,6 @@
       "additionalProperties": false,
       "type": "object",
       "properties": {
-        "styleId": {
-          "type": "string"
-        },
         "styleType": {
           "enum": ["uniqueValue"]
         },
@@ -317,9 +311,6 @@
       "additionalProperties": false,
       "type": "object",
       "properties": {
-        "styleId": {
-          "type": "string"
-        },
         "styleType": {
           "enum": ["classBreaks"]
         },
