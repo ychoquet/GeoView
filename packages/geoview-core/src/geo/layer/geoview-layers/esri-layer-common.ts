@@ -30,6 +30,11 @@ import {
   TypeFieldEntry,
 } from '@/api/events/payloads';
 
+type TypeCommonEsriDynamicOrFeature = (EsriDynamic | EsriFeature) & {
+  unregisterFromLayerSets(layerPath: string): void;
+  setAllLayerStatusToError(listOfLayerEntryConfig: TypeListOfLayerEntryConfig, errorMessage: string): void;
+};
+
 /** ***************************************************************************************************************************
  * This method reads the service metadata from the metadataAccessPath.
  *
@@ -42,7 +47,7 @@ export function commonGetServiceMetadata(this: EsriDynamic | EsriFeature, resolv
     getXMLHttpRequest(`${metadataUrl}?f=json`)
       .then((metadataString) => {
         if (metadataString === '{}') {
-          this.setAllLayerStatusToError(this.listOfLayerEntryConfig, 'Unable to read metadata');
+          (this as TypeCommonEsriDynamicOrFeature).setAllLayerStatusToError(this.listOfLayerEntryConfig, 'Unable to read metadata');
         } else {
           this.metadata = JSON.parse(metadataString) as TypeJsonObject;
           const { copyrightText } = this.metadata;
@@ -51,10 +56,10 @@ export function commonGetServiceMetadata(this: EsriDynamic | EsriFeature, resolv
         }
       })
       .catch((reason) => {
-        this.setAllLayerStatusToError(this.listOfLayerEntryConfig, 'Unable to read metadata');
+        (this as TypeCommonEsriDynamicOrFeature).setAllLayerStatusToError(this.listOfLayerEntryConfig, 'Unable to read metadata');
       });
   } else {
-    this.setAllLayerStatusToError(this.listOfLayerEntryConfig, 'Unable to read metadata');
+    (this as TypeCommonEsriDynamicOrFeature).setAllLayerStatusToError(this.listOfLayerEntryConfig, 'Unable to read metadata');
   }
 }
 
@@ -76,12 +81,12 @@ export function commonValidateListOfLayerEntryConfig(this: EsriDynamic | EsriFea
           layer: layerPath,
           consoleMessage: `Empty layer group (mapId:  ${this.mapId}, layerPath: ${layerPath})`,
         });
-        this.setLayerStatus('error', layerConfiguration);
+        this.setLayerStatus('error', layerPath);
         return;
       }
     }
 
-    this.setLayerStatus('loading', layerConfiguration);
+    this.setLayerStatus('loading', layerPath);
 
     let esriIndex = Number(layerConfiguration.layerId);
     if (Number.isNaN(esriIndex)) {
@@ -89,7 +94,7 @@ export function commonValidateListOfLayerEntryConfig(this: EsriDynamic | EsriFea
         layer: layerPath,
         consoleMessage: `ESRI layerId must be a number (mapId:  ${this.mapId}, layerPath: ${layerPath})`,
       });
-      this.setLayerStatus('error', layerConfiguration);
+      this.setLayerStatus('error', layerPath);
       return;
     }
 
@@ -102,7 +107,7 @@ export function commonValidateListOfLayerEntryConfig(this: EsriDynamic | EsriFea
         layer: layerPath,
         consoleMessage: `ESRI layerId not found (mapId:  ${this.mapId}, layerPath: ${layerPath})`,
       });
-      this.setLayerStatus('error', layerConfiguration);
+      this.setLayerStatus('error', layerPath);
       return;
     }
 
@@ -117,11 +122,11 @@ export function commonValidateListOfLayerEntryConfig(this: EsriDynamic | EsriFea
           fr: this.metadata!.layers[layerId as number].name as string,
         };
         newListOfLayerEntryConfig.push(subLayerEntryConfig);
-        api.maps[this.mapId].layer.registerLayerConfig(subLayerEntryConfig);
+        api.maps[this.mapId].layer.registerLayerConfig(Layer.getLayerPath(subLayerEntryConfig), subLayerEntryConfig);
       });
 
       if (this.registerToLayerSetListenerFunctions[Layer.getLayerPath(layerConfiguration)])
-        this.unregisterFromLayerSets(layerConfiguration as TypeBaseLayerEntryConfig);
+        (this as TypeCommonEsriDynamicOrFeature).unregisterFromLayerSets(layerPath);
       const switchToGroupLayer = Cast<TypeLayerGroupEntryConfig>(layerConfiguration);
       delete (layerConfiguration as TypeBaseLayerEntryConfig).layerStatus;
       switchToGroupLayer.entryType = 'group';
@@ -136,7 +141,7 @@ export function commonValidateListOfLayerEntryConfig(this: EsriDynamic | EsriFea
     }
 
     if (this.esriChildHasDetectedAnError(layerConfiguration, esriIndex)) {
-      this.setLayerStatus('error', layerConfiguration);
+      this.setLayerStatus('error', layerPath);
       return;
     }
 
