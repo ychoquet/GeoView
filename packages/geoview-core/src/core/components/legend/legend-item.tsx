@@ -29,7 +29,8 @@ import {
   BrowserNotSupportedIcon,
   Grid,
 } from '@/ui';
-import { api, payloadIsLegendInfo, NumberPayload, PayloadBaseClass, EsriDynamic, IconStack } from '@/app';
+import { api } from '@/app';
+import { Layer } from '../../../geo/layer/layer';
 import { LegendIconList } from './legend-icon-list';
 import {
   AbstractGeoViewLayer,
@@ -55,6 +56,9 @@ import {
 import { AbstractGeoViewVector } from '@/geo/layer/geoview-layers/vector/abstract-geoview-vector';
 import { disableScrolling } from '../../utils/utilities';
 import { WMSStyleItem } from './WMS-style-item';
+import { PayloadBaseClass, payloadIsLegendInfo, NumberPayload } from '@/api/events/payloads';
+import { EsriDynamic } from '@/geo/layer/geoview-layers/raster/esri-dynamic';
+import { IconStack } from '../icon-stack/icon-stack';
 
 const sxClasses = {
   expandableGroup: {
@@ -321,7 +325,7 @@ export function LegendItem(props: TypeLegendItemProps): JSX.Element {
     getLayerName();
     const isGroup = getGroupsDetails();
     if (!isGroup) {
-      setOpacity(geoviewLayerInstance.getOpacity(geoviewLayerInstance.listOfLayerEntryConfig[0]) ?? 1);
+      setOpacity(geoviewLayerInstance.getOpacity(Layer.getLayerPath(geoviewLayerInstance.listOfLayerEntryConfig[0])) ?? 1);
       const legendInfo = api.maps[mapId].legend.legendLayerSet.resultSets?.[path]?.data;
       if (legendInfo) {
         getLegendDetails(legendInfo);
@@ -356,13 +360,13 @@ export function LegendItem(props: TypeLegendItemProps): JSX.Element {
   useEffect(() => {
     if (layerConfigEntry) {
       if (isParentVisible && isChecked) {
-        geoviewLayerInstance.setVisible(true, layerConfigEntry);
+        geoviewLayerInstance.setVisible(true, Layer.getLayerPath(layerConfigEntry));
       } else {
-        geoviewLayerInstance.setVisible(false, layerConfigEntry);
+        geoviewLayerInstance.setVisible(false, Layer.getLayerPath(layerConfigEntry));
       }
     } else {
       // parent layer with no sub layers
-      geoviewLayerInstance.setVisible(isChecked, geoviewLayerInstance.listOfLayerEntryConfig[0]);
+      geoviewLayerInstance.setVisible(isChecked, Layer.getLayerPath(geoviewLayerInstance.listOfLayerEntryConfig[0]));
     }
   }, [isParentVisible, isChecked, layerConfigEntry, geoviewLayerInstance]);
 
@@ -431,7 +435,8 @@ export function LegendItem(props: TypeLegendItemProps): JSX.Element {
       geoviewLayerInstance.setOpacity((opacityValue as number) / 100, clusterLayerPath);
       geoviewLayerInstance.setOpacity((opacityValue as number) / 100, unclusterLayerPath);
     } else if (subLayerId) geoviewLayerInstance.setOpacity((opacityValue as number) / 100, subLayerId);
-    else geoviewLayerInstance.setOpacity((opacityValue as number) / 100, geoviewLayerInstance.listOfLayerEntryConfig[0]);
+    else
+      geoviewLayerInstance.setOpacity((opacityValue as number) / 100, Layer.getLayerPath(geoviewLayerInstance.listOfLayerEntryConfig[0]));
   };
 
   const handleClusterToggle = () => {
@@ -631,7 +636,7 @@ export function LegendItem(props: TypeLegendItemProps): JSX.Element {
                 iconLabels={labelList}
                 isParentVisible={isChecked}
                 toggleMapVisible={(sublayerConfig) => {
-                  (geoviewLayerInstance as AbstractGeoViewVector | EsriDynamic).applyViewFilter(sublayerConfig);
+                  (geoviewLayerInstance as AbstractGeoViewVector | EsriDynamic).applyViewFilter(Layer.getLayerPath(sublayerConfig));
                 }}
                 layerConfiguration={geometryLayerConfig as TypeVectorLayerEntryConfig}
                 geometryKey={layerGeometryKey!}

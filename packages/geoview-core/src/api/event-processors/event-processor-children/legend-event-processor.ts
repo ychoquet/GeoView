@@ -107,6 +107,7 @@ export class LegendEventProcessor extends AbstractEventProcessor {
       if (layerEntryIsGroupLayer(layerConfiguration)) {
         if (entryIndex === -1) {
           const legendLayerEntry: TypeLegendLayer = {
+            bounds: undefined,
             layerId: layerConfiguration.layerId,
             layerPath: entryLayerPath,
             layerName: legendResultSetsEntry.data?.layerName ? getLocalizedValue(legendResultSetsEntry.data.layerName, mapId)! : '',

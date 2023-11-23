@@ -590,7 +590,7 @@ export class WMS extends AbstractGeoViewRaster {
         this.layerMetadata[Layer.getLayerPath(layerConfiguration)] = layerCapabilities;
         if (layerCapabilities) {
           if (layerCapabilities.Attribution) this.attributions.push(layerCapabilities.Attribution.Title as string);
-          if (!layerEntryConfig.source.featureInfo) layerEntryConfig.source.featureInfo = { queryable: !!layerCapabilities.queryable };
+          if (!layerConfiguration.source.featureInfo) layerConfiguration.source.featureInfo = { queryable: !!layerCapabilities.queryable };
           // ! TODO: The solution implemented in the following lines is not right. scale and zoom are not the same things.
           // if (layerConfiguration.initialSettings?.minZoom === undefined && layerCapabilities.MinScaleDenominator !== undefined)
           //   layerConfiguration.initialSettings.minZoom = layerCapabilities.MinScaleDenominator as number;
