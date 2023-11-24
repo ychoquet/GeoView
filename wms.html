@@ -334,7 +334,7 @@
                   dropDownContent.appendChild(element);
                 });
                 dropDownContent.addEventListener('click', (e) => {
-                  cgpv.api.maps.LYR3.layer.geoviewLayers['wmsLYR3-Root'].setStyle(
+                  cgpv.api.maps.LYR3.layer.geoviewLayers['wmsLYR3-Root'].setWmsStyle(
                     dropDownContent.value,
                     'wmsLYR3-Root/landcover_2015_19classes'
                   );

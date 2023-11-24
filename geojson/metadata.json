@@ -18,7 +18,6 @@
       },
       "style": {
         "Polygon": {
-          "styleId": "uniqueValueId",
           "defaultLabel": "Other provinces",
           "styleType": "uniqueValue",
           "defaultSettings": {
