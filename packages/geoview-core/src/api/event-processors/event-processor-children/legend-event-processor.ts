@@ -125,7 +125,8 @@ export class LegendEventProcessor extends AbstractEventProcessor {
         // Only the children may change and this is handled by the following call.
         createNewLegendEntries(entryLayerPath, currentLevel + 1, existingEntries[entryIndex].children);
       } else {
-        const newLegendLayer: TypeLegendLayer = {
+        const newLegendLayer = {
+          bounds: undefined,
           layerId: layerPathNodes[currentLevel],
           layerPath: entryLayerPath,
           layerName: getLocalizedValue(legendResultSetsEntry.data?.layerName, mapId)!,
@@ -141,7 +142,13 @@ export class LegendEventProcessor extends AbstractEventProcessor {
           items: [] as TypeLegendLayerListItem[],
           children: [] as TypeLegendLayer[],
           icons: LegendEventProcessor.getLayerIconImage(mapId, layerPath, legendResultSetsEntry.data!),
-        };
+        } as TypeLegendLayer;
+
+        // TODO: find the best place to calculate layers item and assign https://github.com/Canadian-Geospatial-Platform/geoview/issues/1566
+        setTimeout(() => {
+          newLegendLayer.bounds = api.maps[mapId].layer.geoviewLayers[layerPathNodes[0]].calculateBounds(layerPath);
+        }, 1000);
+
         newLegendLayer.items = [];
         newLegendLayer.icons?.forEach((legendLayerItem) => {
           if (legendLayerItem.iconList)

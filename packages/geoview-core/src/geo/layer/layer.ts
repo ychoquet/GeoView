@@ -563,7 +563,9 @@ export class Layer {
     } else {
       Object.keys(this.registeredLayers).forEach((geoviewLayerPath) => {
         const otherOlLayer = this.registeredLayers?.[geoviewLayerPath].olLayer;
-        if (geoviewLayerPath !== layerPath) {
+
+        // check for otherOlLayer is undefined. It would be undefined if a layer status is error
+        if (geoviewLayerPath !== layerPath && otherOlLayer !== undefined) {
           otherOlLayer!.setOpacity((otherOlLayer!.getOpacity() || 1) * 0.25);
         } else this.registeredLayers[layerPath].olLayer!.setZIndex(999);
       });
@@ -599,7 +601,9 @@ export class Layer {
       } else {
         Object.keys(this.registeredLayers).forEach((geoviewLayerPath) => {
           const otherOlLayer = this.registeredLayers?.[geoviewLayerPath].olLayer;
-          if (geoviewLayerPath !== layerPath) {
+
+          // check for otherOlLayer is undefined. It would be undefined if a layer status is error
+          if (geoviewLayerPath !== layerPath && otherOlLayer !== undefined) {
             otherOlLayer!.setOpacity((otherOlLayer!.getOpacity() || 1) * 4);
           } else this.setLayerZIndices(this.geoviewLayers[geoviewLayerPath.split('/')[0]]);
         });
