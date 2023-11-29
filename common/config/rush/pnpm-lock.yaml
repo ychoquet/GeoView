@@ -23,19 +23,19 @@ importers:
       prettier: ^2.6.0
       typescript: ^4.5.5
     devDependencies:
-      '@babel/core': 7.23.5
-      '@babel/eslint-parser': 7.23.3_dywn7yr5apbhsrnjszowennw3e
-      '@typescript-eslint/eslint-plugin': 5.62.0_etgruktp74ampygres3wtgczjq
-      '@typescript-eslint/parser': 5.62.0_sjjl3gun7puonkp27uqtyjm5b4
-      eslint: 8.55.0
-      eslint-config-airbnb: 19.0.4_janxutlsgu7fdgbdzdfkvavqjq
-      eslint-config-prettier: 8.10.0_eslint@8.55.0
-      eslint-plugin-import: 2.29.0_ke4l3ydwwsbuvt4k6x536sjhce
-      eslint-plugin-jest: 26.9.0_yurnlh4je3rjg52w5m2xwu7vkq
-      eslint-plugin-jsx-a11y: 6.8.0_eslint@8.55.0
-      eslint-plugin-prettier: 4.2.1_zcdmy6mn7huga4c2k3nwqfp5ii
-      eslint-plugin-react: 7.33.2_eslint@8.55.0
-      eslint-plugin-react-hooks: 4.6.0_eslint@8.55.0
+      '@babel/core': 7.23.3
+      '@babel/eslint-parser': 7.23.3_xig2xi565kmngvyk3tjcu3rayi
+      '@typescript-eslint/eslint-plugin': 5.62.0_mnedyn4jnvusybp6vtysly27t4
+      '@typescript-eslint/parser': 5.62.0_tpmd5btwisapvfle77wdvjenui
+      eslint: 8.54.0
+      eslint-config-airbnb: 19.0.4_col47ebdyca3744buifmak4urq
+      eslint-config-prettier: 8.10.0_eslint@8.54.0
+      eslint-plugin-import: 2.29.0_yz4cpurkeqz3bobzoou4je5mpa
+      eslint-plugin-jest: 26.9.0_6ckfwd7j7qkrrkpcmfmvbbmd54
+      eslint-plugin-jsx-a11y: 6.8.0_eslint@8.54.0
+      eslint-plugin-prettier: 4.2.1_gpykmyejmlalemimawo4xcptki
+      eslint-plugin-react: 7.33.2_eslint@8.54.0
+      eslint-plugin-react-hooks: 4.6.0_eslint@8.54.0
       prettier: 2.8.8
       typescript: 4.9.5
 
@@ -65,10 +65,10 @@ importers:
     dependencies:
       geoview-core: link:../geoview-core
     devDependencies:
-      '@babel/core': 7.23.5
-      '@babel/eslint-parser': 7.23.3_dywn7yr5apbhsrnjszowennw3e
-      '@babel/runtime': 7.23.5
-      '@types/react': 18.2.41
+      '@babel/core': 7.23.3
+      '@babel/eslint-parser': 7.23.3_xig2xi565kmngvyk3tjcu3rayi
+      '@babel/runtime': 7.23.4
+      '@types/react': 18.2.39
       '@types/react-dom': 18.2.17
       '@typescript-eslint/eslint-plugin': 5.62.0_etgruktp74ampygres3wtgczjq
       '@typescript-eslint/parser': 5.62.0_sjjl3gun7puonkp27uqtyjm5b4
@@ -236,36 +236,36 @@ importers:
       react-i18next: 12.3.1_spyi3zqm3bqfobczid2f6jym6y
       react-test-renderer: 18.2.0_react@18.2.0
       sanitize-html: 2.11.0
-      sql.js: 1.9.0
-      yet-another-react-lightbox: 3.15.6_biqbaboplfbrettd7655fr4n2y
-      zustand: 4.4.7_aubhhyadwwrly2ms2jqnyk2qcu
+      sql.js: 1.8.0
+      yet-another-react-lightbox: 3.15.4_biqbaboplfbrettd7655fr4n2y
+      zustand: 4.4.7_d6xr7427ryrc3fdigbbbatktku
     devDependencies:
-      '@babel/cli': 7.23.4_@babel+core@7.23.5
-      '@babel/core': 7.23.5
-      '@babel/eslint-parser': 7.23.3_dywn7yr5apbhsrnjszowennw3e
-      '@babel/plugin-proposal-decorators': 7.23.5_@babel+core@7.23.5
-      '@babel/plugin-proposal-do-expressions': 7.23.3_@babel+core@7.23.5
-      '@babel/plugin-proposal-export-default-from': 7.23.3_@babel+core@7.23.5
-      '@babel/plugin-proposal-function-bind': 7.23.3_@babel+core@7.23.5
-      '@babel/plugin-proposal-function-sent': 7.23.3_@babel+core@7.23.5
-      '@babel/plugin-proposal-pipeline-operator': 7.23.3_@babel+core@7.23.5
-      '@babel/plugin-proposal-throw-expressions': 7.23.3_@babel+core@7.23.5
-      '@babel/plugin-syntax-dynamic-import': 7.8.3_@babel+core@7.23.5
-      '@babel/plugin-syntax-import-meta': 7.10.4_@babel+core@7.23.5
-      '@babel/plugin-transform-class-properties': 7.23.3_@babel+core@7.23.5
-      '@babel/plugin-transform-export-namespace-from': 7.23.4_@babel+core@7.23.5
-      '@babel/plugin-transform-json-strings': 7.23.4_@babel+core@7.23.5
-      '@babel/plugin-transform-logical-assignment-operators': 7.23.4_@babel+core@7.23.5
-      '@babel/plugin-transform-nullish-coalescing-operator': 7.23.4_@babel+core@7.23.5
-      '@babel/plugin-transform-numeric-separator': 7.23.4_@babel+core@7.23.5
-      '@babel/plugin-transform-optional-chaining': 7.23.4_@babel+core@7.23.5
-      '@babel/plugin-transform-private-methods': 7.23.3_@babel+core@7.23.5
-      '@babel/plugin-transform-runtime': 7.23.4_@babel+core@7.23.5
-      '@babel/preset-env': 7.23.5_@babel+core@7.23.5
-      '@babel/preset-react': 7.23.3_@babel+core@7.23.5
-      '@babel/preset-typescript': 7.23.3_@babel+core@7.23.5
-      '@babel/runtime': 7.23.5
-      '@babel/runtime-corejs3': 7.23.5
+      '@babel/cli': 7.23.4_@babel+core@7.23.3
+      '@babel/core': 7.23.3
+      '@babel/eslint-parser': 7.23.3_xig2xi565kmngvyk3tjcu3rayi
+      '@babel/plugin-proposal-decorators': 7.23.3_@babel+core@7.23.3
+      '@babel/plugin-proposal-do-expressions': 7.23.3_@babel+core@7.23.3
+      '@babel/plugin-proposal-export-default-from': 7.23.3_@babel+core@7.23.3
+      '@babel/plugin-proposal-function-bind': 7.23.3_@babel+core@7.23.3
+      '@babel/plugin-proposal-function-sent': 7.23.3_@babel+core@7.23.3
+      '@babel/plugin-proposal-pipeline-operator': 7.23.3_@babel+core@7.23.3
+      '@babel/plugin-proposal-throw-expressions': 7.23.3_@babel+core@7.23.3
+      '@babel/plugin-syntax-dynamic-import': 7.8.3_@babel+core@7.23.3
+      '@babel/plugin-syntax-import-meta': 7.10.4_@babel+core@7.23.3
+      '@babel/plugin-transform-class-properties': 7.23.3_@babel+core@7.23.3
+      '@babel/plugin-transform-export-namespace-from': 7.23.4_@babel+core@7.23.3
+      '@babel/plugin-transform-json-strings': 7.23.4_@babel+core@7.23.3
+      '@babel/plugin-transform-logical-assignment-operators': 7.23.4_@babel+core@7.23.3
+      '@babel/plugin-transform-nullish-coalescing-operator': 7.23.4_@babel+core@7.23.3
+      '@babel/plugin-transform-numeric-separator': 7.23.4_@babel+core@7.23.3
+      '@babel/plugin-transform-optional-chaining': 7.23.4_@babel+core@7.23.3
+      '@babel/plugin-transform-private-methods': 7.23.3_@babel+core@7.23.3
+      '@babel/plugin-transform-runtime': 7.23.4_@babel+core@7.23.3
+      '@babel/preset-env': 7.23.3_@babel+core@7.23.3
+      '@babel/preset-react': 7.23.3_@babel+core@7.23.3
+      '@babel/preset-typescript': 7.23.3_@babel+core@7.23.3
+      '@babel/runtime': 7.23.4
+      '@babel/runtime-corejs3': 7.23.4
       '@types/create-react-class': 15.6.6
       '@types/flux': 3.1.14
       '@types/glob': 7.2.0
@@ -278,10 +278,10 @@ importers:
       '@types/react-router-dom': 5.3.3
       '@types/sanitize-html': 2.9.5
       '@types/sql.js': 1.4.9
-      '@typescript-eslint/eslint-plugin': 5.62.0_etgruktp74ampygres3wtgczjq
-      '@typescript-eslint/parser': 5.62.0_sjjl3gun7puonkp27uqtyjm5b4
-      babel-jest: 27.5.1_@babel+core@7.23.5
-      babel-loader: 8.3.0_wdjw2xneabdtnltxrkqwii75nu
+      '@typescript-eslint/eslint-plugin': 5.62.0_mnedyn4jnvusybp6vtysly27t4
+      '@typescript-eslint/parser': 5.62.0_tpmd5btwisapvfle77wdvjenui
+      babel-jest: 27.5.1_@babel+core@7.23.3
+      babel-loader: 8.3.0_rwp5n2556mrumtrwbeu2k2rar4
       babel-plugin-import: 1.13.8
       babel-plugin-lodash: 3.3.4
       compression-webpack-plugin: 10.0.0_webpack@5.89.0
@@ -343,10 +343,10 @@ importers:
     dependencies:
       geoview-core: link:../geoview-core
     devDependencies:
-      '@babel/core': 7.23.5
-      '@babel/eslint-parser': 7.23.3_dywn7yr5apbhsrnjszowennw3e
-      '@babel/runtime': 7.23.5
-      '@types/react': 18.2.41
+      '@babel/core': 7.23.3
+      '@babel/eslint-parser': 7.23.3_xig2xi565kmngvyk3tjcu3rayi
+      '@babel/runtime': 7.23.4
+      '@types/react': 18.2.39
       '@types/react-dom': 18.2.17
       '@typescript-eslint/eslint-plugin': 5.62.0_etgruktp74ampygres3wtgczjq
       '@typescript-eslint/parser': 5.62.0_sjjl3gun7puonkp27uqtyjm5b4
@@ -390,10 +390,10 @@ importers:
     dependencies:
       geoview-core: link:../geoview-core
     devDependencies:
-      '@babel/core': 7.23.5
-      '@babel/eslint-parser': 7.23.3_dywn7yr5apbhsrnjszowennw3e
-      '@babel/runtime': 7.23.5
-      '@types/react': 18.2.41
+      '@babel/core': 7.23.3
+      '@babel/eslint-parser': 7.23.3_xig2xi565kmngvyk3tjcu3rayi
+      '@babel/runtime': 7.23.4
+      '@types/react': 18.2.39
       '@types/react-dom': 18.2.17
       '@typescript-eslint/eslint-plugin': 5.62.0_etgruktp74ampygres3wtgczjq
       '@typescript-eslint/parser': 5.62.0_sjjl3gun7puonkp27uqtyjm5b4
@@ -439,14 +439,13 @@ importers:
       react-dom: ^18.2.0
       typescript: ^4.5.5
     dependencies:
-      '@mui/material': 5.14.19_smwi6wdglloviiv5gtwtp6yrym
-      geochart: github.com/Canadian-Geospatial-Platform/geochart/7348c5c0778df4fd346fba293e77ce4410900c98_@types+react@18.2.41
+      geochart: github.com/Canadian-Geospatial-Platform/geochart/bc9c5adef4d48a49f59216ae3d0eb53a43b66e26_@types+react@18.2.39
       geoview-core: link:../geoview-core
       lodash: 4.17.21
     devDependencies:
-      '@babel/core': 7.23.5
-      '@babel/eslint-parser': 7.23.3_dywn7yr5apbhsrnjszowennw3e
-      '@babel/runtime': 7.23.5
+      '@babel/core': 7.23.3
+      '@babel/eslint-parser': 7.23.3_xig2xi565kmngvyk3tjcu3rayi
+      '@babel/runtime': 7.23.4
       '@types/lodash': 4.14.202
       '@types/react': 18.2.41
       '@types/react-dom': 18.2.17
@@ -495,10 +494,10 @@ importers:
       geoview-core: link:../geoview-core
       react-beautiful-dnd: 13.1.1_biqbaboplfbrettd7655fr4n2y
     devDependencies:
-      '@babel/core': 7.23.5
-      '@babel/eslint-parser': 7.23.3_dywn7yr5apbhsrnjszowennw3e
-      '@babel/runtime': 7.23.5
-      '@types/react': 18.2.41
+      '@babel/core': 7.23.3
+      '@babel/eslint-parser': 7.23.3_xig2xi565kmngvyk3tjcu3rayi
+      '@babel/runtime': 7.23.4
+      '@types/react': 18.2.39
       '@types/react-beautiful-dnd': 13.1.7
       '@types/react-dom': 18.2.17
       '@typescript-eslint/eslint-plugin': 5.62.0_etgruktp74ampygres3wtgczjq
@@ -548,9 +547,9 @@ importers:
       ol: 8.2.0
       react-draggable: 4.4.6_biqbaboplfbrettd7655fr4n2y
     devDependencies:
-      '@babel/core': 7.23.5
-      '@babel/eslint-parser': 7.23.3_dywn7yr5apbhsrnjszowennw3e
-      '@babel/runtime': 7.23.5
+      '@babel/core': 7.23.3
+      '@babel/eslint-parser': 7.23.3_xig2xi565kmngvyk3tjcu3rayi
+      '@babel/runtime': 7.23.4
       '@types/lodash': 4.14.202
       '@typescript-eslint/eslint-plugin': 5.62.0_etgruktp74ampygres3wtgczjq
       '@typescript-eslint/parser': 5.62.0_sjjl3gun7puonkp27uqtyjm5b4
@@ -596,10 +595,10 @@ importers:
       '@mui/material': 5.14.19_smwi6wdglloviiv5gtwtp6yrym
       geoview-core: link:../geoview-core
     devDependencies:
-      '@babel/core': 7.23.5
-      '@babel/eslint-parser': 7.23.3_dywn7yr5apbhsrnjszowennw3e
-      '@babel/runtime': 7.23.5
-      '@types/react': 18.2.41
+      '@babel/core': 7.23.3
+      '@babel/eslint-parser': 7.23.3_xig2xi565kmngvyk3tjcu3rayi
+      '@babel/runtime': 7.23.4
+      '@types/react': 18.2.39
       '@types/react-dom': 18.2.17
       '@typescript-eslint/eslint-plugin': 5.62.0_etgruktp74ampygres3wtgczjq
       '@typescript-eslint/parser': 5.62.0_sjjl3gun7puonkp27uqtyjm5b4
@@ -687,7 +686,7 @@ packages:
       - supports-color
     dev: true
 
-  /@babel/eslint-parser/7.23.3_dywn7yr5apbhsrnjszowennw3e:
+  /@babel/eslint-parser/7.23.3_xig2xi565kmngvyk3tjcu3rayi:
     resolution: {integrity: sha512-9bTuNlyx7oSstodm1cR1bECj4fkiknsDa1YniISkJemMY3DGhJNYBECbe6QD/q54mp2J8VO66jW3/7uP//iFCw==}
     engines: {node: ^10.13.0 || ^12.13.0 || >=14.0.0}
     peerDependencies:
@@ -729,9 +728,9 @@ packages:
     resolution: {integrity: sha512-y6EEzULok0Qvz8yyLkCvVX+02ic+By2UdOhylwUOvOn9dvYc9mKICJuuU1n1XBI02YWsNsnrY1kc6DVbjcXbtw==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/compat-data': 7.23.5
-      '@babel/helper-validator-option': 7.23.5
-      browserslist: 4.22.2
+      '@babel/compat-data': 7.23.3
+      '@babel/helper-validator-option': 7.22.15
+      browserslist: 4.22.1
       lru-cache: 5.1.1
       semver: 6.3.1
     dev: true
@@ -2666,9 +2665,9 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.5
-      '@mui/material': 5.14.19_3m72q3azgfmtjvmdhnc4acjt2y
-      '@types/react': 18.2.41
+      '@babel/runtime': 7.23.4
+      '@mui/material': 5.14.18_swovqpovnl2mmspo3fisd4kchm
+      '@types/react': 18.2.39
       react: 18.2.0
     dev: false
 
@@ -2689,15 +2688,13 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.5
-      '@emotion/react': 11.11.1_aubhhyadwwrly2ms2jqnyk2qcu
-      '@emotion/styled': 11.11.0_x4qzsp7trrlrlz6xcad7qvinxu
-      '@mui/base': 5.0.0-beta.25_smwi6wdglloviiv5gtwtp6yrym
-      '@mui/core-downloads-tracker': 5.14.19
-      '@mui/system': 5.14.19_tzypmbklms6xlmuapwttkd4rfi
-      '@mui/types': 7.2.10_@types+react@18.2.41
-      '@mui/utils': 5.14.19_aubhhyadwwrly2ms2jqnyk2qcu
-      '@types/react': 18.2.41
+      '@babel/runtime': 7.23.4
+      '@mui/base': 5.0.0-beta.24_dkfbrx5dbnqck2dtpdwvtytcpu
+      '@mui/core-downloads-tracker': 5.14.18
+      '@mui/system': 5.14.18_d6xr7427ryrc3fdigbbbatktku
+      '@mui/types': 7.2.9_@types+react@18.2.39
+      '@mui/utils': 5.14.18_d6xr7427ryrc3fdigbbbatktku
+      '@types/react': 18.2.39
       '@types/react-transition-group': 4.4.9
       clsx: 2.0.0
       csstype: 3.1.2
@@ -2725,13 +2722,15 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.5
-      '@mui/base': 5.0.0-beta.25_smwi6wdglloviiv5gtwtp6yrym
-      '@mui/core-downloads-tracker': 5.14.19
-      '@mui/system': 5.14.19_aubhhyadwwrly2ms2jqnyk2qcu
-      '@mui/types': 7.2.10_@types+react@18.2.41
-      '@mui/utils': 5.14.19_aubhhyadwwrly2ms2jqnyk2qcu
-      '@types/react': 18.2.41
+      '@babel/runtime': 7.23.4
+      '@emotion/react': 11.11.1_d6xr7427ryrc3fdigbbbatktku
+      '@emotion/styled': 11.11.0_ruv3plsedowatqyemvt4mc2upa
+      '@mui/base': 5.0.0-beta.24_dkfbrx5dbnqck2dtpdwvtytcpu
+      '@mui/core-downloads-tracker': 5.14.18
+      '@mui/system': 5.14.18_63rbernuvf3nr42rgctgbnr77e
+      '@mui/types': 7.2.9_@types+react@18.2.39
+      '@mui/utils': 5.14.18_d6xr7427ryrc3fdigbbbatktku
+      '@types/react': 18.2.39
       '@types/react-transition-group': 4.4.9
       clsx: 2.0.0
       csstype: 3.1.2
@@ -2752,9 +2751,9 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.5
-      '@mui/utils': 5.14.19_aubhhyadwwrly2ms2jqnyk2qcu
-      '@types/react': 18.2.41
+      '@babel/runtime': 7.23.4
+      '@mui/utils': 5.14.18_d6xr7427ryrc3fdigbbbatktku
+      '@types/react': 18.2.39
       prop-types: 15.8.1
       react: 18.2.0
     dev: false
@@ -2848,12 +2847,14 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.5
-      '@mui/private-theming': 5.14.19_aubhhyadwwrly2ms2jqnyk2qcu
-      '@mui/styled-engine': 5.14.19_react@18.2.0
-      '@mui/types': 7.2.10_@types+react@18.2.41
-      '@mui/utils': 5.14.19_aubhhyadwwrly2ms2jqnyk2qcu
-      '@types/react': 18.2.41
+      '@babel/runtime': 7.23.4
+      '@emotion/react': 11.11.1_d6xr7427ryrc3fdigbbbatktku
+      '@emotion/styled': 11.11.0_ruv3plsedowatqyemvt4mc2upa
+      '@mui/private-theming': 5.14.18_d6xr7427ryrc3fdigbbbatktku
+      '@mui/styled-engine': 5.14.18_5uavjbr3lmuxf4a3t6dmknaeea
+      '@mui/types': 7.2.9_@types+react@18.2.39
+      '@mui/utils': 5.14.18_d6xr7427ryrc3fdigbbbatktku
+      '@types/react': 18.2.39
       clsx: 2.0.0
       csstype: 3.1.2
       prop-types: 15.8.1
@@ -2876,14 +2877,12 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.5
-      '@emotion/react': 11.11.1_aubhhyadwwrly2ms2jqnyk2qcu
-      '@emotion/styled': 11.11.0_x4qzsp7trrlrlz6xcad7qvinxu
-      '@mui/private-theming': 5.14.19_aubhhyadwwrly2ms2jqnyk2qcu
-      '@mui/styled-engine': 5.14.19_5uavjbr3lmuxf4a3t6dmknaeea
-      '@mui/types': 7.2.10_@types+react@18.2.41
-      '@mui/utils': 5.14.19_aubhhyadwwrly2ms2jqnyk2qcu
-      '@types/react': 18.2.41
+      '@babel/runtime': 7.23.4
+      '@mui/private-theming': 5.14.18_d6xr7427ryrc3fdigbbbatktku
+      '@mui/styled-engine': 5.14.18_react@18.2.0
+      '@mui/types': 7.2.9_@types+react@18.2.39
+      '@mui/utils': 5.14.18_d6xr7427ryrc3fdigbbbatktku
+      '@types/react': 18.2.39
       clsx: 2.0.0
       csstype: 3.1.2
       prop-types: 15.8.1
@@ -2956,13 +2955,13 @@ packages:
       moment-jalaali:
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.5
-      '@emotion/react': 11.11.1_aubhhyadwwrly2ms2jqnyk2qcu
-      '@emotion/styled': 11.11.0_x4qzsp7trrlrlz6xcad7qvinxu
-      '@mui/base': 5.0.0-beta.24_smwi6wdglloviiv5gtwtp6yrym
-      '@mui/material': 5.14.19_3m72q3azgfmtjvmdhnc4acjt2y
-      '@mui/system': 5.14.19_tzypmbklms6xlmuapwttkd4rfi
-      '@mui/utils': 5.14.19_aubhhyadwwrly2ms2jqnyk2qcu
+      '@babel/runtime': 7.23.4
+      '@emotion/react': 11.11.1_d6xr7427ryrc3fdigbbbatktku
+      '@emotion/styled': 11.11.0_ruv3plsedowatqyemvt4mc2upa
+      '@mui/base': 5.0.0-beta.24_dkfbrx5dbnqck2dtpdwvtytcpu
+      '@mui/material': 5.14.18_swovqpovnl2mmspo3fisd4kchm
+      '@mui/system': 5.14.18_63rbernuvf3nr42rgctgbnr77e
+      '@mui/utils': 5.14.18_d6xr7427ryrc3fdigbbbatktku
       '@types/react-transition-group': 4.4.9
       clsx: 2.0.0
       dayjs: 1.11.10
@@ -4300,10 +4299,10 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001566
-      electron-to-chromium: 1.4.601
-      node-releases: 2.0.14
-      update-browserslist-db: 1.0.13_browserslist@4.22.2
+      caniuse-lite: 1.0.30001565
+      electron-to-chromium: 1.4.595
+      node-releases: 2.0.13
+      update-browserslist-db: 1.0.13_browserslist@4.22.1
     dev: true
 
   /bser/2.1.1:
@@ -5001,8 +5000,8 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
-  /electron-to-chromium/1.4.601:
-    resolution: {integrity: sha512-SpwUMDWe9tQu8JX5QCO1+p/hChAi9AE9UpoC3rcHVc+gdCGlbT3SGb5I1klgb952HRIyvt9wZhSz9bNBYz9swA==}
+  /electron-to-chromium/1.4.595:
+    resolution: {integrity: sha512-+ozvXuamBhDOKvMNUQvecxfbyICmIAwS4GpLmR0bsiSBlGnLaOcs2Cj7J8XSbW+YEaN3Xl3ffgpm+srTUWFwFQ==}
     dev: true
 
   /email-addresses/3.1.0:
@@ -10114,9 +10113,9 @@ packages:
       react: 18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
 
-  github.com/Canadian-Geospatial-Platform/geochart/7348c5c0778df4fd346fba293e77ce4410900c98_@types+react@18.2.41:
-    resolution: {tarball: https://codeload.github.com/Canadian-Geospatial-Platform/geochart/tar.gz/7348c5c0778df4fd346fba293e77ce4410900c98}
-    id: github.com/Canadian-Geospatial-Platform/geochart/7348c5c0778df4fd346fba293e77ce4410900c98
+  github.com/Canadian-Geospatial-Platform/geochart/bc9c5adef4d48a49f59216ae3d0eb53a43b66e26_@types+react@18.2.39:
+    resolution: {tarball: https://codeload.github.com/Canadian-Geospatial-Platform/geochart/tar.gz/bc9c5adef4d48a49f59216ae3d0eb53a43b66e26}
+    id: github.com/Canadian-Geospatial-Platform/geochart/bc9c5adef4d48a49f59216ae3d0eb53a43b66e26
     name: geoview-geochart
     version: 0.1.0
     dependencies:
