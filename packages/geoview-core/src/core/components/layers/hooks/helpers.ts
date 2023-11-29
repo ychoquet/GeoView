@@ -62,8 +62,7 @@ export function useLegendHelpers() {
     ];
     const legendLayers: TypeLegendLayer[] = [
       {
-        bounds: undefined,
-        layerId: 'test_testLayerId',
+        layerId: 'testLayerId',
         layerPath: 'testLayerPath',
         layerName: 'TEST--TestLayer1',
         type: 'GeoJSON',
@@ -75,8 +74,7 @@ export function useLegendHelpers() {
         items: layerItems,
       },
       {
-        bounds: undefined,
-        layerId: 'test_geojsonLYR5',
+        layerId: 'geojsonLYR5',
         layerPath: 'geojsonLYR5',
         layerName: 'TEST--Layer with groups',
         type: 'GeoJSON',
@@ -88,8 +86,7 @@ export function useLegendHelpers() {
         items: [],
       },
       {
-        bounds: undefined,
-        layerId: 'test_chrisLayr1',
+        layerId: 'chrisLayr1',
         layerPath: 'Chris Sample Parent1',
         layerName: 'TEST--chrisparentlayer1',
         type: 'GeoJSON',
@@ -99,8 +96,7 @@ export function useLegendHelpers() {
         querySent: true,
         children: [
           {
-            bounds: undefined,
-            layerId: 'test_chrisChildLayer1',
+            layerId: 'chrisChildLayer1',
             layerPath: 'ChrisSampleC3',
             layerName: 'TEST--chrisparentchild1',
             type: 'GeoJSON',
@@ -110,8 +106,7 @@ export function useLegendHelpers() {
             querySent: true,
             children: [
               {
-                bounds: undefined,
-                layerId: 'test_chrisGrandChild1',
+                layerId: 'chrisGrandChild1',
                 layerPath: 'Gran ChildChidl2',
                 layerName: 'TEST--chris parent child2',
                 type: 'GeoJSON',
@@ -123,8 +118,7 @@ export function useLegendHelpers() {
                 items: layerItems,
               },
               {
-                bounds: undefined,
-                layerId: 'test_chrisGrandChild5',
+                layerId: 'chrisGrandChild5',
                 layerPath: 'Gran ChildChidl555',
                 layerName: 'TEST--chris parent child25555',
                 type: 'GeoJSON',
@@ -136,8 +130,7 @@ export function useLegendHelpers() {
                 items: layerItems,
               },
               {
-                bounds: undefined,
-                layerId: 'test_chrisGrandChild2',
+                layerId: 'chrisGrandChild2',
                 layerPath: 'Grand Child Chidl3',
                 layerName: 'TEST--chris parent child3',
                 type: 'GeoJSON',
@@ -152,8 +145,7 @@ export function useLegendHelpers() {
             items: [],
           },
           {
-            bounds: undefined,
-            layerId: 'test_chrisChild2',
+            layerId: 'chrisChild2',
             layerPath: 'Chris Sample Chidl2',
             layerName: 'TEST--chirslyerss',
             type: 'GeoJSON',
@@ -165,8 +157,7 @@ export function useLegendHelpers() {
             items: layerItems,
           },
           {
-            bounds: undefined,
-            layerId: 'test_chrisChild3',
+            layerId: 'chrisChild3',
             layerPath: 'Chris Sample Chidl3',
             layerName: 'TEST--chris-child32edd',
             type: 'GeoJSON',
