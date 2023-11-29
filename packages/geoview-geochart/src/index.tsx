@@ -56,7 +56,7 @@ class GeoChartPlugin extends AbstractPlugin {
    */
   translations = toJsonObject({
     en: {
-      chartPanel: 'Chart',
+      chartPanel: 'Geo Chart',
     },
     fr: {
       chartPanel: 'Graphique',
