@@ -7,7 +7,6 @@ import { GeoJSON as FormatGeoJSON } from 'ol/format';
 import { ReadOptions } from 'ol/format/Feature';
 import { Vector as VectorSource } from 'ol/source';
 import Feature from 'ol/Feature';
-import Geometry from 'ol/geom/Geometry';
 
 import { TypeJsonObject } from '@/core/types/global-types';
 import { AbstractGeoViewLayer, CONST_LAYER_TYPES } from '../abstract-geoview-layers';
@@ -167,12 +166,12 @@ export class OgcFeature extends AbstractGeoViewVector {
             layer: layerPath,
             consoleMessage: `Empty layer group (mapId:  ${this.mapId}, layerPath: ${layerPath})`,
           });
-          this.setLayerStatus('error', layerConfiguration);
+          this.setLayerStatus('error', layerPath);
           return;
         }
       }
 
-      this.setLayerStatus('loading', layerConfiguration);
+      this.setLayerStatus('loading', layerPath);
 
       // Note that the code assumes ogc-feature collections does not contains metadata layer group. If you need layer group,
       // you can define them in the configuration section.
@@ -183,7 +182,7 @@ export class OgcFeature extends AbstractGeoViewVector {
             layer: layerPath,
             consoleMessage: `OGC feature layer not found (mapId:  ${this.mapId}, layerPath: ${layerPath})`,
           });
-          this.setLayerStatus('error', layerConfiguration);
+          this.setLayerStatus('error', layerPath);
           return;
         }
 
@@ -296,22 +295,19 @@ export class OgcFeature extends AbstractGeoViewVector {
   /** ***************************************************************************************************************************
    * Create a source configuration for the vector layer.
    *
-   * @param {TypeBaseLayerEntryConfig} layerConfiguration The layer entry configuration.
+   * @param {string} layerPath The layer path to the layer's configuration.
    * @param {SourceOptions} sourceOptions The source options (default: {}).
    * @param {ReadOptions} readOptions The read options (default: {}).
    *
    * @returns {VectorSource<Geometry>} The source configuration that will be used to create the vector layer.
    */
-  protected createVectorSource(
-    layerConfiguration: TypeBaseLayerEntryConfig,
-    sourceOptions: SourceOptions = {},
-    readOptions: ReadOptions = {}
-  ): VectorSource<Feature> {
+  protected createVectorSource(layerPath: string, sourceOptions: SourceOptions = {}, readOptions: ReadOptions = {}): VectorSource<Feature> {
+    const layerConfiguration = this.getLayerConfig(layerPath) as TypeBaseLayerEntryConfig;
     readOptions.dataProjection = (layerConfiguration.source as TypeBaseSourceVectorInitialConfig).dataProjection;
     sourceOptions.url = getLocalizedValue(layerConfiguration.source!.dataAccessPath!, this.mapId);
     sourceOptions.url = `${sourceOptions.url}/collections/${layerConfiguration.layerId}/items?f=json`;
     sourceOptions.format = new FormatGeoJSON();
-    const vectorSource = super.createVectorSource(layerConfiguration, sourceOptions, readOptions);
+    const vectorSource = super.createVectorSource(layerPath, sourceOptions, readOptions);
     return vectorSource;
   }
 }
