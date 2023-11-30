@@ -3,6 +3,7 @@ import { useTheme } from '@mui/material/styles';
 import { Box, ChevronRightIcon, IconButton, List, ListItem, ListItemButton, ListItemIcon, Paper, Tooltip, Typography } from '@/ui';
 import { getSxClasses } from './layer-list-style';
 import { IconStack } from '@/app';
+import { ListItemText } from '@mui/material';
 
 export interface LayerListEntry {
   layerName: string;
