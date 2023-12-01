@@ -439,8 +439,7 @@ importers:
       react-dom: ^18.2.0
       typescript: ^4.5.5
     dependencies:
-      '@mui/material': 5.14.18_dkfbrx5dbnqck2dtpdwvtytcpu
-      geochart: github.com/Canadian-Geospatial-Platform/geochart/e0f3f7d812623faf149c4ac197a793b7dc9f4481_@types+react@18.2.39
+      geochart: github.com/Canadian-Geospatial-Platform/geochart/7348c5c0778df4fd346fba293e77ce4410900c98_@types+react@18.2.40
       geoview-core: link:../geoview-core
       lodash: 4.17.21
     devDependencies:
