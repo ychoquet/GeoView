@@ -312,7 +312,7 @@ export class GeoPackage extends AbstractGeoViewVector {
     readOptions: ReadOptions = {}
   ): Promise<[layerData[], sldsInterface]> {
     const promisedGeopackageData = new Promise<[layerData[], sldsInterface]>((resolve) => {
-      const layerConfiguration = this.getLayerConfig(layerPath) as  TypeBaseLayerEntryConfig;
+      const layerConfiguration = this.getLayerConfig(layerPath) as TypeBaseLayerEntryConfig;
       const url = getLocalizedValue(layerConfiguration.source!.dataAccessPath!, this.mapId);
       if (this.attributions.length !== 0) sourceOptions.attributions = this.attributions;
       const layersInfo: layerData[] = [];
@@ -437,11 +437,7 @@ export class GeoPackage extends AbstractGeoViewVector {
    *
    * @returns {Promise<BaseLayer | null>} The GeoView base layer that has been created.
    */
-  protected processOneGeopackageLayer(
-    layerPath: string,
-    layerInfo: layerData,
-    sld?: sldsInterface
-  ): Promise<BaseLayer | null> {
+  protected processOneGeopackageLayer(layerPath: string, layerInfo: layerData, sld?: sldsInterface): Promise<BaseLayer | null> {
     const promisedVectorLayer = new Promise<BaseLayer | null>((resolve) => {
       const layerConfiguration = this.getLayerConfig(layerPath) as TypeBaseLayerEntryConfig;
       api.maps[this.mapId].layer.registerLayerConfig(layerPath, layerConfiguration);
