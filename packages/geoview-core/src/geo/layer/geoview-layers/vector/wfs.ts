@@ -8,7 +8,7 @@ import Feature from 'ol/Feature';
 import { bbox } from 'ol/loadingstrategy';
 
 import { TypeJsonArray, TypeJsonObject } from '@/core/types/global-types';
-import { AbstractGeoViewLayer, CONST_LAYER_TYPES } from '../abstract-geoview-layers';
+import { AbstractGeoViewLayer, CONST_LAYER_TYPES } from '@/geo/layer/geoview-layers/abstract-geoview-layers';
 import { AbstractGeoViewVector } from './abstract-geoview-vector';
 import {
   TypeLayerEntryConfig,

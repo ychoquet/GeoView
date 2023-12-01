@@ -34,7 +34,7 @@ import ExportButton from './export-button';
 import JSONExportButton from './json-export-button';
 import FilterMap from './filter-map';
 
-import { AbstractGeoViewVector, TypeLayerEntryConfig, EsriDynamic, api, TypeFieldEntry, TypeFeatureInfoEntry, isImage } from '@/app';
+import { AbstractGeoViewVector, TypeLayerEntryConfig, EsriDynamic, api, TypeFieldEntry, TypeFeatureInfoEntry, isImage, Layer } from '@/app';
 import { getSxClasses } from './data-table-style';
 import { useMapStoreActions } from '@/core/stores/store-interface-and-intial-values/map-state';
 import {
@@ -211,9 +211,9 @@ function MapDataTable({ data, layerId, mapId, layerKey, projectionConfig }: MapD
     const filterLayerConfig = api.maps[mapId].layer.registeredLayers[layerKey] as TypeLayerEntryConfig;
 
     if (mapFilteredRecord[layerKey] && geoviewLayerInstance !== undefined && filterLayerConfig !== undefined && filterStrings.length) {
-      (geoviewLayerInstance as AbstractGeoViewVector | EsriDynamic)?.applyViewFilter(filterLayerConfig, filterStrings);
+      (geoviewLayerInstance as AbstractGeoViewVector | EsriDynamic)?.applyViewFilter(Layer.getLayerPath(filterLayerConfig, filterStrings));
     } else {
-      (geoviewLayerInstance as AbstractGeoViewVector | EsriDynamic)?.applyViewFilter(filterLayerConfig, '');
+      (geoviewLayerInstance as AbstractGeoViewVector | EsriDynamic)?.applyViewFilter(Layer.getLayerPath(filterLayerConfig, ''));
     }
   }, FILTER_MAP_DELAY);
 

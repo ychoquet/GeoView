@@ -5,7 +5,7 @@ import { EsriJSON } from 'ol/format';
 import { ReadOptions } from 'ol/format/Feature';
 import Feature from 'ol/Feature';
 
-import { AbstractGeoViewLayer, CONST_LAYER_TYPES } from '../abstract-geoview-layers';
+import { AbstractGeoViewLayer, CONST_LAYER_TYPES } from '@/geo/layer/geoview-layers/abstract-geoview-layers';
 
 import {
   TypeLayerEntryConfig,

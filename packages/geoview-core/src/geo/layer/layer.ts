@@ -18,7 +18,7 @@ import {
   payloadIsRemoveGeoViewLayer,
   PayloadBaseClass,
 } from '@/api/events/payloads';
-import { AbstractGeoViewLayer } from './geoview-layers/abstract-geoview-layers';
+import { AbstractGeoViewLayer } from '@/geo/layer/geoview-layers/abstract-geoview-layers';
 import {
   TypeGeoviewLayerConfig,
   TypeLayerEntryConfig,

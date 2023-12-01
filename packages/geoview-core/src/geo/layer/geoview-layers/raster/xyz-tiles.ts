@@ -8,7 +8,7 @@ import { transformExtent } from 'ol/proj';
 import { Extent } from 'ol/extent';
 
 import defaultsDeep from 'lodash/defaultsDeep';
-import { AbstractGeoViewLayer, CONST_LAYER_TYPES } from '../abstract-geoview-layers';
+import { AbstractGeoViewLayer, CONST_LAYER_TYPES } from '@/geo/layer/geoview-layers/abstract-geoview-layers';
 import { AbstractGeoViewRaster, TypeBaseRasterLayer } from './abstract-geoview-raster';
 import {
   TypeLayerEntryConfig,

@@ -9,10 +9,11 @@ import { Extent } from 'ol/extent';
 
 import sanitizeHtml from 'sanitize-html';
 
-import { AbstractGeoViewLayer, api } from '@/app';
+import { api } from '@/app';
 import { TypeLocalizedString } from '@/geo/map/map-schema-types';
 import { EVENT_NAMES } from '@/api/events/event-types';
 
+import { AbstractGeoViewLayer } from '@/geo/layer/geoview-layers/abstract-geoview-layers';
 import { Cast, TypeJsonArray, TypeJsonObject, TypeJsonValue, TypeMapFeaturesConfig } from '@/core/types/global-types';
 import { SnackbarType, snackbarMessagePayload } from '@/api/events/payloads';
 import { NotificationType } from '@/core/components/notifications/notifications';

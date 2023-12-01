@@ -17,7 +17,13 @@ import cloneDeep from 'lodash/cloneDeep';
 import i18n from 'i18next';
 
 import { Cast, toJsonObject, TypeJsonArray, TypeJsonObject } from '@/core/types/global-types';
-import { AbstractGeoViewLayer, CONST_LAYER_TYPES, TypeLegend, TypeWmsLegend, TypeWmsLegendStyle } from '../abstract-geoview-layers';
+import {
+  AbstractGeoViewLayer,
+  CONST_LAYER_TYPES,
+  TypeLegend,
+  TypeWmsLegend,
+  TypeWmsLegendStyle,
+} from '@/geo/layer/geoview-layers/abstract-geoview-layers';
 import { AbstractGeoViewRaster, TypeBaseRasterLayer } from './abstract-geoview-raster';
 import {
   TypeLayerEntryConfig,

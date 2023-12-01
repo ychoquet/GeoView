@@ -4,7 +4,7 @@ import Feature from 'ol/Feature';
 import Geometry from 'ol/geom/Geometry';
 import LayerGroup from 'ol/layer/Group';
 
-import { AbstractGeoViewLayer } from '../abstract-geoview-layers';
+import { AbstractGeoViewLayer } from '@/geo/layer/geoview-layers/abstract-geoview-layers';
 import { Layer, LayerSetPayload, TypeLayerEntryConfig, api } from '@/app';
 
 /** *****************************************************************************************************************************

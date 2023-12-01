@@ -14,7 +14,7 @@ import { getCenter, Extent } from 'ol/extent';
 import { Pixel } from 'ol/pixel';
 import { transform } from 'ol/proj';
 
-import { AbstractGeoViewLayer } from '../abstract-geoview-layers';
+import { AbstractGeoViewLayer } from '@/geo/layer/geoview-layers/abstract-geoview-layers';
 import {
   TypeBaseLayerEntryConfig,
   TypeBaseSourceVectorInitialConfig,
