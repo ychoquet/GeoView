@@ -280,7 +280,7 @@ export class ImageStatic extends AbstractGeoViewRaster {
 
       layerConfiguration.olLayer = new ImageLayer(staticImageOptions);
 
-      super.addLoadendListener(layerConfiguration, 'image');
+      super.addLoadendListener(layerPath, 'image');
 
       resolve(layerConfiguration.olLayer);
     });

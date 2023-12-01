@@ -302,7 +302,7 @@ export class EsriDynamic extends AbstractGeoViewRaster {
       layerConfiguration.olLayer = new ImageLayer(imageLayerOptions);
       this.applyViewFilter(layerPath, layerConfiguration.layerFilter ? layerConfiguration.layerFilter : '');
 
-      super.addLoadendListener(layerConfiguration, 'image');
+      super.addLoadendListener(layerPath, 'image');
 
       resolve(layerConfiguration.olLayer);
     });

@@ -207,7 +207,7 @@ export class VectorTiles extends AbstractGeoViewRaster {
           `${getLocalizedValue(this.metadataAccessPath, this.mapId)}${this.metadata.defaultStyles}/root.json`
         );
 
-      super.addLoadendListener(layerConfiguration, 'tile');
+      super.addLoadendListener(layerPath, 'tile');
 
       resolve(layerConfiguration.olLayer);
     });

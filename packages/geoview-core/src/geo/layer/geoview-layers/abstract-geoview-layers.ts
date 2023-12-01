@@ -1048,7 +1048,9 @@ export abstract class AbstractGeoViewLayer {
         }
       });
     };
-    const layerConfiguration: TypeLayerEntryConfig | TypeListOfLayerEntryConfig | undefined = this.getLayerConfig(layerPath);
+    const layerConfiguration: TypeLayerEntryConfig | TypeListOfLayerEntryConfig | undefined = layerPath.includes('/')
+      ? this.getLayerConfig(layerPath)
+      : this.listOfLayerEntryConfig;
     if (layerConfiguration) {
       if (Array.isArray(layerConfiguration)) processGroupLayerBounds(layerConfiguration);
       else processGroupLayerBounds([layerConfiguration]);

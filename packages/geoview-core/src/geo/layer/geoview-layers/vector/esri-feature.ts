@@ -4,7 +4,6 @@ import { Options as SourceOptions } from 'ol/source/Vector';
 import { EsriJSON } from 'ol/format';
 import { ReadOptions } from 'ol/format/Feature';
 import Feature from 'ol/Feature';
-import Geometry from 'ol/geom/Geometry';
 
 import { AbstractGeoViewLayer, CONST_LAYER_TYPES } from '../abstract-geoview-layers';
 
@@ -242,20 +241,17 @@ export class EsriFeature extends AbstractGeoViewVector {
   /** ***************************************************************************************************************************
    * Create a source configuration for the vector layer.
    *
-   * @param {TypeEsriFeatureLayerEntryConfig} layerConfiguration The layer entry configuration.
+   * @param {string} layerPath The layer path tp the layer's configuration.
    * @param {SourceOptions} sourceOptions The source options (default: {}).
    * @param {ReadOptions} readOptions The read options (default: {}).
    *
    * @returns {VectorSource<Geometry>} The source configuration that will be used to create the vector layer.
    */
-  protected createVectorSource(
-    layerConfiguration: TypeBaseLayerEntryConfig,
-    sourceOptions: SourceOptions = {},
-    readOptions: ReadOptions = {}
-  ): VectorSource<Feature> {
+  protected createVectorSource(layerPath: string, sourceOptions: SourceOptions = {}, readOptions: ReadOptions = {}): VectorSource<Feature> {
     // The line below uses var because a var declaration has a wider scope than a let declaration.
     // eslint-disable-next-line no-var
     var vectorSource: VectorSource<Feature>;
+    const layerConfiguration = this.getLayerConfig(layerPath) as TypeBaseLayerEntryConfig;
     sourceOptions.url = getLocalizedValue(layerConfiguration.source!.dataAccessPath!, this.mapId);
     sourceOptions.url = `${sourceOptions.url}/${String(layerConfiguration.layerId).replace(
       '-unclustered',
@@ -263,7 +259,7 @@ export class EsriFeature extends AbstractGeoViewVector {
     )}/query?f=pjson&outfields=*&where=1%3D1`;
     sourceOptions.format = new EsriJSON();
 
-    vectorSource = super.createVectorSource(layerConfiguration, sourceOptions, readOptions);
+    vectorSource = super.createVectorSource(layerPath, sourceOptions, readOptions);
     return vectorSource;
   }
 }

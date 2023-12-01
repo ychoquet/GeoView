@@ -214,7 +214,7 @@ export class XYZTiles extends AbstractGeoViewRaster {
 
       layerConfiguration.olLayer = new TileLayer(tileLayerOptions);
 
-      super.addLoadendListener(layerConfiguration, 'tile');
+      super.addLoadendListener(layerPath, 'tile');
 
       resolve(layerConfiguration.olLayer);
     });
