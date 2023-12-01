@@ -103,22 +103,22 @@ export class VectorTiles extends AbstractGeoViewRaster {
    * Initialize layer
    *
    * @param {string} mapId the id of the map
-   * @param {TypeVectorTilesConfig} layerConfig the layer configuration
+   * @param {TypeVectorTilesConfig} layerConfiguration the layer configuration
    */
-  constructor(mapId: string, layerConfig: TypeVectorTilesConfig) {
-    super(CONST_LAYER_TYPES.VECTOR_TILES, layerConfig, mapId);
+  constructor(mapId: string, layerConfiguration: TypeVectorTilesConfig) {
+    super(CONST_LAYER_TYPES.VECTOR_TILES, layerConfiguration, mapId);
   }
 
   /** ***************************************************************************************************************************
    * Extract the type of the specified field from the metadata. If the type can not be found, return 'string'.
    *
    * @param {string} fieldName field name for which we want to get the type.
-   * @param {TypeLayerEntryConfig} layerConfig layer configuration.
+   * @param {TypeLayerEntryConfig} layerConfiguration layer configuration.
    *
    * @returns {'string' | 'date' | 'number'} The type of the field.
    */
-  protected getFieldType(fieldName: string, layerConfig: TypeLayerEntryConfig): 'string' | 'date' | 'number' {
-    const fieldDefinitions = this.layerMetadata[Layer.getLayerPath(layerConfig)].source.featureInfo;
+  protected getFieldType(fieldName: string, layerConfiguration: TypeLayerEntryConfig): 'string' | 'date' | 'number' {
+    const fieldDefinitions = this.layerMetadata[Layer.getLayerPath(layerConfiguration)].source.featureInfo;
     const fieldIndex = getLocalizedValue(Cast<TypeLocalizedString>(fieldDefinitions.outfields), this.mapId)?.split(',').indexOf(fieldName);
     if (!fieldIndex || fieldIndex === -1) return 'string';
     return (fieldDefinitions.fieldTypes as string).split(',')[fieldIndex!] as 'string' | 'date' | 'number';
@@ -131,84 +131,85 @@ export class VectorTiles extends AbstractGeoViewRaster {
    * @param {TypeListOfLayerEntryConfig} listOfLayerEntryConfig The list of layer entries configuration to validate.
    */
   protected validateListOfLayerEntryConfig(listOfLayerEntryConfig: TypeListOfLayerEntryConfig) {
-    this.changeLayerPhase('validateListOfLayerEntryConfig');
-    listOfLayerEntryConfig.forEach((layerEntryConfig: TypeLayerEntryConfig) => {
-      const layerPath = Layer.getLayerPath(layerEntryConfig);
-      if (layerEntryIsGroupLayer(layerEntryConfig)) {
-        this.validateListOfLayerEntryConfig(layerEntryConfig.listOfLayerEntryConfig!);
-        if (!layerEntryConfig.listOfLayerEntryConfig.length) {
+    this.setLayerPhase('validateListOfLayerEntryConfig');
+    listOfLayerEntryConfig.forEach((layerConfiguration: TypeLayerEntryConfig) => {
+      const layerPath = Layer.getLayerPath(layerConfiguration);
+      if (layerEntryIsGroupLayer(layerConfiguration)) {
+        this.validateListOfLayerEntryConfig(layerConfiguration.listOfLayerEntryConfig!);
+        if (!layerConfiguration.listOfLayerEntryConfig.length) {
           this.layerLoadError.push({
             layer: layerPath,
             consoleMessage: `Empty layer group (mapId:  ${this.mapId}, layerPath: ${layerPath})`,
           });
-          this.changeLayerStatus('error', layerEntryConfig);
+          this.setLayerStatus('error', layerPath);
           return;
         }
       }
 
-      this.changeLayerStatus('loading', layerEntryConfig);
+      this.setLayerStatus('loading', layerPath);
     });
   }
 
   /** ****************************************************************************************************************************
-   * This method creates a GeoView VectorTiles layer using the definition provided in the layerEntryConfig parameter.
+   * This method creates a GeoView VectorTiles layer using the definition provided in the layerConfiguration parameter.
    *
-   * @param {TypeVectorTilesLayerEntryConfig} layerEntryConfig Information needed to create the GeoView layer.
+   * @param {string} layerPath The layer path to the layer's configuration needed to create the GeoView layer.
    *
    * @returns {TypeBaseRasterLayer} The GeoView raster layer that has been created.
    */
-  processOneLayerEntry(layerEntryConfig: TypeVectorTilesLayerEntryConfig): Promise<TypeBaseRasterLayer | null> {
+  processOneLayerEntry(layerPath: string): Promise<TypeBaseRasterLayer | null> {
     const promisedVectorLayer = new Promise<TypeBaseRasterLayer | null>((resolve) => {
-      this.changeLayerPhase('processOneLayerEntry', layerEntryConfig);
+      const layerConfiguration = this.getLayerConfig(layerPath) as TypeVectorTilesLayerEntryConfig;
+      this.setLayerPhase('processOneLayerEntry', layerPath);
       const sourceOptions: SourceOptions = {
-        url: getLocalizedValue(layerEntryConfig.source.dataAccessPath, this.mapId),
+        url: getLocalizedValue(layerConfiguration.source.dataAccessPath, this.mapId),
       };
       if (
         this.metadata?.tileInfo?.spatialReference?.wkid &&
         api.maps[this.mapId].currentProjection !== this.metadata.tileInfo.spatialReference.wkid
       ) {
-        showError(this.mapId, `Error: vector tile layer (${layerEntryConfig.layerId}) projection does not match map projection`);
+        showError(this.mapId, `Error: vector tile layer (${layerConfiguration.layerId}) projection does not match map projection`);
         // eslint-disable-next-line no-console
-        console.log(`Error: vector tile layer (${layerEntryConfig.layerId}) projection does not match map projection`);
-        this.changeLayerStatus('error', layerEntryConfig);
+        console.log(`Error: vector tile layer (${layerConfiguration.layerId}) projection does not match map projection`);
+        this.setLayerStatus('error', layerPath);
         resolve(null);
-      } else if (layerEntryConfig.source.projection) sourceOptions.projection = `EPSG:${layerEntryConfig.source.projection}`;
-      if (layerEntryConfig.source.tileGrid) {
+      } else if (layerConfiguration.source.projection) sourceOptions.projection = `EPSG:${layerConfiguration.source.projection}`;
+      if (layerConfiguration.source.tileGrid) {
         const tileGridOptions: TileGridOptions = {
-          origin: layerEntryConfig.source.tileGrid?.origin,
-          resolutions: layerEntryConfig.source.tileGrid?.resolutions as number[],
+          origin: layerConfiguration.source.tileGrid?.origin,
+          resolutions: layerConfiguration.source.tileGrid?.resolutions as number[],
         };
-        if (layerEntryConfig.source.tileGrid?.tileSize) tileGridOptions.tileSize = layerEntryConfig.source.tileGrid?.tileSize;
-        if (layerEntryConfig.source.tileGrid?.extent) tileGridOptions.extent = layerEntryConfig.source.tileGrid?.extent;
+        if (layerConfiguration.source.tileGrid?.tileSize) tileGridOptions.tileSize = layerConfiguration.source.tileGrid?.tileSize;
+        if (layerConfiguration.source.tileGrid?.extent) tileGridOptions.extent = layerConfiguration.source.tileGrid?.extent;
         sourceOptions.tileGrid = new TileGrid(tileGridOptions);
       }
 
       sourceOptions.format = new MVT();
       sourceOptions.projection = `EPSG:${api.maps[this.mapId].currentProjection}`;
-      sourceOptions.tileGrid = new TileGrid(layerEntryConfig.source!.tileGrid!);
+      sourceOptions.tileGrid = new TileGrid(layerConfiguration.source!.tileGrid!);
       const tileLayerOptions: TileOptions<VectorTileSource> = { source: new VectorTileSource(sourceOptions) };
-      // layerEntryConfig.initialSettings cannot be undefined because config-validation set it to {} if it is undefined.
-      if (layerEntryConfig.initialSettings?.className !== undefined)
-        tileLayerOptions.className = layerEntryConfig.initialSettings?.className;
-      if (layerEntryConfig.initialSettings?.extent !== undefined) tileLayerOptions.extent = layerEntryConfig.initialSettings?.extent;
-      if (layerEntryConfig.initialSettings?.maxZoom !== undefined) tileLayerOptions.maxZoom = layerEntryConfig.initialSettings?.maxZoom;
-      if (layerEntryConfig.initialSettings?.minZoom !== undefined) tileLayerOptions.minZoom = layerEntryConfig.initialSettings?.minZoom;
-      if (layerEntryConfig.initialSettings?.opacity !== undefined) tileLayerOptions.opacity = layerEntryConfig.initialSettings?.opacity;
-      if (layerEntryConfig.initialSettings?.visible !== undefined)
-        tileLayerOptions.visible = layerEntryConfig.initialSettings?.visible !== 'no';
+      // layerConfiguration.initialSettings cannot be undefined because config-validation set it to {} if it is undefined.
+      if (layerConfiguration.initialSettings?.className !== undefined)
+        tileLayerOptions.className = layerConfiguration.initialSettings?.className;
+      if (layerConfiguration.initialSettings?.extent !== undefined) tileLayerOptions.extent = layerConfiguration.initialSettings?.extent;
+      if (layerConfiguration.initialSettings?.maxZoom !== undefined) tileLayerOptions.maxZoom = layerConfiguration.initialSettings?.maxZoom;
+      if (layerConfiguration.initialSettings?.minZoom !== undefined) tileLayerOptions.minZoom = layerConfiguration.initialSettings?.minZoom;
+      if (layerConfiguration.initialSettings?.opacity !== undefined) tileLayerOptions.opacity = layerConfiguration.initialSettings?.opacity;
+      if (layerConfiguration.initialSettings?.visible !== undefined)
+        tileLayerOptions.visible = layerConfiguration.initialSettings?.visible !== 'no';
 
       // TODO remove after demoing
       const declutter = this.mapId !== 'LYR2';
-      layerEntryConfig.olLayer = new VectorTileLayer({ ...tileLayerOptions, declutter });
+      layerConfiguration.olLayer = new VectorTileLayer({ ...tileLayerOptions, declutter });
       if (this.metadata?.defaultStyles)
         applyStyle(
-          layerEntryConfig.olLayer as VectorTileLayer,
+          layerConfiguration.olLayer as VectorTileLayer,
           `${getLocalizedValue(this.metadataAccessPath, this.mapId)}${this.metadata.defaultStyles}/root.json`
         );
 
-      super.addLoadendListener(layerEntryConfig, 'tile');
+      super.addLoadendListener(layerConfiguration, 'tile');
 
-      resolve(layerEntryConfig.olLayer);
+      resolve(layerConfiguration.olLayer);
     });
     return promisedVectorLayer;
   }
@@ -217,11 +218,11 @@ export class VectorTiles extends AbstractGeoViewRaster {
    * This method is used to process the layer's metadata. It will fill the empty fields of the layer's configuration (renderer,
    * initial settings, fields and aliases).
    *
-   * @param {TypeTileLayerEntryConfig} layerEntryConfig The layer entry configuration to process.
+   * @param {TypeTileLayerEntryConfig} layerConfiguration The layer entry configuration to process.
    *
    * @returns {Promise<void>} A promise that the vector layer configuration has its metadata processed.
    */
-  protected processLayerMetadata(layerEntryConfig: TypeTileLayerEntryConfig): Promise<void> {
+  protected processLayerMetadata(layerConfiguration: TypeTileLayerEntryConfig): Promise<void> {
     const promiseOfExecution = new Promise<void>((resolve) => {
       if (!this.metadata) resolve();
       else {
@@ -233,11 +234,11 @@ export class VectorTiles extends AbstractGeoViewRaster {
           resolutions: (tileInfo.lods as Array<TypeJsonObject>).map(({ resolution }) => resolution as number),
           tileSize: [tileInfo.rows as number, tileInfo.cols as number],
         };
-        layerEntryConfig.source!.tileGrid = newTileGrid;
+        layerConfiguration.source!.tileGrid = newTileGrid;
 
-        if (layerEntryConfig.initialSettings?.extent)
-          layerEntryConfig.initialSettings.extent = transformExtent(
-            layerEntryConfig.initialSettings.extent,
+        if (layerConfiguration.initialSettings?.extent)
+          layerConfiguration.initialSettings.extent = transformExtent(
+            layerConfiguration.initialSettings.extent,
             'EPSG:4326',
             `EPSG:${api.maps[this.mapId].currentProjection}`
           );
@@ -249,17 +250,17 @@ export class VectorTiles extends AbstractGeoViewRaster {
   }
 
   /** ***************************************************************************************************************************
-   * Get the bounds of the layer represented in the layerConfig, returns updated bounds
+   * Get the bounds of the layer represented in the layerConfiguration, returns updated bounds
    *
-   * @param {TypeLayerEntryConfig} layerConfig Layer config to get bounds from.
+   * @param {TypeLayerEntryConfig} layerConfiguration Layer config to get bounds from.
    * @param {Extent | undefined} bounds The current bounding box to be adjusted.
    *
    * @returns {Extent} The layer bounding box.
    */
-  getBounds(layerConfig: TypeLayerEntryConfig, bounds: Extent | undefined): Extent | undefined {
-    const layerBounds = (layerConfig.olLayer as TileLayer<VectorTileSource>).getSource()?.getTileGrid()?.getExtent();
+  getBounds(layerConfiguration: TypeLayerEntryConfig, bounds: Extent | undefined): Extent | undefined {
+    const layerBounds = (layerConfiguration.olLayer as TileLayer<VectorTileSource>).getSource()?.getTileGrid()?.getExtent();
     const projection =
-      (layerConfig.olLayer as TileLayer<VectorTileSource>).getSource()?.getProjection()?.getCode().replace('EPSG:', '') ||
+      (layerConfiguration.olLayer as TileLayer<VectorTileSource>).getSource()?.getProjection()?.getCode().replace('EPSG:', '') ||
       api.maps[this.mapId].currentProjection;
 
     if (layerBounds) {

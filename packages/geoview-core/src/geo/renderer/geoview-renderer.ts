@@ -419,22 +419,22 @@ export class GeoviewRenderer {
   /** ***************************************************************************************************************************
    * This method gets the legend styles used by the the layer as specified by the style configuration.
    *
-   * @param {TypeBaseLayerEntryConfig & {style: TypeStyleConfig;}} layerEntryConfig The layer configuration.
+   * @param {TypeBaseLayerEntryConfig & {style: TypeStyleConfig;}} layerConfiguration The layer configuration.
    *
    * @returns {Promise<TypeVectorLayerStyles>} A promise that the layer styles are processed.
    */
   async getLegendStyles(
-    layerEntryConfig: TypeBaseLayerEntryConfig & {
+    layerConfiguration: TypeBaseLayerEntryConfig & {
       style: TypeStyleConfig;
     }
   ): Promise<TypeVectorLayerStyles> {
     try {
-      const styleConfig: TypeStyleConfig = layerEntryConfig.style;
+      const styleConfig: TypeStyleConfig = layerConfiguration.style;
       if (!styleConfig) return {};
 
       const clusterCanvas =
-        layerEntryIsVector(layerEntryConfig) && (layerEntryConfig.source as TypeBaseSourceVectorInitialConfig).cluster?.enable
-          ? this.createPointCanvas(this.getClusterStyle(layerEntryConfig))
+        layerEntryIsVector(layerConfiguration) && (layerConfiguration.source as TypeBaseSourceVectorInitialConfig).cluster?.enable
+          ? this.createPointCanvas(this.getClusterStyle(layerConfiguration))
           : undefined;
 
       if (styleConfig.Point) {
@@ -531,20 +531,20 @@ export class GeoviewRenderer {
    * create it using the default style strategy.
    *
    * @param {Feature<Geometry>} feature The feature that need its style to be defined.
-   * @param {TypeBaseLayerEntryConfig | TypeVectorTileLayerEntryConfig | TypeVectorLayerEntryConfig} layerEntryConfig The layer
+   * @param {TypeBaseLayerEntryConfig | TypeVectorTileLayerEntryConfig | TypeVectorLayerEntryConfig} layerConfiguration The layer
    * entry config that may have a style configuration for the feature. If style does not exist for the geometryType, create it.
    *
    * @returns {Style | undefined} The style applied to the feature or undefined if not found.
    */
   getFeatureStyle(
     feature: Feature<Geometry>,
-    layerEntryConfig: TypeBaseLayerEntryConfig | TypeVectorTileLayerEntryConfig | TypeVectorLayerEntryConfig
+    layerConfiguration: TypeBaseLayerEntryConfig | TypeVectorTileLayerEntryConfig | TypeVectorLayerEntryConfig
   ): Style | undefined {
     const geometryType = getGeometryType(feature);
     // If style does not exist for the geometryType, create it.
-    let { style } = layerEntryConfig as TypeVectorLayerEntryConfig;
+    let { style } = layerConfiguration as TypeVectorLayerEntryConfig;
     if (style === undefined || style[geometryType] === undefined)
-      style = this.createDefaultStyle(geometryType, layerEntryConfig as TypeVectorLayerEntryConfig);
+      style = this.createDefaultStyle(geometryType, layerConfiguration as TypeVectorLayerEntryConfig);
     // Get the style accordingly to its type and geometry.
     if (style![geometryType] !== undefined) {
       const styleSettings = style![geometryType]!;
@@ -553,8 +553,8 @@ export class GeoviewRenderer {
         this,
         styleSettings,
         feature,
-        layerEntryConfig.olLayer!.get('filterEquation'),
-        layerEntryConfig.olLayer!.get('legendFilterIsOff')
+        layerConfiguration.olLayer!.get('filterEquation'),
+        layerConfiguration.olLayer!.get('legendFilterIsOff')
       );
     }
     return undefined;
@@ -564,30 +564,30 @@ export class GeoviewRenderer {
    * This method gets the canvas icon from the style of the feature using the layer entry config.
    *
    * @param {Feature<Geometry>} feature The feature that need its canvas icon to be defined.
-   * @param {TypeBaseLayerEntryConfig | TypeVectorTileLayerEntryConfig | TypeVectorLayerEntryConfig} layerEntryConfig The layer
+   * @param {TypeBaseLayerEntryConfig | TypeVectorTileLayerEntryConfig | TypeVectorLayerEntryConfig} layerConfiguration The layer
    * entry config that may have a style configuration for the feature.
    *
    * @returns {Promise<HTMLCanvasElement | undefined>} The canvas icon associated to the feature or undefined if not found.
    */
   getFeatureCanvas(
     feature: Feature<Geometry>,
-    layerEntryConfig: TypeBaseLayerEntryConfig | TypeVectorTileLayerEntryConfig | TypeVectorLayerEntryConfig
+    layerConfiguration: TypeBaseLayerEntryConfig | TypeVectorTileLayerEntryConfig | TypeVectorLayerEntryConfig
   ): Promise<HTMLCanvasElement | undefined> {
     const promisedCanvas = new Promise<HTMLCanvasElement | undefined>((resolve) => {
       const geometryType = getGeometryType(feature);
-      const { style, source } = layerEntryConfig as TypeVectorLayerEntryConfig;
+      const { style, source } = layerConfiguration as TypeVectorLayerEntryConfig;
       // Get the style accordingly to its type and geometry.
       if (style![geometryType] !== undefined) {
         const styleSettings = style![geometryType]!;
         const { styleType } = styleSettings;
         const featureStyle = source?.cluster?.enable
-          ? this.getClusterStyle(layerEntryConfig as TypeVectorLayerEntryConfig, feature)
+          ? this.getClusterStyle(layerConfiguration as TypeVectorLayerEntryConfig, feature)
           : this.processStyle[styleType][geometryType].call(
               this,
               styleSettings,
               feature,
-              layerEntryConfig.olLayer!.get('filterEquation'),
-              layerEntryConfig.olLayer!.get('legendFilterIsOff')
+              layerConfiguration.olLayer!.get('filterEquation'),
+              layerConfiguration.olLayer!.get('legendFilterIsOff')
             );
         if (featureStyle) {
           if (geometryType === 'Point') {
@@ -597,7 +597,7 @@ export class GeoviewRenderer {
                 isSimpleSymbolVectorConfig((styleSettings as TypeUniqueValueStyleConfig).uniqueValueStyleInfo[0].settings)) ||
               (isClassBreakStyleConfig(styleSettings) &&
                 isSimpleSymbolVectorConfig((styleSettings as TypeClassBreakStyleConfig).classBreakStyleInfo[0].settings)) ||
-              (layerEntryConfig.source as TypeBaseSourceVectorInitialConfig).cluster?.enable
+              (layerConfiguration.source as TypeBaseSourceVectorInitialConfig).cluster?.enable
             )
               resolve(this.createPointCanvas(featureStyle));
             else
@@ -616,15 +616,15 @@ export class GeoviewRenderer {
    * This method gets the style of the cluster feature using the layer entry config. If the style does not exist, create it using
    * the default style strategy.
    *
-   * @param {TypeBaseLayerEntryConfig | TypeVectorLayerEntryConfig} layerEntryConfig The layer entry config that may have a style
+   * @param {TypeBaseLayerEntryConfig | TypeVectorLayerEntryConfig} layerConfiguration The layer entry config that may have a style
    * configuration for the feature. If style does not exist for the geometryType, create it.
    * @param {Feature<Geometry>} feature The feature that need its style to be defined. When undefined, it's because we fetch the styles
    * for the legend.
    *
    * @returns {Style | undefined} The style applied to the feature or undefined if not found.
    */
-  getClusterStyle(layerEntryConfig: TypeVectorLayerEntryConfig, feature?: Feature<Geometry>): Style | undefined {
-    const configSource = layerEntryConfig.source as TypeBaseSourceVectorInitialConfig;
+  getClusterStyle(layerConfiguration: TypeVectorLayerEntryConfig, feature?: Feature<Geometry>): Style | undefined {
+    const configSource = layerConfiguration.source as TypeBaseSourceVectorInitialConfig;
     if (!configSource.cluster?.textColor) configSource.cluster!.textColor = '';
 
     const clusterSize = feature?.get('features')
@@ -640,9 +640,9 @@ export class GeoviewRenderer {
 
     // Get the cluster point style to use when the features are clustered.
     if (feature === undefined || clusterSize > 1) {
-      const styleSettings = layerEntryConfig.source!.cluster!.settings!;
+      const styleSettings = layerConfiguration.source!.cluster!.settings!;
       if (!styleSettings.color || !styleSettings.stroke?.color) {
-        const { style } = layerEntryConfig;
+        const { style } = layerConfiguration;
         let geoColor: string | null = null;
         const geoStyle = style?.Point || style?.Polygon || style?.LineString || null;
         if (geoStyle) {
@@ -656,11 +656,11 @@ export class GeoviewRenderer {
         if (!styleSettings.stroke.color) styleSettings.stroke.color = strokeColor;
       }
 
-      const pointStyle = this.processClusterSymbol(layerEntryConfig, feature);
+      const pointStyle = this.processClusterSymbol(layerConfiguration, feature);
       if (pointStyle!.getText()!.getText() !== '1') return pointStyle;
       let styleFound: Style | undefined;
       const theUniqueVisibleFeature = (feature!.get('features') as Array<Feature<Geometry>>).find((featureToTest) => {
-        styleFound = this.getFeatureStyle(featureToTest, layerEntryConfig);
+        styleFound = this.getFeatureStyle(featureToTest, layerConfiguration);
         return styleFound;
       });
       return styleFound;
@@ -671,7 +671,7 @@ export class GeoviewRenderer {
       const originalFeature = clusterSize ? feature!.get('features')[0] : feature;
 
       // If style does not exist for the geometryType, getFeatureStyle will create it.
-      return this.getFeatureStyle(originalFeature, layerEntryConfig);
+      return this.getFeatureStyle(originalFeature, layerConfiguration);
     }
 
     return undefined;
@@ -907,14 +907,14 @@ export class GeoviewRenderer {
   /** ***************************************************************************************************************************
    * Process a cluster circle symbol using the settings.
    *
-   * @param {TypeBaseLayerEntryConfig | TypeVectorLayerEntryConfig} layerEntryConfig The layer configuration.
+   * @param {TypeBaseLayerEntryConfig | TypeVectorLayerEntryConfig} layerConfiguration The layer configuration.
    * @param {Feature<Geometry>} feature The feature that need its style to be defined. When undefined, it's because we fetch the styles
    * for the legend.
    *
    * @returns {Style | undefined} The Style created. Undefined if unable to create it.
    */
-  private processClusterSymbol(layerEntryConfig: TypeVectorLayerEntryConfig, feature?: Feature<Geometry>): Style | undefined {
-    const { settings } = layerEntryConfig.source!.cluster!;
+  private processClusterSymbol(layerConfiguration: TypeVectorLayerEntryConfig, feature?: Feature<Geometry>): Style | undefined {
+    const { settings } = layerConfiguration.source!.cluster!;
     const fillOptions: FillOptions = { color: settings!.color };
     const strokeOptions: StrokeOptions = this.createStrokeOptions(settings!);
     const circleOptions: CircleOptions = { radius: settings!.size !== undefined ? settings!.size + 10 : 14 };
@@ -925,7 +925,7 @@ export class GeoviewRenderer {
     const text = feature
       ? (feature.get('features') as Array<Feature<Geometry>>)
           .reduce((numberOfVisibleFeature, featureToTest) => {
-            if (this.getFeatureStyle(featureToTest, layerEntryConfig)) {
+            if (this.getFeatureStyle(featureToTest, layerConfiguration)) {
               const geometryType = featureToTest.getGeometry()?.getType();
               let numberOfEmbededFeatures = 1;
               if (geometryType === 'MultiPoint') numberOfEmbededFeatures = (featureToTest.getGeometry() as MultiPoint).getPoints().length;
@@ -942,7 +942,7 @@ export class GeoviewRenderer {
     if (text === '0') return undefined;
     const textOptions: TextOptions = { text, font: '12px sans-serif' };
     const textFillOptions: FillOptions = {
-      color: layerEntryConfig.source?.cluster?.textColor !== '' ? layerEntryConfig.source!.cluster!.textColor : '#fff',
+      color: layerConfiguration.source?.cluster?.textColor !== '' ? layerConfiguration.source!.cluster!.textColor : '#fff',
     };
     textOptions.fill = new Fill(textFillOptions);
     const textStrokeOptions: StrokeOptions = { color: '#000', width: 2 };
@@ -1434,50 +1434,50 @@ export class GeoviewRenderer {
    * Create a default style to use with a vector feature that has no style configuration.
    *
    * @param {TypeStyleGeometry} geometryType The type of geometry (Point, LineString, Polygon).
-   * @param {TypeVectorTileLayerEntryConfig | TypeVectorLayerEntryConfig} layerEntryConfig the layer entry config to configure.
+   * @param {TypeVectorTileLayerEntryConfig | TypeVectorLayerEntryConfig} layerConfiguration the layer entry config to configure.
    *
    * @returns {TypeStyleConfig | undefined} The Style configurationcreated. Undefined if unable to create it.
    */
   private createDefaultStyle(
     geometryType: TypeStyleGeometry,
-    layerEntryConfig: TypeVectorTileLayerEntryConfig | TypeVectorLayerEntryConfig
+    layerConfiguration: TypeVectorTileLayerEntryConfig | TypeVectorLayerEntryConfig
   ): TypeStyleConfig | undefined {
-    if (layerEntryConfig.style === undefined) layerEntryConfig.style = {};
-    const label = getLocalizedValue(layerEntryConfig.layerName, this.mapId) as string;
+    if (layerConfiguration.style === undefined) layerConfiguration.style = {};
+    const label = getLocalizedValue(layerConfiguration.layerName, this.mapId) as string;
     if (geometryType === 'Point') {
       const settings: TypeSimpleSymbolVectorConfig = {
         type: 'simpleSymbol',
-        color: layerEntryConfig.source?.cluster?.settings?.color || this.getDefaultColor(0.25),
+        color: layerConfiguration.source?.cluster?.settings?.color || this.getDefaultColor(0.25),
         stroke: {
-          color: layerEntryConfig.source?.cluster?.settings?.stroke?.color || this.getDefaultColorAndIncrementIndex(1),
+          color: layerConfiguration.source?.cluster?.settings?.stroke?.color || this.getDefaultColorAndIncrementIndex(1),
           lineStyle: 'solid',
           width: 1,
         },
         symbol: 'circle',
       };
       const styleSettings: TypeSimpleStyleConfig = { styleType: 'simple', label, settings };
-      layerEntryConfig.style[geometryType] = styleSettings;
-      return layerEntryConfig.style;
+      layerConfiguration.style[geometryType] = styleSettings;
+      return layerConfiguration.style;
     }
     if (geometryType === 'LineString') {
       const settings: TypeLineStringVectorConfig = {
         type: 'lineString',
-        stroke: { color: layerEntryConfig.source?.cluster?.settings?.stroke?.color || this.getDefaultColorAndIncrementIndex(1) },
+        stroke: { color: layerConfiguration.source?.cluster?.settings?.stroke?.color || this.getDefaultColorAndIncrementIndex(1) },
       };
       const styleSettings: TypeSimpleStyleConfig = { styleType: 'simple', label, settings };
-      layerEntryConfig.style[geometryType] = styleSettings;
-      return layerEntryConfig.style;
+      layerConfiguration.style[geometryType] = styleSettings;
+      return layerConfiguration.style;
     }
     if (geometryType === 'Polygon') {
       const settings: TypePolygonVectorConfig = {
         type: 'filledPolygon',
-        color: layerEntryConfig.source?.cluster?.settings?.color || this.getDefaultColor(0.25),
-        stroke: { color: layerEntryConfig.source?.cluster?.settings?.stroke?.color || this.getDefaultColorAndIncrementIndex(1) },
+        color: layerConfiguration.source?.cluster?.settings?.color || this.getDefaultColor(0.25),
+        stroke: { color: layerConfiguration.source?.cluster?.settings?.stroke?.color || this.getDefaultColorAndIncrementIndex(1) },
         fillStyle: 'solid',
       };
       const styleSettings: TypeSimpleStyleConfig = { styleType: 'simple', label, settings };
-      layerEntryConfig.style[geometryType] = styleSettings;
-      return layerEntryConfig.style;
+      layerConfiguration.style[geometryType] = styleSettings;
+      return layerConfiguration.style;
     }
     // eslint-disable-next-line no-console
     console.log(`Geometry type ${geometryType} is not supported by the GeoView viewer.`);

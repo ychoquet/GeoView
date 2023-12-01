@@ -26,19 +26,19 @@ export const payloadIsALayerConfig = (verifyIfPayload: PayloadBaseClass): verify
  */
 export class LayerConfigPayload extends PayloadBaseClass {
   // the layer configuration
-  layerConfig: TypeGeoviewLayerConfig;
+  layerConfiguration: TypeGeoviewLayerConfig;
 
   /**
    * Constructor for the class
    *
    * @param {EventStringId} event the event identifier for which the payload is constructed
    * @param {string | null} handlerName the handler Name
-   * @param {TypeGeoviewLayerConfig} layerConfig the layer configuration
+   * @param {TypeGeoviewLayerConfig} layerConfiguration the layer configuration
    */
-  constructor(event: EventStringId, handlerName: string | null, layerConfig: TypeGeoviewLayerConfig) {
+  constructor(event: EventStringId, handlerName: string | null, layerConfiguration: TypeGeoviewLayerConfig) {
     if (!validEvents.includes(event)) throw new Error(`LayerConfigPayload can't be instanciated for event of type ${event}`);
     super(event, handlerName);
-    this.layerConfig = layerConfig;
+    this.layerConfiguration = layerConfiguration;
   }
 }
 
@@ -48,14 +48,14 @@ export class LayerConfigPayload extends PayloadBaseClass {
  *
  * @param {EventStringId} event the event identifier for which the payload is constructed
  * @param {string | null} handlerName the handler Name
- * @param {TypeGeoviewLayerConfig} layerConfig the layer configuration
+ * @param {TypeGeoviewLayerConfig} layerConfiguration the layer configuration
  *
  * @returns {LayerConfigPayload} the LayerConfigPayload object created
  */
 export const layerConfigPayload = (
   event: EventStringId,
   handlerName: string | null,
-  layerConfig: TypeGeoviewLayerConfig
+  layerConfiguration: TypeGeoviewLayerConfig
 ): LayerConfigPayload => {
-  return new LayerConfigPayload(event, handlerName, layerConfig);
+  return new LayerConfigPayload(event, handlerName, layerConfiguration);
 };

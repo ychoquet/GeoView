@@ -93,23 +93,23 @@ export class GeoJSON extends AbstractGeoViewVector {
    * Initialize layer
    *
    * @param {string} mapId the id of the map
-   * @param {TypeGeoJSONLayerConfig} layerConfig the layer configuration
+   * @param {TypeGeoJSONLayerConfig} layerConfiguration the layer configuration
    */
-  constructor(mapId: string, layerConfig: TypeGeoJSONLayerConfig) {
-    super(CONST_LAYER_TYPES.GEOJSON, layerConfig, mapId);
+  constructor(mapId: string, layerConfiguration: TypeGeoJSONLayerConfig) {
+    super(CONST_LAYER_TYPES.GEOJSON, layerConfiguration, mapId);
   }
 
   /** ***************************************************************************************************************************
    * Extract the type of the specified field from the metadata. If the type can not be found, return 'string'.
    *
    * @param {string} fieldName field name for which we want to get the type.
-   * @param {TypeLayerEntryConfig} layerConfig layer configuration.
+   * @param {TypeLayerEntryConfig} layerConfiguration layer configuration.
    *
    * @returns {'string' | 'date' | 'number'} The type of the field.
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected getFieldType(fieldName: string, layerConfig: TypeLayerEntryConfig): 'string' | 'date' | 'number' {
-    const fieldDefinitions = this.layerMetadata[Layer.getLayerPath(layerConfig)].source.featureInfo;
+  protected getFieldType(fieldName: string, layerConfiguration: TypeLayerEntryConfig): 'string' | 'date' | 'number' {
+    const fieldDefinitions = this.layerMetadata[Layer.getLayerPath(layerConfiguration)].source.featureInfo;
     const fieldIndex = getLocalizedValue(Cast<TypeLocalizedString>(fieldDefinitions.outfields), this.mapId)?.split(',').indexOf(fieldName);
     if (!fieldIndex || fieldIndex === -1) return 'string';
     return (fieldDefinitions.fieldTypes as string).split(',')[fieldIndex!] as 'string' | 'date' | 'number';
@@ -122,22 +122,22 @@ export class GeoJSON extends AbstractGeoViewVector {
    * @param {TypeListOfLayerEntryConfig} listOfLayerEntryConfig The list of layer entries configuration to validate.
    */
   protected validateListOfLayerEntryConfig(listOfLayerEntryConfig: TypeListOfLayerEntryConfig) {
-    this.changeLayerPhase('validateListOfLayerEntryConfig');
-    listOfLayerEntryConfig.forEach((layerEntryConfig: TypeLayerEntryConfig) => {
-      const layerPath = Layer.getLayerPath(layerEntryConfig);
-      if (layerEntryIsGroupLayer(layerEntryConfig)) {
-        this.validateListOfLayerEntryConfig(layerEntryConfig.listOfLayerEntryConfig!);
-        if (!layerEntryConfig.listOfLayerEntryConfig.length) {
+    this.setLayerPhase('validateListOfLayerEntryConfig');
+    listOfLayerEntryConfig.forEach((layerConfiguration: TypeLayerEntryConfig) => {
+      const layerPath = Layer.getLayerPath(layerConfiguration);
+      if (layerEntryIsGroupLayer(layerConfiguration)) {
+        this.validateListOfLayerEntryConfig(layerConfiguration.listOfLayerEntryConfig!);
+        if (!layerConfiguration.listOfLayerEntryConfig.length) {
           this.layerLoadError.push({
             layer: layerPath,
             consoleMessage: `Empty layer group (mapId:  ${this.mapId}, layerPath: ${layerPath})`,
           });
-          this.changeLayerStatus('error', layerEntryConfig);
+          this.setLayerStatus('error', layerConfiguration);
         }
         return;
       }
 
-      this.changeLayerStatus('loading', layerEntryConfig);
+      this.setLayerStatus('loading', layerConfiguration);
 
       // When no metadata are provided, all layers are considered valid.
       if (!this.metadata) return;
@@ -148,14 +148,14 @@ export class GeoJSON extends AbstractGeoViewVector {
         const metadataLayerList = Cast<TypeLayerEntryConfig[]>(this.metadata?.listOfLayerEntryConfig);
         const foundEntry = metadataLayerList.find(
           (layerMetadata) =>
-            layerMetadata.layerId === layerEntryConfig.layerId && layerMetadata.layerPathEnding === layerEntryConfig.layerPathEnding
+            layerMetadata.layerId === layerConfiguration.layerId && layerMetadata.layerPathEnding === layerConfiguration.layerPathEnding
         );
         if (!foundEntry) {
           this.layerLoadError.push({
             layer: layerPath,
             consoleMessage: `GeoJSON layer not found (mapId:  ${this.mapId}, layerPath: ${layerPath})`,
           });
-          this.changeLayerStatus('error', layerEntryConfig);
+          this.setLayerStatus('error', layerConfiguration);
           return;
         }
         return;
@@ -171,46 +171,46 @@ export class GeoJSON extends AbstractGeoViewVector {
    * This method is used to process the layer's metadata. It will fill the empty fields of the layer's configuration (renderer,
    * initial settings, fields and aliases).
    *
-   * @param {TypeVectorLayerEntryConfig} layerEntryConfig The layer entry configuration to process.
+   * @param {TypeVectorLayerEntryConfig} layerConfiguration The layer entry configuration to process.
    *
    * @returns {Promise<void>} A promise that the vector layer configuration has its metadata processed.
    */
-  protected processLayerMetadata(layerEntryConfig: TypeVectorLayerEntryConfig): Promise<void> {
+  protected processLayerMetadata(layerConfiguration: TypeVectorLayerEntryConfig): Promise<void> {
     const promiseOfExecution = new Promise<void>((resolve) => {
       if (!this.metadata) resolve();
       else {
         const metadataLayerList = Cast<TypeVectorLayerEntryConfig[]>(this.metadata?.listOfLayerEntryConfig);
         const layerMetadataFound = metadataLayerList.find(
           (layerMetadata) =>
-            layerMetadata.layerId === layerEntryConfig.layerId && layerMetadata.layerPathEnding === layerEntryConfig.layerPathEnding
+            layerMetadata.layerId === layerConfiguration.layerId && layerMetadata.layerPathEnding === layerConfiguration.layerPathEnding
         );
         if (layerMetadataFound) {
-          this.layerMetadata[Layer.getLayerPath(layerEntryConfig)] = toJsonObject(layerMetadataFound);
-          layerEntryConfig.layerName = layerEntryConfig.layerName || layerMetadataFound.layerName;
-          layerEntryConfig.source = defaultsDeep(layerEntryConfig.source, layerMetadataFound.source);
-          layerEntryConfig.initialSettings = defaultsDeep(layerEntryConfig.initialSettings, layerMetadataFound.initialSettings);
-          layerEntryConfig.style = defaultsDeep(layerEntryConfig.style, layerMetadataFound.style);
-          // When the dataAccessPath stored in the layerEntryConfig.source objet is equal to the root of the metadataAccessPath with a
+          this.layerMetadata[Layer.getLayerPath(layerConfiguration)] = toJsonObject(layerMetadataFound);
+          layerConfiguration.layerName = layerConfiguration.layerName || layerMetadataFound.layerName;
+          layerConfiguration.source = defaultsDeep(layerConfiguration.source, layerMetadataFound.source);
+          layerConfiguration.initialSettings = defaultsDeep(layerConfiguration.initialSettings, layerMetadataFound.initialSettings);
+          layerConfiguration.style = defaultsDeep(layerConfiguration.style, layerMetadataFound.style);
+          // When the dataAccessPath stored in the layerConfiguration.source objet is equal to the root of the metadataAccessPath with a
           // layerId ending, chances are that it was set by the config-validation because of an empty dataAcessPath value in the config.
           // This situation means that we want to use the dataAccessPath found in the metadata if it is set, otherwise we will keep the
           // config dataAccessPath value.
-          let metadataAccessPathRoot = getLocalizedValue(layerEntryConfig.geoviewRootLayer?.metadataAccessPath, this.mapId);
+          let metadataAccessPathRoot = getLocalizedValue(layerConfiguration.geoviewRootLayer?.metadataAccessPath, this.mapId);
           if (metadataAccessPathRoot) {
             metadataAccessPathRoot =
               metadataAccessPathRoot.split('/').length > 1 ? metadataAccessPathRoot.split('/').slice(0, -1).join('/') : './';
-            const metadataAccessPathRootPlusLayerId = `${metadataAccessPathRoot}/${layerEntryConfig.layerId}`;
+            const metadataAccessPathRootPlusLayerId = `${metadataAccessPathRoot}/${layerConfiguration.layerId}`;
             if (
-              metadataAccessPathRootPlusLayerId === getLocalizedValue(layerEntryConfig.source?.dataAccessPath, this.mapId) &&
+              metadataAccessPathRootPlusLayerId === getLocalizedValue(layerConfiguration.source?.dataAccessPath, this.mapId) &&
               getLocalizedValue(layerMetadataFound.source?.dataAccessPath, this.mapId)
             ) {
-              layerEntryConfig.source!.dataAccessPath = { ...layerMetadataFound.source!.dataAccessPath } as TypeLocalizedString;
+              layerConfiguration.source!.dataAccessPath = { ...layerMetadataFound.source!.dataAccessPath } as TypeLocalizedString;
             }
           }
         }
 
-        if (layerEntryConfig.initialSettings?.extent)
-          layerEntryConfig.initialSettings.extent = transformExtent(
-            layerEntryConfig.initialSettings.extent,
+        if (layerConfiguration.initialSettings?.extent)
+          layerConfiguration.initialSettings.extent = transformExtent(
+            layerConfiguration.initialSettings.extent,
             'EPSG:4326',
             `EPSG:${api.maps[this.mapId].currentProjection}`
           );
@@ -224,21 +224,21 @@ export class GeoJSON extends AbstractGeoViewVector {
   /** ***************************************************************************************************************************
    * Create a source configuration for the vector layer.
    *
-   * @param {TypeBaseLayerEntryConfig} layerEntryConfig The layer entry configuration.
+   * @param {TypeBaseLayerEntryConfig} layerConfiguration The layer entry configuration.
    * @param {SourceOptions} sourceOptions The source options (default: {}).
    * @param {ReadOptions} readOptions The read options (default: {}).
    *
    * @returns {VectorSource<Geometry>} The source configuration that will be used to create the vector layer.
    */
   protected createVectorSource(
-    layerEntryConfig: TypeBaseLayerEntryConfig,
+    layerConfiguration: TypeBaseLayerEntryConfig,
     sourceOptions: SourceOptions = {},
     readOptions: ReadOptions = {}
-  ): VectorSource<Feature<Geometry>> {
-    readOptions.dataProjection = (layerEntryConfig.source as TypeBaseSourceVectorInitialConfig).dataProjection;
-    sourceOptions.url = getLocalizedValue(layerEntryConfig.source!.dataAccessPath!, this.mapId);
+  ): VectorSource<Feature> {
+    readOptions.dataProjection = (layerConfiguration.source as TypeBaseSourceVectorInitialConfig).dataProjection;
+    sourceOptions.url = getLocalizedValue(layerConfiguration.source!.dataAccessPath!, this.mapId);
     sourceOptions.format = new FormatGeoJSON();
-    const vectorSource = super.createVectorSource(layerEntryConfig, sourceOptions, readOptions);
+    const vectorSource = super.createVectorSource(layerConfiguration, sourceOptions, readOptions);
     return vectorSource;
   }
 }

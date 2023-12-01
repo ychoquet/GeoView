@@ -42,9 +42,12 @@ export function FooterPanelLegendItem({ mapId }: Props): JSX.Element {
         api.eventNames.LAYER.EVENT_LAYER_ADDED,
         () => {
           updateLayers();
-          api.event.off(api.eventNames.LAYER.EVENT_LAYER_ADDED, `${mapId}/${(payload as LayerConfigPayload).layerConfig.geoviewLayerId}`);
+          api.event.off(
+            api.eventNames.LAYER.EVENT_LAYER_ADDED,
+            `${mapId}/${(payload as LayerConfigPayload).layerConfiguration.geoviewLayerId}`
+          );
         },
-        `${mapId}/${(payload as LayerConfigPayload).layerConfig.geoviewLayerId}`
+        `${mapId}/${(payload as LayerConfigPayload).layerConfiguration.geoviewLayerId}`
       );
     }
   };

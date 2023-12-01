@@ -83,10 +83,10 @@ export class ImageStatic extends AbstractGeoViewRaster {
    * Initialize layer
    *
    * @param {string} mapId the id of the map
-   * @param {TypeImageStaticLayerConfig} layerConfig the layer configuration
+   * @param {TypeImageStaticLayerConfig} layerConfiguration the layer configuration
    */
-  constructor(mapId: string, layerConfig: TypeImageStaticLayerConfig) {
-    super(CONST_LAYER_TYPES.IMAGE_STATIC, layerConfig, mapId);
+  constructor(mapId: string, layerConfiguration: TypeImageStaticLayerConfig) {
+    super(CONST_LAYER_TYPES.IMAGE_STATIC, layerConfiguration, mapId);
   }
 
   /** ***************************************************************************************************************************
@@ -95,7 +95,7 @@ export class ImageStatic extends AbstractGeoViewRaster {
    * @returns {Promise<void>} A promise that the execution is completed.
    */
   protected getServiceMetadata(): Promise<void> {
-    this.changeLayerPhase('getServiceMetadata');
+    this.setLayerPhase('getServiceMetadata');
     const promisedExecution = new Promise<void>((resolve) => {
       resolve();
     });
@@ -105,11 +105,11 @@ export class ImageStatic extends AbstractGeoViewRaster {
   /** ***************************************************************************************************************************
    * Get the legend image of a layer.
    *
-   * @param {TypeImageStaticLayerEntryConfig} layerConfig layer configuration.
+   * @param {TypeImageStaticLayerEntryConfig} layerConfiguration layer configuration.
    *
    * @returns {blob} image blob
    */
-  private getLegendImage(layerConfig: TypeImageStaticLayerEntryConfig): Promise<string | ArrayBuffer | null> {
+  private getLegendImage(layerConfiguration: TypeImageStaticLayerEntryConfig): Promise<string | ArrayBuffer | null> {
     const promisedImage = new Promise<string | ArrayBuffer | null>((resolve) => {
       const readImage = (blob: Blob): Promise<string | ArrayBuffer | null> =>
         // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -120,7 +120,7 @@ export class ImageStatic extends AbstractGeoViewRaster {
           reader.readAsDataURL(blob);
         });
 
-      let legendUrl: string | undefined = getLocalizedValue(layerConfig.source.dataAccessPath, this.mapId);
+      let legendUrl: string | undefined = getLocalizedValue(layerConfiguration.source.dataAccessPath, this.mapId);
 
       if (legendUrl) {
         legendUrl = legendUrl.toLowerCase().startsWith('http:') ? `https${legendUrl.slice(4)}` : legendUrl;
@@ -140,23 +140,21 @@ export class ImageStatic extends AbstractGeoViewRaster {
    * Return the legend of the layer.This routine return null when the layerPath specified is not found. If the legend can't be
    * read, the legend property of the object returned will be null.
    *
-   * @param {string | TypeLayerEntryConfig} layerPathOrConfig Layer path or configuration.
+   * @param {string} layerPath The layer path to the layer's configuration.
    *
    * @returns {Promise<TypeLegend | null>} The legend of the layer.
    */
-  getLegend(layerPathOrConfig: string | TypeLayerEntryConfig): Promise<TypeLegend | null> {
+  getLegend(layerPath: string): Promise<TypeLegend | null> {
     const promisedLegend = new Promise<TypeLegend | null>((resolve) => {
-      const layerConfig = Cast<TypeImageStaticLayerEntryConfig | undefined | null>(
-        typeof layerPathOrConfig === 'string' ? this.getLayerConfig(layerPathOrConfig) : layerPathOrConfig
-      );
-      if (!layerConfig) resolve(null);
+      const layerConfiguration = this.getLayerConfig(layerPath) as TypeImageStaticLayerEntryConfig | undefined | null;
+      if (!layerConfiguration) resolve(null);
 
-      this.getLegendImage(layerConfig!).then((legendImage) => {
+      this.getLegendImage(layerConfiguration!).then((legendImage) => {
         if (!legendImage)
           resolve({
             type: this.type,
-            layerPath: Layer.getLayerPath(layerConfig!),
-            layerName: layerConfig!.layerName,
+            layerPath: Layer.getLayerPath(layerConfiguration!),
+            layerName: layerConfiguration!.layerName,
             legend: null,
           });
         else {
@@ -169,16 +167,16 @@ export class ImageStatic extends AbstractGeoViewRaster {
               drawingContext.drawImage(image, 0, 0);
               const legend: TypeLegend = {
                 type: this.type,
-                layerPath: Layer.getLayerPath(layerConfig!),
-                layerName: layerConfig!.layerName,
+                layerPath: Layer.getLayerPath(layerConfiguration!),
+                layerName: layerConfiguration!.layerName,
                 legend: drawingCanvas,
               };
               resolve(legend);
             } else
               resolve({
                 type: this.type,
-                layerPath: Layer.getLayerPath(layerConfig!),
-                layerName: layerConfig!.layerName,
+                layerPath: Layer.getLayerPath(layerConfiguration!),
+                layerName: layerConfiguration!.layerName,
                 legend: null,
               });
           });
@@ -197,22 +195,22 @@ export class ImageStatic extends AbstractGeoViewRaster {
    * @returns {TypeListOfLayerEntryConfig} A new list of layer entries configuration with deleted error layers.
    */
   protected validateListOfLayerEntryConfig(listOfLayerEntryConfig: TypeListOfLayerEntryConfig) {
-    this.changeLayerPhase('validateListOfLayerEntryConfig');
-    listOfLayerEntryConfig.forEach((layerEntryConfig: TypeLayerEntryConfig) => {
-      const layerPath = Layer.getLayerPath(layerEntryConfig);
-      if (layerEntryIsGroupLayer(layerEntryConfig)) {
-        this.validateListOfLayerEntryConfig(layerEntryConfig.listOfLayerEntryConfig!);
-        if (!layerEntryConfig.listOfLayerEntryConfig.length) {
+    this.setLayerPhase('validateListOfLayerEntryConfig');
+    listOfLayerEntryConfig.forEach((layerConfiguration: TypeLayerEntryConfig) => {
+      const layerPath = Layer.getLayerPath(layerConfiguration);
+      if (layerEntryIsGroupLayer(layerConfiguration)) {
+        this.validateListOfLayerEntryConfig(layerConfiguration.listOfLayerEntryConfig!);
+        if (!layerConfiguration.listOfLayerEntryConfig.length) {
           this.layerLoadError.push({
             layer: layerPath,
             consoleMessage: `Empty layer group (mapId:  ${this.mapId}, layerPath: ${layerPath})`,
           });
-          this.changeLayerStatus('error', layerEntryConfig);
+          this.setLayerStatus('error', layerPath);
           return;
         }
       }
 
-      this.changeLayerStatus('loading', layerEntryConfig);
+      this.setLayerStatus('loading', layerPath);
 
       // When no metadata are provided, all layers are considered valid.
       if (!this.metadata) return;
@@ -221,13 +219,13 @@ export class ImageStatic extends AbstractGeoViewRaster {
       // you can define them in the configuration section.
       if (Array.isArray(this.metadata?.listOfLayerEntryConfig)) {
         const metadataLayerList = Cast<TypeLayerEntryConfig[]>(this.metadata?.listOfLayerEntryConfig);
-        const foundEntry = metadataLayerList.find((layerMetadata) => layerMetadata.layerId === layerEntryConfig.layerId);
+        const foundEntry = metadataLayerList.find((layerMetadata) => layerMetadata.layerId === layerConfiguration.layerId);
         if (!foundEntry) {
           this.layerLoadError.push({
             layer: layerPath,
             consoleMessage: `GeoJSON layer not found (mapId:  ${this.mapId}, layerPath: ${layerPath})`,
           });
-          this.changeLayerStatus('error', layerEntryConfig);
+          this.setLayerStatus('error', layerPath);
           return;
         }
         return;
@@ -240,64 +238,68 @@ export class ImageStatic extends AbstractGeoViewRaster {
   }
 
   /** ****************************************************************************************************************************
-   * This method creates a GeoView Image Static layer using the definition provided in the layerEntryConfig parameter.
+   * This method creates a GeoView Image Static layer using the definition provided in the layerConfiguration parameter.
    *
-   * @param {TypeImageStaticLayerEntryConfig} layerEntryConfig Information needed to create the GeoView layer.
+   * @param {string} layerPath The layer path to the layer's configuration needed to create the GeoView layer.
    *
    * @returns {TypeBaseRasterLayer} The GeoView raster layer that has been created.
    */
-  processOneLayerEntry(layerEntryConfig: TypeImageStaticLayerEntryConfig): Promise<TypeBaseRasterLayer | null> {
+  processOneLayerEntry(layerPath: string): Promise<TypeBaseRasterLayer | null> {
     const promisedVectorLayer = new Promise<TypeBaseRasterLayer | null>((resolve) => {
-      this.changeLayerPhase('processOneLayerEntry', layerEntryConfig);
+      const layerConfiguration = this.getLayerConfig(this.layerPhase) as TypeImageStaticLayerEntryConfig;
+      this.setLayerPhase('processOneLayerEntry', layerPath);
 
-      if (!layerEntryConfig.source.extent) throw new Error('Parameter extent is not defined in source element of layerEntryConfig.');
+      if (!layerConfiguration.source.extent) throw new Error('Parameter extent is not defined in source element of layerConfiguration.');
       const sourceOptions: SourceOptions = {
-        url: getLocalizedValue(layerEntryConfig.source.dataAccessPath, this.mapId) || '',
-        imageExtent: layerEntryConfig.source.extent,
+        url: getLocalizedValue(layerConfiguration.source.dataAccessPath, this.mapId) || '',
+        imageExtent: layerConfiguration.source.extent,
       };
 
-      if (layerEntryConfig.source.crossOrigin) {
-        sourceOptions.crossOrigin = layerEntryConfig.source.crossOrigin;
+      if (layerConfiguration.source.crossOrigin) {
+        sourceOptions.crossOrigin = layerConfiguration.source.crossOrigin;
       } else {
         sourceOptions.crossOrigin = 'Anonymous';
       }
 
-      if (layerEntryConfig.source.projection) {
-        sourceOptions.projection = `EPSG:${layerEntryConfig.source.projection}`;
-      } else throw new Error('Parameter projection is not define in source element of layerEntryConfig.');
+      if (layerConfiguration.source.projection) {
+        sourceOptions.projection = `EPSG:${layerConfiguration.source.projection}`;
+      } else throw new Error('Parameter projection is not define in source element of layerConfiguration.');
 
       const staticImageOptions: ImageOptions<Static> = { source: new Static(sourceOptions) };
-      // layerEntryConfig.initialSettings cannot be undefined because config-validation set it to {} if it is undefined.
-      if (layerEntryConfig.initialSettings?.extent !== undefined) staticImageOptions.extent = layerEntryConfig.initialSettings?.extent;
-      if (layerEntryConfig.initialSettings?.maxZoom !== undefined) staticImageOptions.maxZoom = layerEntryConfig.initialSettings?.maxZoom;
-      if (layerEntryConfig.initialSettings?.minZoom !== undefined) staticImageOptions.minZoom = layerEntryConfig.initialSettings?.minZoom;
-      if (layerEntryConfig.initialSettings?.opacity !== undefined) staticImageOptions.opacity = layerEntryConfig.initialSettings?.opacity;
-      if (layerEntryConfig.initialSettings?.visible !== undefined)
+      // layerConfiguration.initialSettings cannot be undefined because config-validation set it to {} if it is undefined.
+      if (layerConfiguration.initialSettings?.extent !== undefined) staticImageOptions.extent = layerConfiguration.initialSettings?.extent;
+      if (layerConfiguration.initialSettings?.maxZoom !== undefined)
+        staticImageOptions.maxZoom = layerConfiguration.initialSettings?.maxZoom;
+      if (layerConfiguration.initialSettings?.minZoom !== undefined)
+        staticImageOptions.minZoom = layerConfiguration.initialSettings?.minZoom;
+      if (layerConfiguration.initialSettings?.opacity !== undefined)
+        staticImageOptions.opacity = layerConfiguration.initialSettings?.opacity;
+      if (layerConfiguration.initialSettings?.visible !== undefined)
         staticImageOptions.visible =
-          layerEntryConfig.initialSettings?.visible === 'yes' || layerEntryConfig.initialSettings?.visible === 'always';
+          layerConfiguration.initialSettings?.visible === 'yes' || layerConfiguration.initialSettings?.visible === 'always';
 
-      layerEntryConfig.olLayer = new ImageLayer(staticImageOptions);
+      layerConfiguration.olLayer = new ImageLayer(staticImageOptions);
 
-      super.addLoadendListener(layerEntryConfig, 'image');
+      super.addLoadendListener(layerConfiguration, 'image');
 
-      resolve(layerEntryConfig.olLayer);
+      resolve(layerConfiguration.olLayer);
     });
 
     return promisedVectorLayer;
   }
 
   /** ***************************************************************************************************************************
-   * Get the bounds of the layer represented in the layerConfig, returns updated bounds
+   * Get the bounds of the layer represented in the layerConfiguration, returns updated bounds
    *
-   * @param {TypeLayerEntryConfig} layerConfig Layer config to get bounds from.
+   * @param {TypeLayerEntryConfig} layerConfiguration Layer config to get bounds from.
    * @param {Extent | undefined} bounds The current bounding box to be adjusted.
    *
    * @returns {Extent} The layer bounding box.
    */
-  protected getBounds(layerConfig: TypeLayerEntryConfig, bounds: Extent | undefined): Extent | undefined {
-    const layerBounds = (layerConfig.olLayer as ImageLayer<Static>).getSource()?.getImageExtent();
+  protected getBounds(layerConfiguration: TypeLayerEntryConfig, bounds: Extent | undefined): Extent | undefined {
+    const layerBounds = (layerConfiguration.olLayer as ImageLayer<Static>).getSource()?.getImageExtent();
     const projection =
-      (layerConfig.olLayer as ImageLayer<Static>).getSource()?.getProjection()?.getCode().replace('EPSG:', '') ||
+      (layerConfiguration.olLayer as ImageLayer<Static>).getSource()?.getProjection()?.getCode().replace('EPSG:', '') ||
       api.maps[this.mapId].currentProjection;
 
     if (layerBounds) {

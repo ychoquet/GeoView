@@ -100,23 +100,23 @@ export class OgcFeature extends AbstractGeoViewVector {
    * Initialize layer
    *
    * @param {string} mapId the id of the map
-   * @param {TypeOgcFeatureLayerConfig} layerConfig the layer configuration
+   * @param {TypeOgcFeatureLayerConfig} layerConfiguration the layer configuration
    */
-  constructor(mapId: string, layerConfig: TypeOgcFeatureLayerConfig) {
-    super(CONST_LAYER_TYPES.OGC_FEATURE, layerConfig, mapId);
+  constructor(mapId: string, layerConfiguration: TypeOgcFeatureLayerConfig) {
+    super(CONST_LAYER_TYPES.OGC_FEATURE, layerConfiguration, mapId);
   }
 
   /** ***************************************************************************************************************************
    * Extract the type of the specified field from the metadata. If the type can not be found, return 'string'.
    *
    * @param {string} fieldName field name for which we want to get the type.
-   * @param {TypeLayerEntryConfig} layerConfig layer configuration.
+   * @param {TypeLayerEntryConfig} layerConfiguration layer configuration.
    *
    * @returns {'string' | 'date' | 'number'} The type of the field.
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected getFieldType(fieldName: string, layerConfig: TypeLayerEntryConfig): 'string' | 'date' | 'number' {
-    const fieldDefinitions = this.layerMetadata[Layer.getLayerPath(layerConfig)];
+  protected getFieldType(fieldName: string, layerConfiguration: TypeLayerEntryConfig): 'string' | 'date' | 'number' {
+    const fieldDefinitions = this.layerMetadata[Layer.getLayerPath(layerConfiguration)];
     const fieldEntryType = (fieldDefinitions[fieldName].type as string).split(':').slice(-1)[0] as string;
     if (fieldEntryType === 'date') return 'date';
     if (['int', 'number'].includes(fieldEntryType)) return 'number';
@@ -129,7 +129,7 @@ export class OgcFeature extends AbstractGeoViewVector {
    * @returns {Promise<void>} A promise that the execution is completed.
    */
   protected getServiceMetadata(): Promise<void> {
-    this.changeLayerPhase('getServiceMetadata');
+    this.setLayerPhase('getServiceMetadata');
     const promisedExecution = new Promise<void>((resolve) => {
       const metadataUrl = getLocalizedValue(this.metadataAccessPath, this.mapId);
       if (metadataUrl) {
@@ -141,10 +141,10 @@ export class OgcFeature extends AbstractGeoViewVector {
             resolve();
           }) // eslint-disable-next-line @typescript-eslint/no-unused-vars
           .catch((reason) => {
-            api.geoUtilities.setAllLayerStatusToError(this, this.listOfLayerEntryConfig, 'Unable to read metadata');
+            this.setAllLayerStatusToError(this.listOfLayerEntryConfig, 'Unable to read metadata');
           });
       } else {
-        api.geoUtilities.setAllLayerStatusToError(this, this.listOfLayerEntryConfig, 'Unable to read metadata');
+        this.setAllLayerStatusToError(this.listOfLayerEntryConfig, 'Unable to read metadata');
       }
     });
     return promisedExecution;
@@ -157,52 +157,52 @@ export class OgcFeature extends AbstractGeoViewVector {
    * @param {TypeListOfLayerEntryConfig} listOfLayerEntryConfig The list of layer entries configuration to validate.
    */
   protected validateListOfLayerEntryConfig(listOfLayerEntryConfig: TypeListOfLayerEntryConfig) {
-    this.changeLayerPhase('validateListOfLayerEntryConfig');
-    listOfLayerEntryConfig.forEach((layerEntryConfig: TypeLayerEntryConfig) => {
-      const layerPath = Layer.getLayerPath(layerEntryConfig);
-      if (layerEntryIsGroupLayer(layerEntryConfig)) {
-        this.validateListOfLayerEntryConfig(layerEntryConfig.listOfLayerEntryConfig!);
-        if (!layerEntryConfig.listOfLayerEntryConfig.length) {
+    this.setLayerPhase('validateListOfLayerEntryConfig');
+    listOfLayerEntryConfig.forEach((layerConfiguration: TypeLayerEntryConfig) => {
+      const layerPath = Layer.getLayerPath(layerConfiguration);
+      if (layerEntryIsGroupLayer(layerConfiguration)) {
+        this.validateListOfLayerEntryConfig(layerConfiguration.listOfLayerEntryConfig!);
+        if (!layerConfiguration.listOfLayerEntryConfig.length) {
           this.layerLoadError.push({
             layer: layerPath,
             consoleMessage: `Empty layer group (mapId:  ${this.mapId}, layerPath: ${layerPath})`,
           });
-          this.changeLayerStatus('error', layerEntryConfig);
+          this.setLayerStatus('error', layerConfiguration);
           return;
         }
       }
 
-      this.changeLayerStatus('loading', layerEntryConfig);
+      this.setLayerStatus('loading', layerConfiguration);
 
       // Note that the code assumes ogc-feature collections does not contains metadata layer group. If you need layer group,
       // you can define them in the configuration section.
       if (Array.isArray(this.metadata!.collections)) {
-        const foundCollection = this.metadata!.collections.find((layerMetadata) => layerMetadata.id === layerEntryConfig.layerId);
+        const foundCollection = this.metadata!.collections.find((layerMetadata) => layerMetadata.id === layerConfiguration.layerId);
         if (!foundCollection) {
           this.layerLoadError.push({
             layer: layerPath,
             consoleMessage: `OGC feature layer not found (mapId:  ${this.mapId}, layerPath: ${layerPath})`,
           });
-          this.changeLayerStatus('error', layerEntryConfig);
+          this.setLayerStatus('error', layerConfiguration);
           return;
         }
 
         if (foundCollection.description)
-          layerEntryConfig.layerName = {
+          layerConfiguration.layerName = {
             en: foundCollection.description as string,
             fr: foundCollection.description as string,
           };
 
-        if (layerEntryConfig.initialSettings?.extent)
-          layerEntryConfig.initialSettings.extent = transformExtent(
-            layerEntryConfig.initialSettings.extent,
+        if (layerConfiguration.initialSettings?.extent)
+          layerConfiguration.initialSettings.extent = transformExtent(
+            layerConfiguration.initialSettings.extent,
             'EPSG:4326',
             `EPSG:${api.maps[this.mapId].currentProjection}`
           );
 
-        if (!layerEntryConfig.initialSettings?.bounds && foundCollection.extent?.spatial?.bbox && foundCollection.extent?.spatial?.crs) {
-          // layerEntryConfig.initialSettings cannot be undefined because config-validation set it to {} if it is undefined.
-          layerEntryConfig.initialSettings!.bounds = transformExtent(
+        if (!layerConfiguration.initialSettings?.bounds && foundCollection.extent?.spatial?.bbox && foundCollection.extent?.spatial?.crs) {
+          // layerConfiguration.initialSettings cannot be undefined because config-validation set it to {} if it is undefined.
+          layerConfiguration.initialSettings!.bounds = transformExtent(
             foundCollection.extent.spatial.bbox[0] as number[],
             get(foundCollection.extent.spatial.crs as string)!,
             `EPSG:${api.maps[this.mapId].currentProjection}`
@@ -219,22 +219,22 @@ export class OgcFeature extends AbstractGeoViewVector {
    * This method is used to process the layer's metadata. It will fill the empty outfields and aliasFields properties of the
    * layer's configuration.
    *
-   * @param {TypeVectorLayerEntryConfig} layerEntryConfig The layer entry configuration to process.
+   * @param {TypeVectorLayerEntryConfig} layerConfiguration The layer entry configuration to process.
    *
    * @returns {Promise<void>} A promise that the vector layer configuration has its metadata processed.
    */
-  protected processLayerMetadata(layerEntryConfig: TypeVectorLayerEntryConfig): Promise<void> {
+  protected processLayerMetadata(layerConfiguration: TypeVectorLayerEntryConfig): Promise<void> {
     const promiseOfExecution = new Promise<void>((resolve) => {
       const metadataUrl = getLocalizedValue(this.metadataAccessPath, this.mapId);
       if (metadataUrl) {
         const queryUrl = metadataUrl.endsWith('/')
-          ? `${metadataUrl}collections/${String(layerEntryConfig.layerId).replace('-unclustered', '')}/queryables?f=json`
-          : `${metadataUrl}/collections/${String(layerEntryConfig.layerId).replace('-unclustered', '')}/queryables?f=json`;
+          ? `${metadataUrl}collections/${String(layerConfiguration.layerId).replace('-unclustered', '')}/queryables?f=json`
+          : `${metadataUrl}/collections/${String(layerConfiguration.layerId).replace('-unclustered', '')}/queryables?f=json`;
         const queryResult = axios.get<TypeJsonObject>(queryUrl);
         queryResult.then((response) => {
           if (response.data.properties) {
-            this.layerMetadata[Layer.getLayerPath(layerEntryConfig)] = response.data.properties;
-            this.processFeatureInfoConfig(response.data.properties, layerEntryConfig);
+            this.layerMetadata[Layer.getLayerPath(layerConfiguration)] = response.data.properties;
+            this.processFeatureInfoConfig(response.data.properties, layerConfiguration);
           }
           resolve();
         });
@@ -247,69 +247,71 @@ export class OgcFeature extends AbstractGeoViewVector {
    * This method sets the outfields and aliasFields of the source feature info.
    *
    * @param {TypeJsonArray} fields An array of field names and its aliases.
-   * @param {TypeVectorLayerEntryConfig} layerEntryConfig The vector layer entry to configure.
+   * @param {TypeVectorLayerEntryConfig} layerConfiguration The vector layer entry to configure.
    */
-  private processFeatureInfoConfig(fields: TypeJsonObject, layerEntryConfig: TypeVectorLayerEntryConfig) {
-    if (!layerEntryConfig.source) layerEntryConfig.source = {};
-    if (!layerEntryConfig.source.featureInfo) layerEntryConfig.source.featureInfo = { queryable: true };
+  private processFeatureInfoConfig(fields: TypeJsonObject, layerConfiguration: TypeVectorLayerEntryConfig) {
+    if (!layerConfiguration.source) layerConfiguration.source = {};
+    if (!layerConfiguration.source.featureInfo) layerConfiguration.source.featureInfo = { queryable: true };
     // Process undefined outfields or aliasFields ('' = false and !'' = true). Also, if en is undefined, then fr is also undefined.
     // when en and fr are undefined, we set both en and fr to the same value.
-    if (!layerEntryConfig.source.featureInfo.outfields?.en || !layerEntryConfig.source.featureInfo.aliasFields?.en) {
-      const processOutField = !layerEntryConfig.source.featureInfo.outfields?.en;
-      const processAliasFields = !layerEntryConfig.source.featureInfo.aliasFields?.en;
+    if (!layerConfiguration.source.featureInfo.outfields?.en || !layerConfiguration.source.featureInfo.aliasFields?.en) {
+      const processOutField = !layerConfiguration.source.featureInfo.outfields?.en;
+      const processAliasFields = !layerConfiguration.source.featureInfo.aliasFields?.en;
       if (processOutField) {
-        layerEntryConfig.source.featureInfo.outfields = { en: '' };
-        layerEntryConfig.source.featureInfo.fieldTypes = '';
+        layerConfiguration.source.featureInfo.outfields = { en: '' };
+        layerConfiguration.source.featureInfo.fieldTypes = '';
       }
-      if (processAliasFields) layerEntryConfig.source.featureInfo.aliasFields = { en: '' };
+      if (processAliasFields) layerConfiguration.source.featureInfo.aliasFields = { en: '' };
 
       // TODO: check if this is a duplicate of getField function. Clean in other classes as well
       Object.keys(fields).forEach((fieldEntry) => {
         if (fields[fieldEntry].type === 'Geometry') return;
         if (processOutField) {
-          layerEntryConfig.source!.featureInfo!.outfields!.en = `${layerEntryConfig.source!.featureInfo!.outfields!.en}${fieldEntry},`;
+          layerConfiguration.source!.featureInfo!.outfields!.en = `${layerConfiguration.source!.featureInfo!.outfields!.en}${fieldEntry},`;
           let fieldType: 'string' | 'date' | 'number';
           if (fields[fieldEntry].type === 'date') fieldType = 'date';
           else if (['int', 'number'].includes(fields[fieldEntry].type as string)) fieldType = 'number';
           else fieldType = 'string';
-          layerEntryConfig.source!.featureInfo!.fieldTypes = `${layerEntryConfig.source!.featureInfo!.fieldTypes}${fieldType},`;
+          layerConfiguration.source!.featureInfo!.fieldTypes = `${layerConfiguration.source!.featureInfo!.fieldTypes}${fieldType},`;
         }
-        layerEntryConfig.source!.featureInfo!.aliasFields!.en = `${layerEntryConfig.source!.featureInfo!.aliasFields!.en}${fieldEntry},`;
+        layerConfiguration.source!.featureInfo!.aliasFields!.en = `${
+          layerConfiguration.source!.featureInfo!.aliasFields!.en
+        }${fieldEntry},`;
       });
-      layerEntryConfig.source.featureInfo!.outfields!.en = layerEntryConfig.source.featureInfo!.outfields?.en?.slice(0, -1);
-      layerEntryConfig.source.featureInfo!.fieldTypes = layerEntryConfig.source.featureInfo!.fieldTypes?.slice(0, -1);
-      layerEntryConfig.source.featureInfo!.aliasFields!.en = layerEntryConfig.source.featureInfo!.aliasFields?.en?.slice(0, -1);
-      layerEntryConfig.source!.featureInfo!.outfields!.fr = layerEntryConfig.source!.featureInfo!.outfields?.en;
-      layerEntryConfig.source!.featureInfo!.aliasFields!.fr = layerEntryConfig.source!.featureInfo!.aliasFields?.en;
+      layerConfiguration.source.featureInfo!.outfields!.en = layerConfiguration.source.featureInfo!.outfields?.en?.slice(0, -1);
+      layerConfiguration.source.featureInfo!.fieldTypes = layerConfiguration.source.featureInfo!.fieldTypes?.slice(0, -1);
+      layerConfiguration.source.featureInfo!.aliasFields!.en = layerConfiguration.source.featureInfo!.aliasFields?.en?.slice(0, -1);
+      layerConfiguration.source!.featureInfo!.outfields!.fr = layerConfiguration.source!.featureInfo!.outfields?.en;
+      layerConfiguration.source!.featureInfo!.aliasFields!.fr = layerConfiguration.source!.featureInfo!.aliasFields?.en;
     }
-    if (!layerEntryConfig.source.featureInfo.nameField) {
+    if (!layerConfiguration.source.featureInfo.nameField) {
       const en =
-        layerEntryConfig.source.featureInfo!.outfields!.en?.split(',')[0] ||
-        layerEntryConfig.source.featureInfo!.outfields!.fr?.split(',')[0];
+        layerConfiguration.source.featureInfo!.outfields!.en?.split(',')[0] ||
+        layerConfiguration.source.featureInfo!.outfields!.fr?.split(',')[0];
       const fr = en;
-      if (en) layerEntryConfig.source.featureInfo.nameField = { en, fr };
+      if (en) layerConfiguration.source.featureInfo.nameField = { en, fr };
     }
   }
 
   /** ***************************************************************************************************************************
    * Create a source configuration for the vector layer.
    *
-   * @param {TypeBaseLayerEntryConfig} layerEntryConfig The layer entry configuration.
+   * @param {TypeBaseLayerEntryConfig} layerConfiguration The layer entry configuration.
    * @param {SourceOptions} sourceOptions The source options (default: {}).
    * @param {ReadOptions} readOptions The read options (default: {}).
    *
    * @returns {VectorSource<Geometry>} The source configuration that will be used to create the vector layer.
    */
   protected createVectorSource(
-    layerEntryConfig: TypeBaseLayerEntryConfig,
+    layerConfiguration: TypeBaseLayerEntryConfig,
     sourceOptions: SourceOptions = {},
     readOptions: ReadOptions = {}
-  ): VectorSource<Feature<Geometry>> {
-    readOptions.dataProjection = (layerEntryConfig.source as TypeBaseSourceVectorInitialConfig).dataProjection;
-    sourceOptions.url = getLocalizedValue(layerEntryConfig.source!.dataAccessPath!, this.mapId);
-    sourceOptions.url = `${sourceOptions.url}/collections/${layerEntryConfig.layerId}/items?f=json`;
+  ): VectorSource<Feature> {
+    readOptions.dataProjection = (layerConfiguration.source as TypeBaseSourceVectorInitialConfig).dataProjection;
+    sourceOptions.url = getLocalizedValue(layerConfiguration.source!.dataAccessPath!, this.mapId);
+    sourceOptions.url = `${sourceOptions.url}/collections/${layerConfiguration.layerId}/items?f=json`;
     sourceOptions.format = new FormatGeoJSON();
-    const vectorSource = super.createVectorSource(layerEntryConfig, sourceOptions, readOptions);
+    const vectorSource = super.createVectorSource(layerConfiguration, sourceOptions, readOptions);
     return vectorSource;
   }
 }

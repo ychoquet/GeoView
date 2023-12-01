@@ -37,10 +37,10 @@ const sxClasses = {
 export interface TypeLegendIconListProps {
   iconImages: string[];
   iconLabels: string[];
-  layerConfig?: TypeVectorLayerEntryConfig;
+  layerConfiguration?: TypeVectorLayerEntryConfig;
   geometryKey?: TypeStyleGeometry;
   isParentVisible?: boolean;
-  toggleMapVisible: (layerConfig: TypeLayerEntryConfig) => void;
+  toggleMapVisible: (layerConfiguration: TypeLayerEntryConfig) => void;
 }
 
 /**
@@ -49,7 +49,7 @@ export interface TypeLegendIconListProps {
  * @returns {JSX.Element} the list of icons
  */
 export function LegendIconList(props: TypeLegendIconListProps): JSX.Element {
-  const { iconImages, iconLabels, isParentVisible, geometryKey, layerConfig, toggleMapVisible } = props;
+  const { iconImages, iconLabels, isParentVisible, geometryKey, layerConfiguration, toggleMapVisible } = props;
   const theme: Theme & {
     iconImage: React.CSSProperties;
   } = useTheme();
@@ -58,8 +58,8 @@ export function LegendIconList(props: TypeLegendIconListProps): JSX.Element {
   const initialChecked = allChecked;
 
   // set checkboxes of layers according to metadata
-  if (layerConfig && layerConfig.style !== undefined && geometryKey) {
-    const itemStyle = layerConfig.style[geometryKey];
+  if (layerConfiguration && layerConfiguration.style !== undefined && geometryKey) {
+    const itemStyle = layerConfiguration.style[geometryKey];
     if (itemStyle && itemStyle.styleType === 'uniqueValue' && (itemStyle as TypeUniqueValueStyleConfig).uniqueValueStyleInfo) {
       const uniqueItemStyles = (itemStyle as TypeUniqueValueStyleConfig).uniqueValueStyleInfo;
       for (let i = 0; i < uniqueItemStyles.length; i++) {
@@ -83,8 +83,8 @@ export function LegendIconList(props: TypeLegendIconListProps): JSX.Element {
    * Handle view/hide layers.
    */
   const handleToggleLayer = (index: number) => {
-    if (layerConfig && geometryKey) {
-      const geometryStyle = layerConfig.style![geometryKey];
+    if (layerConfiguration && geometryKey) {
+      const geometryStyle = layerConfiguration.style![geometryKey];
       if (geometryStyle !== undefined) {
         if (geometryStyle.styleType === 'uniqueValue') {
           if ((geometryStyle as TypeUniqueValueStyleConfig).uniqueValueStyleInfo[index].visible === 'no')
@@ -98,7 +98,7 @@ export function LegendIconList(props: TypeLegendIconListProps): JSX.Element {
             (geometryStyle as TypeClassBreakStyleConfig).classBreakStyleInfo[index].visible = 'no';
         }
       }
-      toggleMapVisible(layerConfig);
+      toggleMapVisible(layerConfiguration);
     }
     const checklist = isChecked.map((checked, i) => (i === index ? !checked : checked));
     setChecked(checklist);
@@ -122,7 +122,7 @@ export function LegendIconList(props: TypeLegendIconListProps): JSX.Element {
                   />
                 </Tooltip>
                 <ListItemIcon>
-                  {iconLabels[index] !== 'Cluster' && layerConfig?.initialSettings?.visible !== 'always' && isParentVisible && (
+                  {iconLabels[index] !== 'Cluster' && layerConfiguration?.initialSettings?.visible !== 'always' && isParentVisible && (
                     <IconButton color="primary" onClick={() => handleToggleLayer(index)}>
                       {isChecked[index] === true ? <CheckBoxIcon /> : <CheckBoxOutineBlankIcon />}
                     </IconButton>

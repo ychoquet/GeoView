@@ -58,7 +58,7 @@ export class UUIDmapConfigReader {
             const isFeature = (url as string).indexOf('FeatureServer') > -1;
 
             if (layerType === CONST_LAYER_TYPES.ESRI_DYNAMIC && !isFeature) {
-              const layerConfig: TypeEsriDynamicLayerConfig = {
+              const layerConfiguration: TypeEsriDynamicLayerConfig = {
                 geoviewLayerId: `${id}`,
                 geoviewLayerName: {
                   en: name as string,
@@ -84,11 +84,11 @@ export class UUIDmapConfigReader {
                   return esriDynamicLayerEntryConfig;
                 }),
               };
-              listOfGeoviewLayerConfig.push(layerConfig);
+              listOfGeoviewLayerConfig.push(layerConfiguration);
             } else if (isFeature) {
               for (let j = 0; j < (layerEntries as TypeJsonArray).length; j++) {
                 const featureUrl = `${url}/${layerEntries[j].index}`;
-                const layerConfig: TypeEsriFeatureLayerConfig = {
+                const layerConfiguration: TypeEsriFeatureLayerConfig = {
                   geoviewLayerId: `${id}`,
                   geoviewLayerName: {
                     en: name as string,
@@ -115,10 +115,10 @@ export class UUIDmapConfigReader {
                     return esriFeatureLayerEntryConfig;
                   }),
                 };
-                listOfGeoviewLayerConfig.push(layerConfig);
+                listOfGeoviewLayerConfig.push(layerConfiguration);
               }
             } else if (layerType === CONST_LAYER_TYPES.ESRI_FEATURE) {
-              const layerConfig: TypeEsriFeatureLayerConfig = {
+              const layerConfiguration: TypeEsriFeatureLayerConfig = {
                 geoviewLayerId: `${id}`,
                 geoviewLayerName: {
                   en: name as string,
@@ -145,9 +145,9 @@ export class UUIDmapConfigReader {
                   return esriFeatureLayerEntryConfig;
                 }),
               };
-              listOfGeoviewLayerConfig.push(layerConfig);
+              listOfGeoviewLayerConfig.push(layerConfiguration);
             } else if (layerType === CONST_LAYER_TYPES.WMS) {
-              const layerConfig: TypeWMSLayerConfig = {
+              const layerConfiguration: TypeWMSLayerConfig = {
                 geoviewLayerId: `${id}`,
                 geoviewLayerName: {
                   en: name as string,
@@ -174,9 +174,9 @@ export class UUIDmapConfigReader {
                   return wmsLayerEntryConfig;
                 }),
               };
-              listOfGeoviewLayerConfig.push(layerConfig);
+              listOfGeoviewLayerConfig.push(layerConfiguration);
             } else if (layerType === CONST_LAYER_TYPES.WFS) {
-              const layerConfig: TypeWFSLayerConfig = {
+              const layerConfiguration: TypeWFSLayerConfig = {
                 geoviewLayerId: `${id}`,
                 geoviewLayerName: {
                   en: name as string,
@@ -204,9 +204,9 @@ export class UUIDmapConfigReader {
                   return wfsLayerEntryConfig;
                 }),
               };
-              listOfGeoviewLayerConfig.push(layerConfig);
+              listOfGeoviewLayerConfig.push(layerConfiguration);
             } else if (layerType === CONST_LAYER_TYPES.OGC_FEATURE) {
-              const layerConfig: TypeOgcFeatureLayerConfig = {
+              const layerConfiguration: TypeOgcFeatureLayerConfig = {
                 geoviewLayerId: `${id}`,
                 geoviewLayerName: {
                   en: name as string,
@@ -233,9 +233,9 @@ export class UUIDmapConfigReader {
                   return ogcFeatureLayerEntryConfig;
                 }),
               };
-              listOfGeoviewLayerConfig.push(layerConfig);
+              listOfGeoviewLayerConfig.push(layerConfiguration);
             } else if (layerType === CONST_LAYER_TYPES.GEOJSON) {
-              const layerConfig: TypeGeoJSONLayerConfig = {
+              const layerConfiguration: TypeGeoJSONLayerConfig = {
                 geoviewLayerId: `${id}`,
                 geoviewLayerName: {
                   en: name as string,
@@ -262,9 +262,9 @@ export class UUIDmapConfigReader {
                   return geoJSONLayerEntryConfig;
                 }),
               };
-              listOfGeoviewLayerConfig.push(layerConfig);
+              listOfGeoviewLayerConfig.push(layerConfiguration);
             } else if (layerType === CONST_LAYER_TYPES.XYZ_TILES) {
-              const layerConfig: TypeXYZTilesConfig = {
+              const layerConfiguration: TypeXYZTilesConfig = {
                 geoviewLayerId: `${id}`,
                 geoviewLayerName: {
                   en: name as string,
@@ -290,9 +290,9 @@ export class UUIDmapConfigReader {
                   return xyzTilesLayerEntryConfig;
                 }),
               };
-              listOfGeoviewLayerConfig.push(layerConfig);
+              listOfGeoviewLayerConfig.push(layerConfiguration);
             } else if (layerType === CONST_LAYER_TYPES.VECTOR_TILES) {
-              const layerConfig: TypeVectorTilesConfig = {
+              const layerConfiguration: TypeVectorTilesConfig = {
                 geoviewLayerId: `${id}`,
                 geoviewLayerName: {
                   en: name as string,
@@ -319,9 +319,9 @@ export class UUIDmapConfigReader {
                   return vectorTilesLayerEntryConfig;
                 }),
               };
-              listOfGeoviewLayerConfig.push(layerConfig);
+              listOfGeoviewLayerConfig.push(layerConfiguration);
             } else if (layerType === CONST_LAYER_TYPES.GEOPACKAGE) {
-              const layerConfig: TypeGeoPackageLayerConfig = {
+              const layerConfiguration: TypeGeoPackageLayerConfig = {
                 geoviewLayerId: `${id}`,
                 geoviewLayerName: {
                   en: name as string,
@@ -348,9 +348,9 @@ export class UUIDmapConfigReader {
                   return geoPackageLayerEntryConfig;
                 }),
               };
-              listOfGeoviewLayerConfig.push(layerConfig);
+              listOfGeoviewLayerConfig.push(layerConfiguration);
             } else if (layerType === CONST_LAYER_TYPES.IMAGE_STATIC) {
-              const layerConfig: TypeImageStaticLayerConfig = {
+              const layerConfiguration: TypeImageStaticLayerConfig = {
                 geoviewLayerId: `${id}`,
                 geoviewLayerName: {
                   en: name as string,
@@ -377,7 +377,7 @@ export class UUIDmapConfigReader {
                   return imageStaticLayerEntryConfig;
                 }),
               };
-              listOfGeoviewLayerConfig.push(layerConfig);
+              listOfGeoviewLayerConfig.push(layerConfiguration);
             }
           }
         }

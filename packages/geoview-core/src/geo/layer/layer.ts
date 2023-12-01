@@ -20,7 +20,6 @@ import {
 } from '@/api/events/payloads';
 import { AbstractGeoViewLayer } from './geoview-layers/abstract-geoview-layers';
 import {
-  TypeBaseLayerEntryConfig,
   TypeGeoviewLayerConfig,
   TypeLayerEntryConfig,
   TypeLayerGroupEntryConfig,
@@ -71,7 +70,7 @@ export class Layer {
   private eventHandlerFunctions: TypeEventHandlerFunctions;
 
   /** used to keep a reference of highlighted layer */
-  private highlightedLayer: { layerPath: string | undefined; originalOpacity: number | undefined } = {
+  private highlightedLayer: { layerPath?: string; originalOpacity?: number } = {
     layerPath: undefined,
     originalOpacity: undefined,
   };
@@ -93,64 +92,64 @@ export class Layer {
     this.eventHandlerFunctions = {
       addLayer: (payload: PayloadBaseClass) => {
         if (payloadIsALayerConfig(payload)) {
-          const { layerConfig } = payload;
+          const { layerConfiguration } = payload;
 
-          if (layerConfigIsGeoCore(layerConfig)) {
+          if (layerConfigIsGeoCore(layerConfiguration)) {
             const geoCore = new GeoCore(this.mapId);
-            geoCore.createLayers(layerConfig).then((arrayOfListOfGeoviewLayerConfig) => {
+            geoCore.createLayers(layerConfiguration).then((arrayOfListOfGeoviewLayerConfig) => {
               arrayOfListOfGeoviewLayerConfig.forEach((listOfGeoviewLayerConfig) => {
                 listOfGeoviewLayerConfig.forEach((geoviewLayerConfig) => {
                   this.addGeoviewLayer(geoviewLayerConfig);
                 });
               });
             });
-          } else if (layerConfigIsGeoJSON(layerConfig)) {
-            const geoJSON = new GeoJSON(this.mapId, layerConfig);
+          } else if (layerConfigIsGeoJSON(layerConfiguration)) {
+            const geoJSON = new GeoJSON(this.mapId, layerConfiguration);
             geoJSON.createGeoViewLayers().then(() => {
               this.addToMap(geoJSON);
             });
-          } else if (layerConfigIsGeoPackage(layerConfig)) {
-            const geoPackage = new GeoPackage(this.mapId, layerConfig);
+          } else if (layerConfigIsGeoPackage(layerConfiguration)) {
+            const geoPackage = new GeoPackage(this.mapId, layerConfiguration);
             geoPackage.createGeoViewLayers().then(() => {
               this.addToMap(geoPackage);
             });
-          } else if (layerConfigIsWMS(layerConfig)) {
-            const wmsLayer = new WMS(this.mapId, layerConfig);
+          } else if (layerConfigIsWMS(layerConfiguration)) {
+            const wmsLayer = new WMS(this.mapId, layerConfiguration);
             wmsLayer.createGeoViewLayers().then(() => {
               this.addToMap(wmsLayer);
             });
-          } else if (layerConfigIsEsriDynamic(layerConfig)) {
-            const esriDynamic = new EsriDynamic(this.mapId, layerConfig);
+          } else if (layerConfigIsEsriDynamic(layerConfiguration)) {
+            const esriDynamic = new EsriDynamic(this.mapId, layerConfiguration);
             esriDynamic.createGeoViewLayers().then(() => {
               this.addToMap(esriDynamic);
             });
-          } else if (layerConfigIsEsriFeature(layerConfig)) {
-            const esriFeature = new EsriFeature(this.mapId, layerConfig);
+          } else if (layerConfigIsEsriFeature(layerConfiguration)) {
+            const esriFeature = new EsriFeature(this.mapId, layerConfiguration);
             esriFeature.createGeoViewLayers().then(() => {
               this.addToMap(esriFeature);
             });
-          } else if (layerConfigIsImageStatic(layerConfig)) {
-            const imageStatic = new ImageStatic(this.mapId, layerConfig);
+          } else if (layerConfigIsImageStatic(layerConfiguration)) {
+            const imageStatic = new ImageStatic(this.mapId, layerConfiguration);
             imageStatic.createGeoViewLayers().then(() => {
               this.addToMap(imageStatic);
             });
-          } else if (layerConfigIsWFS(layerConfig)) {
-            const wfsLayer = new WFS(this.mapId, layerConfig);
+          } else if (layerConfigIsWFS(layerConfiguration)) {
+            const wfsLayer = new WFS(this.mapId, layerConfiguration);
             wfsLayer.createGeoViewLayers().then(() => {
               this.addToMap(wfsLayer);
             });
-          } else if (layerConfigIsOgcFeature(layerConfig)) {
-            const ogcFeatureLayer = new OgcFeature(this.mapId, layerConfig);
+          } else if (layerConfigIsOgcFeature(layerConfiguration)) {
+            const ogcFeatureLayer = new OgcFeature(this.mapId, layerConfiguration);
             ogcFeatureLayer.createGeoViewLayers().then(() => {
               this.addToMap(ogcFeatureLayer);
             });
-          } else if (layerConfigIsXYZTiles(layerConfig)) {
-            const xyzTiles = new XYZTiles(this.mapId, layerConfig);
+          } else if (layerConfigIsXYZTiles(layerConfiguration)) {
+            const xyzTiles = new XYZTiles(this.mapId, layerConfiguration);
             xyzTiles.createGeoViewLayers().then(() => {
               this.addToMap(xyzTiles);
             });
-          } else if (layerConfigIsVectorTiles(layerConfig)) {
-            const vectorTiles = new VectorTiles(this.mapId, layerConfig);
+          } else if (layerConfigIsVectorTiles(layerConfiguration)) {
+            const vectorTiles = new VectorTiles(this.mapId, layerConfiguration);
             vectorTiles.createGeoViewLayers().then(() => {
               this.addToMap(vectorTiles);
             });
@@ -245,48 +244,48 @@ export class Layer {
 
   /**
    * Get the layer Path of the layer configuration parameter.
-   * @param {TypeLayerEntryConfig} layerEntryConfig The layer configuration for wich we want to get the layer path.
+   * @param {TypeLayerEntryConfig} layerConfiguration The layer configuration for wich we want to get the layer path.
    * @param {string} layerPath Internal parameter used to build the layer path (should not be used by the user).
    *
    * @returns {string} Returns the layer path.
    */
-  static getLayerPath(layerEntryConfig: TypeLayerEntryConfig, layerPath?: string): string {
+  static getLayerPath(layerConfiguration: TypeLayerEntryConfig, layerPath?: string): string {
     let pathEnding = layerPath;
     if (pathEnding === undefined)
       pathEnding =
-        layerEntryConfig.layerPathEnding === undefined
-          ? layerEntryConfig.layerId
-          : `${layerEntryConfig.layerId}.${layerEntryConfig.layerPathEnding}`;
-    if (layerEntryConfig.geoviewRootLayer === layerEntryConfig.parentLayerConfig)
-      return `${layerEntryConfig.geoviewRootLayer!.geoviewLayerId!}/${pathEnding}`;
+        layerConfiguration.layerPathEnding === undefined
+          ? layerConfiguration.layerId
+          : `${layerConfiguration.layerId}.${layerConfiguration.layerPathEnding}`;
+    if (layerConfiguration.geoviewRootLayer === layerConfiguration.parentLayerConfig)
+      return `${layerConfiguration.geoviewRootLayer!.geoviewLayerId!}/${pathEnding}`;
     return this.getLayerPath(
-      layerEntryConfig.parentLayerConfig as TypeLayerGroupEntryConfig,
-      `${(layerEntryConfig.parentLayerConfig as TypeLayerGroupEntryConfig).layerId}/${pathEnding}`
+      layerConfiguration.parentLayerConfig as TypeLayerGroupEntryConfig,
+      `${(layerConfiguration.parentLayerConfig as TypeLayerGroupEntryConfig).layerId}/${pathEnding}`
     );
   }
 
   /**
    * Register the layer identifier. Duplicate identifier are not allowed.
-   * @param {TypeLayerEntryConfig} layerEntryConfig The layer configuration to register.
+   * @param {string} layerPath The layer path to the layer's configuration to register.
+   * @param {TypeLayerEntryConfig} layerConfiguration The layer's configuration to register.
    *
    * @returns {boolean} Returns false if the layer configuration can't be registered.
    */
-  registerLayerConfig(layerEntryConfig: TypeLayerEntryConfig): boolean {
-    const layerPath = Layer.getLayerPath(layerEntryConfig);
+  registerLayerConfig(layerPath: string, layerConfiguration: TypeLayerEntryConfig): boolean {
     if (this.registeredLayers[layerPath]) return false;
-    this.registeredLayers[layerPath] = layerEntryConfig;
-    this.geoviewLayers[layerPath.split('/')[0]].changeLayerStatus('newInstance', layerEntryConfig);
+    this.registeredLayers[layerPath] = layerConfiguration;
+    this.geoviewLayers[layerPath.split('/')[0]].setLayerStatus('newInstance', layerPath);
     return true;
   }
 
   /**
    * Method used to verify if a layer is registered. Returns true if registered.
-   * @param {TypeLayerEntryConfig} layerEntryConfig The layer configuration to test.
+   * @param {TypeLayerEntryConfig} layerConfiguration The layer configuration to test.
    *
    * @returns {boolean} Returns true if the layer configuration is registered.
    */
-  isRegistered(layerEntryConfig: TypeLayerEntryConfig): boolean {
-    const layerPath = Layer.getLayerPath(layerEntryConfig);
+  isRegistered(layerConfiguration: TypeLayerEntryConfig): boolean {
+    const layerPath = Layer.getLayerPath(layerConfiguration);
     return this.registeredLayers[layerPath] !== undefined;
   }
 
@@ -315,13 +314,13 @@ export class Layer {
     else {
       geoviewLayer.olLayers?.once('prerender' as EventTypes, () => {
         if (geoviewLayer.layerPhase !== 'processed') {
-          geoviewLayer.layerPhase = 'processed';
+          geoviewLayer.setLayerPhase('processed');
           api.event.emit(GeoViewLayerPayload.createGeoviewLayerAddedPayload(`${this.mapId}/${geoviewLayer.geoviewLayerId}`, geoviewLayer));
         }
       });
       geoviewLayer.olLayers?.once('change' as EventTypes, () => {
         if (geoviewLayer.layerPhase !== 'processed') {
-          geoviewLayer.layerPhase = 'processed';
+          geoviewLayer.setLayerPhase('processed');
           api.event.emit(GeoViewLayerPayload.createGeoviewLayerAddedPayload(`${this.mapId}/${geoviewLayer.geoviewLayerId}`, geoviewLayer));
         }
       });
@@ -339,10 +338,10 @@ export class Layer {
     // A layer path is a slash seperated string made of the GeoView layer Id followed by the layer Ids
     const partialLayerPathNodes = partialLayerPath.split('/');
 
-    // initialize these two constant now because we will delete the information use to get their values.
+    // initialize these two constant now because we will delete the information used to get their values.
     const indexToDelete = this.registeredLayers[partialLayerPath]
       ? this.registeredLayers[partialLayerPath].parentLayerConfig?.listOfLayerEntryConfig.findIndex(
-          (layerEntryConfig) => layerEntryConfig === this.registeredLayers?.[partialLayerPath]
+          (layerConfiguration) => layerConfiguration === this.registeredLayers?.[partialLayerPath]
         )
       : undefined;
     const listOfLayerEntryConfigAffected = this.registeredLayers[partialLayerPath]?.parentLayerConfig?.listOfLayerEntryConfig;
@@ -352,13 +351,7 @@ export class Layer {
       const pathBeginningAreEqual = partialLayerPathNodes.reduce<boolean>((areEqual, partialLayerPathNode, nodeIndex) => {
         return areEqual && partialLayerPathNode === completeLayerPathNodes[nodeIndex];
       }, true);
-      if (pathBeginningAreEqual) {
-        const layerEntryConfigToRemove = this.registeredLayers[completeLayerPath];
-        layerEntryConfigToRemove.olLayer?.dispose();
-        if (layerEntryConfigToRemove.entryType !== 'group')
-          this.geoviewLayers[partialLayerPathNodes[0]].unregisterFromLayerSets(layerEntryConfigToRemove as TypeBaseLayerEntryConfig);
-        delete this.registeredLayers[completeLayerPath];
-      }
+      if (pathBeginningAreEqual) this.geoviewLayers[partialLayerPathNodes[0]].removeLayerConfiguration(completeLayerPath);
     });
     if (listOfLayerEntryConfigAffected) listOfLayerEntryConfigAffected.splice(indexToDelete!, 1);
 

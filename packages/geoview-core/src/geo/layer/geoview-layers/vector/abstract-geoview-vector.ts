@@ -33,7 +33,7 @@ import { NodeType } from '@/geo/renderer/geoview-renderer-types';
 
 // Base type used to keep the layer's hierarchical structure. It is similar to ol/layer/Base~BaseLayer.
 export type TypeVectorLayerGroup = LayerGroup;
-export type TypeVectorLayer = VectorSource<Feature<Geometry>>;
+export type TypeVectorLayer = VectorSource<Feature>;
 export type TypeBaseVectorLayer = BaseLayer | TypeVectorLayerGroup | TypeVectorLayer;
 
 // ******************************************************************************************************************************
@@ -62,18 +62,18 @@ export abstract class AbstractGeoViewVector extends AbstractGeoViewLayer {
   protected abstract validateListOfLayerEntryConfig(listOfLayerEntryConfig: TypeListOfLayerEntryConfig): void;
 
   /** ***************************************************************************************************************************
-   * This method creates a GeoView layer using the definition provided in the layerEntryConfig parameter.
+   * This method creates a GeoView layer using the definition provided in the layerConfiguration parameter.
    *
-   * @param {TypeLayerEntryConfig} layerEntryConfig Information needed to create the GeoView layer.
+   * @param {string} layerPath The layer path to the layer's configuration needed to create the GeoView layer.
    *
    * @returns {Promise<BaseLayer | null>} The GeoView base layer that has been created.
    */
-  protected processOneLayerEntry(layerEntryConfig: TypeBaseLayerEntryConfig): Promise<BaseLayer | null> {
-    layerEntryConfig.layerPhase = 'processOneLayerEntry';
+  protected processOneLayerEntry(layerPath: string): Promise<BaseLayer | null> {
+    this.setLayerPhase('processOneLayerEntry', layerPath);
     const promisedVectorLayer = new Promise<BaseLayer | null>((resolve) => {
-      this.changeLayerPhase('processOneLayerEntry', layerEntryConfig);
-      const vectorSource = this.createVectorSource(layerEntryConfig);
-      const vectorLayer = this.createVectorLayer(layerEntryConfig as TypeVectorLayerEntryConfig, vectorSource);
+      this.setLayerPhase('processOneLayerEntry', layerPath);
+      const vectorSource = this.createVectorSource(layerPath);
+      const vectorLayer = this.createVectorLayer(layerPath, vectorSource);
       resolve(vectorLayer);
     });
     return promisedVectorLayer;
@@ -82,32 +82,29 @@ export abstract class AbstractGeoViewVector extends AbstractGeoViewLayer {
   /** ***************************************************************************************************************************
    * Create a source configuration for the vector layer.
    *
-   * @param {TypeBaseLayerEntryConfig} layerEntryConfig The layer entry configuration.
+   * @param {string} layerPath The layer path to the layer's configuration .
    * @param {SourceOptions} sourceOptions The source options (default: { strategy: all }).
    * @param {ReadOptions} readOptions The read options (default: {}).
    *
    * @returns {VectorSource<Geometry>} The source configuration that will be used to create the vector layer.
    */
-  protected createVectorSource(
-    layerEntryConfig: TypeBaseLayerEntryConfig,
-    sourceOptions: SourceOptions = {},
-    readOptions: ReadOptions = {}
-  ): VectorSource<Feature<Geometry>> {
+  protected createVectorSource(layerPath: string, sourceOptions: SourceOptions = {}, readOptions: ReadOptions = {}): VectorSource<Feature> {
     // The line below uses var because a var declaration has a wider scope than a let declaration.
-    var vectorSource: VectorSource<Feature<Geometry>>;
-    layerEntryConfig.layerPhase = 'createVectorSource';
+    var vectorSource: VectorSource<Feature>;
+    const layerConfiguration = this.getLayerConfig(layerPath) as TypeBaseLayerEntryConfig;
+    this.setLayerPhase('createVectorSource', layerPath);
     if (this.attributions.length !== 0) sourceOptions.attributions = this.attributions;
 
     // set loading strategy option
-    sourceOptions.strategy = (layerEntryConfig.source! as TypeBaseSourceVectorInitialConfig).strategy === 'bbox' ? bbox : all;
+    sourceOptions.strategy = (layerConfiguration.source! as TypeBaseSourceVectorInitialConfig).strategy === 'bbox' ? bbox : all;
 
     sourceOptions.loader = (extent, resolution, projection, success, failure) => {
       let url = vectorSource.getUrl();
       if (typeof url === 'function') url = url(extent, resolution, projection);
 
       const xhr = new XMLHttpRequest();
-      if ((layerEntryConfig?.source as TypeBaseSourceVectorInitialConfig)?.postSettings) {
-        const { postSettings } = layerEntryConfig.source as TypeBaseSourceVectorInitialConfig;
+      if ((layerConfiguration?.source as TypeBaseSourceVectorInitialConfig)?.postSettings) {
+        const { postSettings } = layerConfiguration.source as TypeBaseSourceVectorInitialConfig;
         xhr.open('POST', url as string);
         if (postSettings!.header)
           Object.keys(postSettings!.header).forEach((headerParameter) => {
@@ -130,8 +127,8 @@ export abstract class AbstractGeoViewVector extends AbstractGeoViewLayer {
              which is defined as the midnight at the beginning of January 1, 1970, UTC (equivalent to the UNIX epoch). If the date type
              is not a number, we assume it is provided as an ISO UTC string. If not, the result is unpredictable.
           */
-          if (layerEntryConfig.source?.featureInfo?.queryable) {
-            const featureInfo = (layerEntryConfig.source as TypeBaseSourceVectorInitialConfig).featureInfo!;
+          if (layerConfiguration.source?.featureInfo?.queryable) {
+            const featureInfo = (layerConfiguration.source as TypeBaseSourceVectorInitialConfig).featureInfo!;
             const fieldTypes = featureInfo.fieldTypes?.split(',');
             const fieldNames = getLocalizedValue(featureInfo.outfields, this.mapId)!.split(',');
             const dateFields = fieldTypes?.reduce<string[]>((accumulator, entryFieldType, i) => {
@@ -160,23 +157,23 @@ export abstract class AbstractGeoViewVector extends AbstractGeoViewLayer {
           }
           vectorSource.addFeatures(features);
           if (success) success(features as Feature<Geometry>[]);
-          layerEntryConfig.olLayer!.changed();
+          layerConfiguration.olLayer!.changed();
         } else {
           onError();
         }
       };
-      xhr.send(JSON.stringify((layerEntryConfig.source as TypeBaseSourceVectorInitialConfig).postSettings?.data));
+      xhr.send(JSON.stringify((layerConfiguration.source as TypeBaseSourceVectorInitialConfig).postSettings?.data));
     };
 
     vectorSource = new VectorSource(sourceOptions);
 
     let featuresLoadErrorHandler: () => void;
     const featuresLoadEndHandler = () => {
-      this.changeLayerStatus('loaded', layerEntryConfig);
+      this.setLayerStatus('loaded', layerPath);
       vectorSource.un('featuresloaderror', featuresLoadErrorHandler);
     };
     featuresLoadErrorHandler = () => {
-      this.changeLayerStatus('error', layerEntryConfig);
+      this.setLayerStatus('error', layerPath);
       vectorSource.un('featuresloadend', featuresLoadEndHandler);
     };
 
@@ -191,19 +188,17 @@ export abstract class AbstractGeoViewVector extends AbstractGeoViewLayer {
    * The layer entry configuration keeps a reference to the layer in the olLayer attribute. If clustering is enabled, creates a
    * cluster source and uses that to create the layer.
    *
-   * @param {TypeBaseLayerEntryConfig} layerEntryConfig The layer entry configuration used by the source.
-   * @param {VectorSource<Feature<Geometry>>} vectorSource The source configuration for the vector layer.
+   * @param {string} layerPath The layer path to the layer's configuration used by the source.
+   * @param {VectorSource<Feature>} vectorSource The source configuration for the vector layer.
    *
    * @returns {VectorLayer<VectorSource>} The vector layer created.
    */
-  createVectorLayer(
-    layerEntryConfig: TypeVectorLayerEntryConfig,
-    vectorSource: VectorSource<Feature<Geometry>>
-  ): VectorLayer<VectorSource> {
-    layerEntryConfig.layerPhase = 'createVectorLayer';
+  createVectorLayer(layerPath: string, vectorSource: VectorSource<Feature>): VectorLayer<VectorSource> {
+    const layerConfiguration = this.getLayerConfig(layerPath) as TypeVectorLayerEntryConfig;
+    this.setLayerPhase('createVectorLayer', layerPath);
     let configSource: TypeBaseSourceVectorInitialConfig = {};
-    if (layerEntryConfig.source !== undefined) {
-      configSource = layerEntryConfig.source as TypeBaseSourceVectorInitialConfig;
+    if (layerConfiguration.source !== undefined) {
+      configSource = layerConfiguration.source as TypeBaseSourceVectorInitialConfig;
       if (configSource.cluster === undefined) {
         configSource.cluster = { enable: false };
       }
@@ -212,10 +207,10 @@ export abstract class AbstractGeoViewVector extends AbstractGeoViewLayer {
     }
 
     const layerOptions: VectorLayerOptions<VectorSource> = {
-      properties: { layerEntryConfig },
+      properties: { layerConfiguration },
       source: configSource.cluster!.enable
         ? new Cluster({
-            source: vectorSource as VectorSource<Feature<Geometry>>,
+            source: vectorSource as VectorSource<Feature>,
             distance: configSource.cluster!.distance,
             minDistance: configSource.cluster!.minDistance,
             geometryFunction: ((feature): Point | null => {
@@ -227,81 +222,78 @@ export abstract class AbstractGeoViewVector extends AbstractGeoViewLayer {
               return null;
             }) as (arg0: Feature<Geometry>) => Point,
           })
-        : (vectorSource as VectorSource<Feature<Geometry>>),
+        : (vectorSource as VectorSource<Feature>),
       style: (feature) => {
         const { geoviewRenderer } = api.maps[this.mapId];
 
         if (configSource.cluster!.enable) {
-          return geoviewRenderer.getClusterStyle(layerEntryConfig, feature as Feature<Geometry>);
+          return geoviewRenderer.getClusterStyle(layerConfiguration, feature as Feature<Geometry>);
         }
 
-        if ('style' in layerEntryConfig) {
-          return geoviewRenderer.getFeatureStyle(feature as Feature<Geometry>, layerEntryConfig);
+        if ('style' in layerConfiguration) {
+          return geoviewRenderer.getFeatureStyle(feature as Feature<Geometry>, layerConfiguration);
         }
 
         return undefined;
       },
     };
 
-    layerEntryConfig.olLayer = new VectorLayer(layerOptions);
+    layerConfiguration.olLayer = new VectorLayer(layerOptions);
 
-    if (layerEntryConfig.initialSettings?.extent !== undefined) this.setExtent(layerEntryConfig.initialSettings?.extent, layerEntryConfig);
-    if (layerEntryConfig.initialSettings?.maxZoom !== undefined)
-      this.setMaxZoom(layerEntryConfig.initialSettings?.maxZoom, layerEntryConfig);
-    if (layerEntryConfig.initialSettings?.minZoom !== undefined)
-      this.setMinZoom(layerEntryConfig.initialSettings?.minZoom, layerEntryConfig);
-    if (layerEntryConfig.initialSettings?.opacity !== undefined)
-      this.setOpacity(layerEntryConfig.initialSettings?.opacity, layerEntryConfig);
-    if (layerEntryConfig.initialSettings?.visible !== undefined)
-      this.setVisible(
-        !!(layerEntryConfig.initialSettings?.visible === 'yes' || layerEntryConfig.initialSettings?.visible === 'always'),
-        layerEntryConfig
-      );
-    this.applyViewFilter(layerEntryConfig, layerEntryConfig.layerFilter ? layerEntryConfig.layerFilter : '');
+    if (layerConfiguration.initialSettings?.extent !== undefined) this.setExtent(layerConfiguration.initialSettings?.extent, layerPath);
+    if (layerConfiguration.initialSettings?.maxZoom !== undefined) this.setMaxZoom(layerConfiguration.initialSettings?.maxZoom, layerPath);
+    if (layerConfiguration.initialSettings?.minZoom !== undefined) this.setMinZoom(layerConfiguration.initialSettings?.minZoom, layerPath);
+    if (layerConfiguration.initialSettings?.opacity !== undefined) this.setOpacity(layerConfiguration.initialSettings?.opacity, layerPath);
+    if (layerConfiguration.initialSettings?.visible !== undefined)
+      this.setVisible(layerConfiguration.initialSettings?.visible !== 'no', layerPath);
+    this.applyViewFilter(layerPath, layerConfiguration.layerFilter ? layerConfiguration.layerFilter : '');
 
-    return layerEntryConfig.olLayer as VectorLayer<VectorSource>;
+    return layerConfiguration.olLayer as VectorLayer<VectorSource>;
   }
 
   /** ***************************************************************************************************************************
    * Return feature information for all the features stored in the layer.
    *
-   * @param {TypeLayerEntryConfig} layerEntryConfig The layer configuration.
+   * @param {string} layerPath The layer path to the layer's configuration.
    *
    * @returns {TypeArrayOfFeatureInfoEntries} The feature info table.
    */
-  protected getAllFeatureInfo(layerEntryConfig: TypeLayerEntryConfig): Promise<TypeArrayOfFeatureInfoEntries> {
-    const promisedQueryResult = new Promise<TypeArrayOfFeatureInfoEntries>((resolve) => {
-      if (!layerEntryConfig?.olLayer) resolve([]);
-      else
-        this.formatFeatureInfoResult(
-          (layerEntryConfig.olLayer as VectorLayer<VectorSource<Feature<Geometry>>>).getSource()!.getFeatures(),
-          layerEntryConfig as TypeVectorLayerEntryConfig
-        ).then((arrayOfFeatureInfoEntries) => {
-          resolve(arrayOfFeatureInfoEntries);
-        });
-    });
-    return promisedQueryResult;
+  protected async getAllFeatureInfo(layerPath: string): Promise<TypeArrayOfFeatureInfoEntries> {
+    const layerConfiguration = this.getLayerConfig(layerPath) as TypeLayerEntryConfig;
+    if (!layerConfiguration?.olLayer) return [];
+
+    try {
+      const arrayOfFeatureInfoEntries = await this.formatFeatureInfoResult(
+        (layerConfiguration.olLayer as VectorLayer<VectorSource<Feature>>).getSource()!.getFeatures(),
+        layerConfiguration as TypeVectorLayerEntryConfig
+      );
+      return arrayOfFeatureInfoEntries;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
   }
 
   /** ***************************************************************************************************************************
    * Return feature information for all the features around the provided Pixel.
    *
    * @param {Coordinate} location The pixel coordinate that will be used by the query.
-   * @param {TypeLayerEntryConfig} layerConfig The layer configuration.
+   * @param {string} layerPath The layer path to the layer's configuration.
    *
    * @returns {Promise<TypeArrayOfFeatureInfoEntries>} The feature info table.
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected async getFeatureInfoAtPixel(location: Pixel, layerConfig: TypeLayerEntryConfig): Promise<TypeArrayOfFeatureInfoEntries> {
+  protected async getFeatureInfoAtPixel(location: Pixel, layerPath: string): Promise<TypeArrayOfFeatureInfoEntries> {
     try {
+      const layerConfiguration = this.getLayerConfig(layerPath) as TypeLayerEntryConfig;
       const layerFilter = (layer: BaseLayer) => {
-        const layerSource = layer.get('layerEntryConfig')?.source;
-        const configSource = layerConfig?.source;
+        const layerSource = layer.get('layerConfiguration')?.source;
+        const configSource = layerConfiguration?.source;
         return layerSource !== undefined && configSource !== undefined && layerSource === configSource;
       };
       const { map } = api.maps[this.mapId];
       const features = map.getFeaturesAtPixel(location, { hitTolerance: 4, layerFilter });
-      return await this.formatFeatureInfoResult(features as Feature<Geometry>[], layerConfig as TypeVectorLayerEntryConfig);
+      return await this.formatFeatureInfoResult(features as Feature<Geometry>[], layerConfiguration as TypeVectorLayerEntryConfig);
     } catch (error) {
       console.log('abstract-geoview-vector.getFeatureInfoAtPixel\n', error);
       return null;
@@ -312,41 +304,41 @@ export abstract class AbstractGeoViewVector extends AbstractGeoViewLayer {
    * Return feature information for all the features around the provided projected coordinate.
    *
    * @param {Coordinate} location The pixel coordinate that will be used by the query.
-   * @param {TypeLayerEntryConfig} layerConfig The layer configuration.
+   * @param {string} layerPath The layer path to the layer's configuration.
    *
    * @returns {Promise<TypeArrayOfFeatureInfoEntries>} The feature info table.
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected getFeatureInfoAtCoordinate(location: Coordinate, layerConfig: TypeLayerEntryConfig): Promise<TypeArrayOfFeatureInfoEntries> {
+  protected getFeatureInfoAtCoordinate(location: Coordinate, layerPath: string): Promise<TypeArrayOfFeatureInfoEntries> {
     const { map } = api.maps[this.mapId];
-    return this.getFeatureInfoAtPixel(map.getPixelFromCoordinate(location as Coordinate), layerConfig);
+    return this.getFeatureInfoAtPixel(map.getPixelFromCoordinate(location as Coordinate), layerPath);
   }
 
   /** ***************************************************************************************************************************
    * Return feature information for all the features around the provided longitude latitude.
    *
    * @param {Coordinate} location The coordinate that will be used by the query.
-   * @param {TypeLayerEntryConfig} layerConfig The layer configuration.
+   * @param {string} layerPath The layer path to the layer's configuration.
    *
    * @returns {Promise<TypeArrayOfFeatureInfoEntries>} The feature info table.
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected getFeatureInfoAtLongLat(location: Coordinate, layerConfig: TypeLayerEntryConfig): Promise<TypeArrayOfFeatureInfoEntries> {
+  protected getFeatureInfoAtLongLat(location: Coordinate, layerPath: string): Promise<TypeArrayOfFeatureInfoEntries> {
     const { map } = api.maps[this.mapId];
     const convertedLocation = transform(location, 'EPSG:4326', `EPSG:${api.maps[this.mapId].currentProjection}`);
-    return this.getFeatureInfoAtPixel(map.getPixelFromCoordinate(convertedLocation as Coordinate), layerConfig);
+    return this.getFeatureInfoAtPixel(map.getPixelFromCoordinate(convertedLocation as Coordinate), layerPath);
   }
 
   /** ***************************************************************************************************************************
-   * Get the bounds of the layer represented in the layerConfig, returns updated bounds
+   * Get the bounds of the layer represented in the layerConfiguration, returns updated bounds
    *
-   * @param {TypeLayerEntryConfig} layerConfig Layer config to get bounds from.
+   * @param {TypeLayerEntryConfig} layerConfiguration Layer config to get bounds from.
    * @param {Extent | undefined} bounds The current bounding box to be adjusted.
    *
    * @returns {Extent} The layer bounding box.
    */
-  protected getBounds(layerConfig: TypeLayerEntryConfig, bounds: Extent | undefined): Extent | undefined {
-    (layerConfig.olLayer as VectorLayer<VectorSource<Feature<Geometry>>>).getSource()?.forEachFeature((feature) => {
+  protected getBounds(layerConfiguration: TypeLayerEntryConfig, bounds: Extent | undefined): Extent | undefined {
+    (layerConfiguration.olLayer as VectorLayer<VectorSource<Feature>>).getSource()?.forEachFeature((feature) => {
       const coordinates = feature.get('geometry').flatCoordinates;
       for (let i = 0; i < coordinates.length; i += 2) {
         const geographicCoordinate = transform(
@@ -376,40 +368,28 @@ export abstract class AbstractGeoViewVector extends AbstractGeoViewLayer {
    * legend filters are derived from the uniqueValue or classBreaks style of the layer. When the layer config is invalid, nothing
    * is done.
    *
-   * @param {string | TypeLayerEntryConfig} layerPathOrConfig Layer path or configuration.
+   * @param {string} layerPath The layer path to the layer's configuration.
    * @param {string} filter An optional filter to be used in place of the getViewFilter value.
    * @param {boolean} CombineLegendFilter Flag used to combine the legend filter and the filter together (default: true)
    * @param {boolean} checkCluster An optional value to see if we check for clustered layers.
    */
-  applyViewFilter(layerPathOrConfig: string | TypeLayerEntryConfig, filter = '', CombineLegendFilter = true, checkCluster = true) {
-    const layerEntryConfig = (
-      typeof layerPathOrConfig === 'string' ? this.getLayerConfig(layerPathOrConfig) : layerPathOrConfig
-    ) as TypeVectorLayerEntryConfig;
-    if (layerEntryConfig) {
-      const layerPath = layerEntryConfig.geoviewRootLayer
-        ? `${layerEntryConfig.geoviewRootLayer.geoviewLayerId}/${String(layerEntryConfig.layerId).replace('-unclustered', '')}`
-        : String(layerEntryConfig.layerId).replace('-unclustered', '');
+  applyViewFilter(layerPath: string, filter = '', CombineLegendFilter = true, checkCluster = true) {
+    const layerConfiguration = this.getLayerConfig(layerPath) as TypeVectorLayerEntryConfig;
+    if (layerConfiguration) {
+      const localLayerPath = layerConfiguration.geoviewRootLayer
+        ? `${layerConfiguration.geoviewRootLayer.geoviewLayerId}/${layerConfiguration.layerId.replace('-unclustered', '')}`
+        : layerConfiguration.layerId.replace('-unclustered', '');
       const unclusteredLayerPath = `${layerPath}-unclustered`;
       const cluster = !!api.maps[this.mapId].layer.registeredLayers[unclusteredLayerPath];
       if (cluster && checkCluster) {
-        this.applyViewFilter(
-          api.maps[this.mapId].layer.registeredLayers[layerPath] as TypeVectorLayerEntryConfig,
-          filter,
-          CombineLegendFilter,
-          false
-        );
-        this.applyViewFilter(
-          api.maps[this.mapId].layer.registeredLayers[unclusteredLayerPath] as TypeVectorLayerEntryConfig,
-          filter,
-          CombineLegendFilter,
-          false
-        );
+        this.applyViewFilter(localLayerPath, filter, CombineLegendFilter, false);
+        this.applyViewFilter(unclusteredLayerPath, filter, CombineLegendFilter, false);
         return;
       }
-      if (!layerEntryConfig.olLayer) return; // We must wait for the layer to be created.
+      if (!layerConfiguration.olLayer) return; // We must wait for the layer to be created.
       let filterValueToUse = filter;
-      layerEntryConfig.olLayer!.set('legendFilterIsOff', !CombineLegendFilter);
-      if (CombineLegendFilter) layerEntryConfig.olLayer?.set('layerFilter', filter);
+      layerConfiguration.olLayer!.set('legendFilterIsOff', !CombineLegendFilter);
+      if (CombineLegendFilter) layerConfiguration.olLayer?.set('layerFilter', filter);
 
       // Convert date constants using the externalFragmentsOrder derived from the externalDateFormat
       const searchDateEntry = [
@@ -431,16 +411,16 @@ export abstract class AbstractGeoViewVector extends AbstractGeoViewLayer {
         const filterEquation = api.maps[this.mapId].geoviewRenderer.analyzeLayerFilter([
           { nodeType: NodeType.unprocessedNode, nodeValue: filterValueToUse },
         ]);
-        layerEntryConfig.olLayer?.set('filterEquation', filterEquation);
+        layerConfiguration.olLayer?.set('filterEquation', filterEquation);
       } catch (error) {
         throw new Error(
           `Invalid vector layer filter (${(error as { message: string }).message}).\nfilter = ${this.getLayerFilter(
-            layerEntryConfig
+            layerPath
           )}\ninternal filter = ${filterValueToUse}`
         );
       }
 
-      layerEntryConfig.olLayer?.changed();
+      layerConfiguration.olLayer?.changed();
     }
   }
 }

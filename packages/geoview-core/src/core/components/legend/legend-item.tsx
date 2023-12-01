@@ -274,15 +274,15 @@ export function LegendItem(props: TypeLegendItemProps): JSX.Element {
 
               Object.keys(api.maps[mapId].layer.registeredLayers).forEach((layerPath) => {
                 if (layerPath.startsWith(geoviewLayerId)) {
-                  const layerConfig = api.maps[mapId].layer.registeredLayers[layerPath] as TypeVectorLayerEntryConfig;
-                  if (layerConfig && layerConfig.style && geometryKey) {
-                    const geometryStyle = layerConfig.style[geometryKey as TypeStyleGeometry];
+                  const layerConfiguration = api.maps[mapId].layer.registeredLayers[layerPath] as TypeVectorLayerEntryConfig;
+                  if (layerConfiguration && layerConfiguration.style && geometryKey) {
+                    const geometryStyle = layerConfiguration.style[geometryKey as TypeStyleGeometry];
                     if (
                       geometryStyle !== undefined &&
                       (geometryStyle.styleType === 'uniqueValue' || geometryStyle.styleType === 'classBreaks')
                     ) {
                       setGeometryKey(geometryKey);
-                      setLayerConfig(layerConfig);
+                      setLayerConfig(layerConfiguration);
                     }
                   }
                 }
@@ -633,7 +633,7 @@ export function LegendItem(props: TypeLegendItemProps): JSX.Element {
                 toggleMapVisible={(sublayerConfig) => {
                   (geoviewLayerInstance as AbstractGeoViewVector | EsriDynamic).applyViewFilter(sublayerConfig);
                 }}
-                layerConfig={geometryLayerConfig as TypeVectorLayerEntryConfig}
+                layerConfiguration={geometryLayerConfig as TypeVectorLayerEntryConfig}
                 geometryKey={layerGeometryKey!}
               />
             )}

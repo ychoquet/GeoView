@@ -112,11 +112,11 @@ export class EsriDynamic extends AbstractGeoViewRaster {
   /** ****************************************************************************************************************************
    * Initialize layer.
    * @param {string} mapId The id of the map.
-   * @param {TypeEsriDynamicLayerConfig} layerConfig The layer configuration.
+   * @param {TypeEsriDynamicLayerConfig} layerConfiguration The layer configuration.
    */
-  constructor(mapId: string, layerConfig: TypeEsriDynamicLayerConfig) {
-    if (!layerConfig.serviceDateFormat) layerConfig.serviceDateFormat = 'DD/MM/YYYY HH:MM:SSZ';
-    super(CONST_LAYER_TYPES.ESRI_DYNAMIC, layerConfig, mapId);
+  constructor(mapId: string, layerConfiguration: TypeEsriDynamicLayerConfig) {
+    if (!layerConfiguration.serviceDateFormat) layerConfiguration.serviceDateFormat = 'DD/MM/YYYY HH:MM:SSZ';
+    super(CONST_LAYER_TYPES.ESRI_DYNAMIC, layerConfiguration, mapId);
   }
 
   /** ***************************************************************************************************************************
@@ -148,11 +148,11 @@ export class EsriDynamic extends AbstractGeoViewRaster {
    *
    * @returns {boolean} true if an error is detected.
    */
-  esriChildHasDetectedAnError(layerEntryConfig: TypeLayerEntryConfig, esriIndex: number): boolean {
+  esriChildHasDetectedAnError(layerConfiguration: TypeLayerEntryConfig, esriIndex: number): boolean {
     if (!this.metadata!.supportsDynamicLayers) {
       this.layerLoadError.push({
-        layer: Layer.getLayerPath(layerEntryConfig),
-        consoleMessage: `Layer ${Layer.getLayerPath(layerEntryConfig)} of map ${this.mapId} does not support dynamic layers.`,
+        layer: Layer.getLayerPath(layerConfiguration),
+        consoleMessage: `Layer ${Layer.getLayerPath(layerConfiguration)} of map ${this.mapId} does not support dynamic layers.`,
       });
       return true;
     }
@@ -163,36 +163,36 @@ export class EsriDynamic extends AbstractGeoViewRaster {
    * Extract the type of the specified field from the metadata. If the type can not be found, return 'string'.
    *
    * @param {string} fieldName field name for which we want to get the type.
-   * @param {TypeLayerEntryConfig} layerConfig layer configuration.
+   * @param {TypeLayerEntryConfig} layerConfiguration layer configuration.
    *
    * @returns {'string' | 'date' | 'number'} The type of the field.
    */
-  getFieldType(fieldName: string, layerConfig: TypeLayerEntryConfig): 'string' | 'date' | 'number' {
-    return commonGetFieldType.call(this, fieldName, layerConfig);
+  getFieldType(fieldName: string, layerConfiguration: TypeLayerEntryConfig): 'string' | 'date' | 'number' {
+    return commonGetFieldType.call(this, fieldName, layerConfiguration);
   }
 
   /** ***************************************************************************************************************************
    * Return the domain of the specified field.
    *
    * @param {string} fieldName field name for which we want to get the domain.
-   * @param {TypeLayerEntryConfig} layerConfig layer configuration.
+   * @param {TypeLayerEntryConfig} layerConfiguration layer configuration.
    *
    * @returns {null | codedValueType | rangeDomainType} The domain of the field.
    */
-  getFieldDomain(fieldName: string, layerConfig: TypeLayerEntryConfig): null | codedValueType | rangeDomainType {
-    return commonGetFieldDomain.call(this, fieldName, layerConfig);
+  getFieldDomain(fieldName: string, layerConfiguration: TypeLayerEntryConfig): null | codedValueType | rangeDomainType {
+    return commonGetFieldDomain.call(this, fieldName, layerConfiguration);
   }
 
   /** ***************************************************************************************************************************
    * This method will create a Geoview temporal dimension if it exist in the service metadata
    * @param {TypeJsonObject} esriTimeDimension The ESRI time dimension object
-   * @param {TypeEsriFeatureLayerEntryConfig | TypeEsriDynamicLayerEntryConfig} layerEntryConfig The layer entry to configure
+   * @param {TypeEsriFeatureLayerEntryConfig | TypeEsriDynamicLayerEntryConfig} layerConfiguration The layer entry to configure
    */
   processTemporalDimension(
     esriTimeDimension: TypeJsonObject,
-    layerEntryConfig: TypeEsriFeatureLayerEntryConfig | TypeEsriDynamicLayerEntryConfig
+    layerConfiguration: TypeEsriFeatureLayerEntryConfig | TypeEsriDynamicLayerEntryConfig
   ) {
-    return commonProcessTemporalDimension.call(this, esriTimeDimension, layerEntryConfig);
+    return commonProcessTemporalDimension.call(this, esriTimeDimension, layerConfiguration);
   }
 
   /** ***************************************************************************************************************************
@@ -202,16 +202,16 @@ export class EsriDynamic extends AbstractGeoViewRaster {
    * @param {string} nameField The display field associated to the layer.
    * @param {string} geometryFieldName The field name of the geometry property.
    * @param {TypeJsonArray} fields An array of field names and its aliases.
-   * @param {TypeEsriFeatureLayerEntryConfig | TypeEsriDynamicLayerEntryConfig} layerEntryConfig The layer entry to configure.
+   * @param {TypeEsriFeatureLayerEntryConfig | TypeEsriDynamicLayerEntryConfig} layerConfiguration The layer entry to configure.
    */
   processFeatureInfoConfig = (
     capabilities: string,
     nameField: string,
     geometryFieldName: string,
     fields: TypeJsonArray,
-    layerEntryConfig: TypeEsriFeatureLayerEntryConfig | TypeEsriDynamicLayerEntryConfig
+    layerConfiguration: TypeEsriFeatureLayerEntryConfig | TypeEsriDynamicLayerEntryConfig
   ) => {
-    return commonProcessFeatureInfoConfig.call(this, capabilities, nameField, geometryFieldName, fields, layerEntryConfig);
+    return commonProcessFeatureInfoConfig.call(this, capabilities, nameField, geometryFieldName, fields, layerConfiguration);
   };
 
   /** ***************************************************************************************************************************
@@ -222,88 +222,89 @@ export class EsriDynamic extends AbstractGeoViewRaster {
    * @param {number} minScale The metadata minScale of the layer.
    * @param {number} maxScale The metadata maxScale of the layer.
    * @param {TypeJsonObject} extent The metadata layer extent.
-   * @param {TypeEsriFeatureLayerEntryConfig | TypeEsriDynamicLayerEntryConfig} layerEntryConfig The layer entry to configure.
+   * @param {TypeEsriFeatureLayerEntryConfig | TypeEsriDynamicLayerEntryConfig} layerConfiguration The layer entry to configure.
    */
   processInitialSettings(
     visibility: boolean,
     minScale: number,
     maxScale: number,
     extent: TypeJsonObject,
-    layerEntryConfig: TypeEsriFeatureLayerEntryConfig | TypeEsriDynamicLayerEntryConfig
+    layerConfiguration: TypeEsriFeatureLayerEntryConfig | TypeEsriDynamicLayerEntryConfig
   ) {
-    return commonProcessInitialSettings.call(this, visibility, minScale, maxScale, extent, layerEntryConfig);
+    return commonProcessInitialSettings.call(this, visibility, minScale, maxScale, extent, layerConfiguration);
   }
 
   /** ***************************************************************************************************************************
    * This method is used to process the layer's metadata. It will fill the empty fields of the layer's configuration (renderer,
    * initial settings, fields and aliases).
    *
-   * @param {TypeLayerEntryConfig} layerEntryConfig The layer entry configuration to process.
+   * @param {TypeLayerEntryConfig} layerConfiguration The layer entry configuration to process.
    *
    * @returns {Promise<void>} A promise that the layer configuration has its metadata processed.
    */
-  protected processLayerMetadata(layerEntryConfig: TypeLayerEntryConfig): Promise<void> {
+  protected processLayerMetadata(layerConfiguration: TypeLayerEntryConfig): Promise<void> {
     const promiseOfExecution = new Promise<void>((resolve) => {
-      commonProcessLayerMetadata.call(this, resolve, layerEntryConfig);
+      commonProcessLayerMetadata.call(this, resolve, layerConfiguration);
     });
     return promiseOfExecution;
   }
 
   /** ****************************************************************************************************************************
-   * This method creates a GeoView EsriDynamic layer using the definition provided in the layerEntryConfig parameter.
+   * This method creates a GeoView EsriDynamic layer using the definition provided in the layerConfiguration parameter.
    *
-   * @param {TypeEsriDynamicLayerEntryConfig} layerEntryConfig Information needed to create the GeoView layer.
+   * @param {string} layerPath The layer path to the layer's configuration needed to create the GeoView layer.
    *
    * @returns {TypeBaseRasterLayer} The GeoView raster layer that has been created.
    */
-  processOneLayerEntry(layerEntryConfig: TypeEsriDynamicLayerEntryConfig): Promise<TypeBaseRasterLayer | null> {
+  processOneLayerEntry(layerPath: string): Promise<TypeBaseRasterLayer | null> {
     const promisedVectorLayer = new Promise<TypeBaseRasterLayer | null>((resolve) => {
-      this.changeLayerPhase('processOneLayerEntry', layerEntryConfig);
+      const layerConfiguration = this.getLayerConfig(layerPath)! as TypeEsriDynamicLayerEntryConfig;
+      this.setLayerPhase('processOneLayerEntry', layerPath);
       const sourceOptions: SourceOptions = {};
       sourceOptions.attributions = [(this.metadata!.copyrightText ? this.metadata!.copyrightText : '') as string];
-      sourceOptions.url = getLocalizedValue(layerEntryConfig.source.dataAccessPath!, this.mapId);
-      sourceOptions.params = { LAYERS: `show:${layerEntryConfig.layerId}` };
-      if (layerEntryConfig.source.transparent)
-        Object.defineProperty(sourceOptions.params, 'transparent', layerEntryConfig.source.transparent!);
-      if (layerEntryConfig.source.format) Object.defineProperty(sourceOptions.params, 'format', layerEntryConfig.source.format!);
-      if (layerEntryConfig.source.crossOrigin) {
-        sourceOptions.crossOrigin = layerEntryConfig.source.crossOrigin;
+      sourceOptions.url = getLocalizedValue(layerConfiguration.source?.dataAccessPath, this.mapId);
+      sourceOptions.params = { LAYERS: `show:${layerConfiguration.layerId}` };
+      if (layerConfiguration.source?.transparent)
+        Object.defineProperty(sourceOptions.params, 'transparent', layerConfiguration.source.transparent!);
+      if (layerConfiguration.source.format) Object.defineProperty(sourceOptions.params, 'format', layerConfiguration.source.format!);
+      if (layerConfiguration.source.crossOrigin) {
+        sourceOptions.crossOrigin = layerConfiguration.source.crossOrigin;
       } else {
         sourceOptions.crossOrigin = 'Anonymous';
       }
-      if (layerEntryConfig.source.projection) sourceOptions.projection = `EPSG:${layerEntryConfig.source.projection}`;
+      if (layerConfiguration.source.projection) sourceOptions.projection = `EPSG:${layerConfiguration.source.projection}`;
 
       const imageLayerOptions: ImageOptions<ImageArcGISRest> = {
         source: new ImageArcGISRest(sourceOptions),
-        properties: { layerEntryConfig },
+        properties: { layerConfiguration },
       };
-      // layerEntryConfig.initialSettings cannot be undefined because config-validation set it to {} if it is undefined.
-      if (layerEntryConfig.initialSettings?.className !== undefined)
-        imageLayerOptions.className = layerEntryConfig.initialSettings?.className;
-      if (layerEntryConfig.initialSettings?.extent !== undefined) imageLayerOptions.extent = layerEntryConfig.initialSettings?.extent;
-      if (layerEntryConfig.initialSettings?.maxZoom !== undefined) imageLayerOptions.maxZoom = layerEntryConfig.initialSettings?.maxZoom;
-      if (layerEntryConfig.initialSettings?.minZoom !== undefined) imageLayerOptions.minZoom = layerEntryConfig.initialSettings?.minZoom;
-      if (layerEntryConfig.initialSettings?.opacity !== undefined) imageLayerOptions.opacity = layerEntryConfig.initialSettings?.opacity;
+      // layerConfiguration.initialSettings cannot be undefined because config-validation set it to {} if it is undefined.
+      if (layerConfiguration.initialSettings?.className !== undefined)
+        imageLayerOptions.className = layerConfiguration.initialSettings?.className;
+      if (layerConfiguration.initialSettings?.extent !== undefined) imageLayerOptions.extent = layerConfiguration.initialSettings?.extent;
+      if (layerConfiguration.initialSettings?.maxZoom !== undefined)
+        imageLayerOptions.maxZoom = layerConfiguration.initialSettings?.maxZoom;
+      if (layerConfiguration.initialSettings?.minZoom !== undefined)
+        imageLayerOptions.minZoom = layerConfiguration.initialSettings?.minZoom;
+      if (layerConfiguration.initialSettings?.opacity !== undefined)
+        imageLayerOptions.opacity = layerConfiguration.initialSettings?.opacity;
       // If all layers on the map have an initialSettings.visible set to false, a loading error occurs because nothing is drawn on the
       // map and the 'change' or 'prerender' events are never sent to the addToMap method of the layer.ts file. The workaround is to
       // postpone the setVisible action until all layers have been loaded on the map.
       api.event.once(
         EVENT_NAMES.LAYER.EVENT_IF_CONDITION,
         (payload) => {
-          this.setVisible(
-            layerEntryConfig.initialSettings!.visible! === 'yes' || layerEntryConfig.initialSettings!.visible! === 'always',
-            layerEntryConfig
-          );
+          this.setVisible(layerConfiguration.initialSettings!.visible! !== 'no', layerPath);
         },
         `${this.mapId}/visibilityTest`
       );
 
-      layerEntryConfig.olLayer = new ImageLayer(imageLayerOptions);
-      this.applyViewFilter(layerEntryConfig, layerEntryConfig.layerFilter ? layerEntryConfig.layerFilter : '');
+      layerConfiguration.olLayer = new ImageLayer(imageLayerOptions);
+      this.applyViewFilter(layerPath, layerConfiguration.layerFilter ? layerConfiguration.layerFilter : '');
 
-      super.addLoadendListener(layerEntryConfig, 'image');
+      super.addLoadendListener(layerConfiguration, 'image');
 
-      resolve(layerEntryConfig.olLayer);
+      resolve(layerConfiguration.olLayer);
     });
 
     return promisedVectorLayer;
@@ -313,48 +314,43 @@ export class EsriDynamic extends AbstractGeoViewRaster {
    * Return feature information for all the features around the provided Pixel.
    *
    * @param {Coordinate} location The pixel coordinate that will be used by the query.
-   * @param {TypeEsriDynamicLayerEntryConfig} layerConfig The layer configuration.
+   * @param {string} layerPath The layer path to the layer's configuration.
    *
    * @returns {Promise<TypeArrayOfFeatureInfoEntries>} The feature info table.
    */
-  protected getFeatureInfoAtPixel(location: Pixel, layerConfig: TypeEsriDynamicLayerEntryConfig): Promise<TypeArrayOfFeatureInfoEntries> {
+  protected getFeatureInfoAtPixel(location: Pixel, layerPath: string): Promise<TypeArrayOfFeatureInfoEntries> {
     const { map } = api.maps[this.mapId];
-    return this.getFeatureInfoAtCoordinate(map.getCoordinateFromPixel(location), layerConfig);
+    return this.getFeatureInfoAtCoordinate(map.getCoordinateFromPixel(location), layerPath);
   }
 
   /** ***************************************************************************************************************************
    * Return feature information for all the features around the provided projection coordinate.
    *
    * @param {Coordinate} location The coordinate that will be used by the query.
-   * @param {TypeEsriDynamicLayerEntryConfig} layerConfig The layer configuration.
+   * @param {string} layerPath The layer path to the layer's configuration.
    *
    * @returns {Promise<TypeArrayOfFeatureInfoEntries>} The promised feature info table.
    */
-  protected getFeatureInfoAtCoordinate(
-    location: Coordinate,
-    layerConfig: TypeEsriDynamicLayerEntryConfig
-  ): Promise<TypeArrayOfFeatureInfoEntries> {
+  protected getFeatureInfoAtCoordinate(location: Coordinate, layerPath: string): Promise<TypeArrayOfFeatureInfoEntries> {
     const convertedLocation = transform(location, `EPSG:${api.maps[this.mapId].currentProjection}`, 'EPSG:4326');
-    return this.getFeatureInfoAtLongLat(convertedLocation, layerConfig);
+    return this.getFeatureInfoAtLongLat(convertedLocation, layerPath);
   }
 
   /** ***************************************************************************************************************************
    * Return feature information for all the features around the provided coordinate.
    *
    * @param {Coordinate} lnglat The coordinate that will be used by the query.
-   * @param {TypeEsriDynamicLayerEntryConfig} layerConfig The layer configuration.
+   * @param {string} layerPath The layer path to the layer's configuration.
    *
    * @returns {Promise<TypeArrayOfFeatureInfoEntries>} The promised feature info table.
    */
-  protected getFeatureInfoAtLongLat(
-    lnglat: Coordinate,
-    layerConfig: TypeEsriDynamicLayerEntryConfig
-  ): Promise<TypeArrayOfFeatureInfoEntries> {
+  protected getFeatureInfoAtLongLat(lnglat: Coordinate, layerPath: string): Promise<TypeArrayOfFeatureInfoEntries> {
     const promisedQueryResult = new Promise<TypeArrayOfFeatureInfoEntries>((resolve) => {
-      if (!this.getVisible(layerConfig) || !layerConfig.olLayer) resolve([]);
+      const layerConfiguration = this.getLayerConfig(layerPath) as TypeEsriDynamicLayerEntryConfig;
+      if (!this.getVisible(layerPath) || !layerConfiguration.olLayer) resolve([]);
       else {
-        if (!(layerConfig as TypeEsriDynamicLayerEntryConfig).source.featureInfo?.queryable) resolve([]);
-        let identifyUrl = getLocalizedValue(layerConfig.source?.dataAccessPath, this.mapId);
+        if (!(layerConfiguration as TypeEsriDynamicLayerEntryConfig).source.featureInfo?.queryable) resolve([]);
+        let identifyUrl = getLocalizedValue(layerConfiguration.source?.dataAccessPath, this.mapId);
         if (!identifyUrl) resolve([]);
         else {
           identifyUrl = identifyUrl.endsWith('/') ? identifyUrl : `${identifyUrl}/`;
@@ -366,14 +362,14 @@ export class EsriDynamic extends AbstractGeoViewRaster {
 
           const extent = { xmin: bounds[0], ymin: bounds[1], xmax: bounds[2], ymax: bounds[3] };
 
-          const source = (layerConfig.olLayer as ImageLayer<ImageArcGISRest>).getSource()!;
+          const source = (layerConfiguration.olLayer as ImageLayer<ImageArcGISRest>).getSource()!;
           const { layerDefs } = source.getParams();
 
           identifyUrl =
             `${identifyUrl}identify?f=json&tolerance=7` +
             `&mapExtent=${extent.xmin},${extent.ymin},${extent.xmax},${extent.ymax}` +
             `&imageDisplay=${size[0]},${size[1]},96` +
-            `&layers=visible:${layerConfig.layerId}` +
+            `&layers=visible:${layerConfiguration.layerId}` +
             `&layerDefs=${layerDefs}` +
             `&returnFieldName=true&sr=4326&returnGeometry=true` +
             `&geometryType=esriGeometryPoint&geometry=${lnglat[0]},${lnglat[1]}`;
@@ -384,7 +380,7 @@ export class EsriDynamic extends AbstractGeoViewRaster {
                 { features: jsonResponse.results },
                 { dataProjection: 'EPSG:4326', featureProjection: `EPSG:${currentProjection}` }
               ) as Feature<Geometry>[];
-              this.formatFeatureInfoResult(features, layerConfig).then((arrayOfFeatureInfoEntries) => {
+              this.formatFeatureInfoResult(features, layerConfiguration).then((arrayOfFeatureInfoEntries) => {
                 resolve(arrayOfFeatureInfoEntries);
               });
             });
@@ -577,17 +573,15 @@ export class EsriDynamic extends AbstractGeoViewRaster {
    * Get the layer view filter. The filter is derived fron the uniqueValue or the classBreak visibility flags and a layerFilter
    * associated to the layer.
    *
-   * @param {string | TypeLayerEntryConfig} layerPathOrConfig Layer path or configuration.
+   * @param {string} layerPath The layer path to the layer's configuration.
    *
    * @returns {string} the filter associated to the layerPath
    */
-  getViewFilter(layerPathOrConfig: string | TypeLayerEntryConfig): string {
-    const layerEntryConfig = (
-      typeof layerPathOrConfig === 'string' ? this.getLayerConfig(layerPathOrConfig) : layerPathOrConfig
-    ) as TypeEsriDynamicLayerEntryConfig;
-    const layerFilter = layerEntryConfig.olLayer?.get('layerFilter');
+  getViewFilter(layerPath: string): string {
+    const layerConfiguration = this.getLayerConfig(layerPath) as TypeEsriDynamicLayerEntryConfig;
+    const layerFilter = layerConfiguration.olLayer?.get('layerFilter');
 
-    if (layerEntryConfig?.style) {
+    if (layerConfiguration?.style) {
       const setAllUndefinedVisibilityFlagsToYes = (styleConfig: TypeUniqueValueStyleConfig | TypeClassBreakStyleConfig) => {
         // default value is true for all undefined visibility flags
         if (styleConfig.defaultVisible === undefined) styleConfig.defaultVisible = 'yes';
@@ -603,7 +597,7 @@ export class EsriDynamic extends AbstractGeoViewRaster {
         return allVisible;
       };
 
-      const styleSettings = layerEntryConfig.style[Object.keys(layerEntryConfig.style)[0] as TypeStyleGeometry]!;
+      const styleSettings = layerConfiguration.style[Object.keys(layerConfiguration.style)[0] as TypeStyleGeometry]!;
 
       if (isSimpleStyleConfig(styleSettings)) {
         return layerFilter || '(1=1)';
@@ -617,7 +611,7 @@ export class EsriDynamic extends AbstractGeoViewRaster {
         const fieldOfTheSameValue = this.countFieldOfTheSameValue(styleSettings);
         const fieldOrder = this.sortFieldOfTheSameValue(styleSettings, fieldOfTheSameValue);
         const queryTree = this.getQueryTree(styleSettings, fieldOfTheSameValue, fieldOrder);
-        const query = this.buildQuery(queryTree, 0, fieldOrder, styleSettings, layerEntryConfig.source.featureInfo!);
+        const query = this.buildQuery(queryTree, 0, fieldOrder, styleSettings, layerConfiguration.source.featureInfo!);
         return `${query}${layerFilter ? ` and (${layerFilter})` : ''}`;
       }
 
@@ -636,7 +630,7 @@ export class EsriDynamic extends AbstractGeoViewRaster {
                   `${styleSettings.field} >= ${this.formatFieldValue(
                     styleSettings.field,
                     styleSettings.classBreakStyleInfo[0].minValue!,
-                    layerEntryConfig.source.featureInfo!
+                    layerConfiguration.source.featureInfo!
                   )}`
                 );
               else if (styleSettings.classBreakStyleInfo[0].visible === 'no' && styleSettings.defaultVisible !== 'no') {
@@ -644,7 +638,7 @@ export class EsriDynamic extends AbstractGeoViewRaster {
                   `${styleSettings.field} < ${this.formatFieldValue(
                     styleSettings.field,
                     styleSettings.classBreakStyleInfo[0].minValue!,
-                    layerEntryConfig.source.featureInfo!
+                    layerConfiguration.source.featureInfo!
                   )}`
                 );
                 visibleWhenGreatherThisIndex = i;
@@ -654,7 +648,7 @@ export class EsriDynamic extends AbstractGeoViewRaster {
                 `${styleSettings.field} > ${this.formatFieldValue(
                   styleSettings.field,
                   styleSettings.classBreakStyleInfo[i].minValue!,
-                  layerEntryConfig.source.featureInfo!
+                  layerConfiguration.source.featureInfo!
                 )}`
               );
               if (i + 1 === styleSettings.classBreakStyleInfo.length)
@@ -662,7 +656,7 @@ export class EsriDynamic extends AbstractGeoViewRaster {
                   `${styleSettings.field} <= ${this.formatFieldValue(
                     styleSettings.field,
                     styleSettings.classBreakStyleInfo[i].maxValue!,
-                    layerEntryConfig.source.featureInfo!
+                    layerConfiguration.source.featureInfo!
                   )}`
                 );
             } else if (styleSettings.classBreakStyleInfo[i].visible === 'no' && styleSettings.defaultVisible !== 'no') {
@@ -670,7 +664,7 @@ export class EsriDynamic extends AbstractGeoViewRaster {
                 `${styleSettings.field} <= ${this.formatFieldValue(
                   styleSettings.field,
                   styleSettings.classBreakStyleInfo[i].minValue!,
-                  layerEntryConfig.source.featureInfo!
+                  layerConfiguration.source.featureInfo!
                 )}`
               );
               visibleWhenGreatherThisIndex = i;
@@ -681,7 +675,7 @@ export class EsriDynamic extends AbstractGeoViewRaster {
                 `${styleSettings.field} <= ${this.formatFieldValue(
                   styleSettings.field,
                   styleSettings.classBreakStyleInfo[i - 1].maxValue!,
-                  layerEntryConfig.source.featureInfo!
+                  layerConfiguration.source.featureInfo!
                 )}`
               );
             } else if (i + 1 === styleSettings.classBreakStyleInfo.length) {
@@ -689,7 +683,7 @@ export class EsriDynamic extends AbstractGeoViewRaster {
                 `${styleSettings.field} <= ${this.formatFieldValue(
                   styleSettings.field,
                   styleSettings.classBreakStyleInfo[i].maxValue!,
-                  layerEntryConfig.source.featureInfo!
+                  layerConfiguration.source.featureInfo!
                 )}`
               );
             }
@@ -698,7 +692,7 @@ export class EsriDynamic extends AbstractGeoViewRaster {
               `${styleSettings.field} > ${this.formatFieldValue(
                 styleSettings.field,
                 styleSettings.classBreakStyleInfo[i - 1].maxValue!,
-                layerEntryConfig.source.featureInfo!
+                layerConfiguration.source.featureInfo!
               )}`
             );
             visibleWhenGreatherThisIndex = -1;
@@ -711,7 +705,7 @@ export class EsriDynamic extends AbstractGeoViewRaster {
             `${styleSettings.field} > ${this.formatFieldValue(
               styleSettings.field,
               styleSettings.classBreakStyleInfo[visibleWhenGreatherThisIndex].maxValue!,
-              layerEntryConfig.source.featureInfo!
+              layerConfiguration.source.featureInfo!
             )}`
           );
 
@@ -744,21 +738,19 @@ export class EsriDynamic extends AbstractGeoViewRaster {
    * legend filters are derived from the uniqueValue or classBreaks style of the layer. When the layer config is invalid, nothing
    * is done.
    *
-   * @param {string | TypeLayerEntryConfig} layerPathOrConfig Layer path or configuration.
+   * @param {string} layerPath The layer path to the layer's configuration.
    * @param {string} filter An optional filter to be used in place of the getViewFilter value.
    * @param {boolean} CombineLegendFilter Flag used to combine the legend filter and the filter together (default: true)
    */
-  applyViewFilter(layerPathOrConfig: string | TypeLayerEntryConfig, filter = '', CombineLegendFilter = true) {
-    const layerEntryConfig = (
-      typeof layerPathOrConfig === 'string' ? this.getLayerConfig(layerPathOrConfig) : layerPathOrConfig
-    ) as TypeEsriDynamicLayerEntryConfig;
-    const source = (layerEntryConfig.olLayer as ImageLayer<ImageArcGISRest>).getSource();
+  applyViewFilter(layerPath: string, filter = '', CombineLegendFilter = true) {
+    const layerConfiguration = this.getLayerConfig(layerPath) as TypeEsriDynamicLayerEntryConfig;
+    const source = (layerConfiguration.olLayer as ImageLayer<ImageArcGISRest>).getSource();
     if (source) {
       let filterValueToUse = filter.replaceAll(/\s{2,}/g, ' ').trim();
-      layerEntryConfig.olLayer!.set('legendFilterIsOff', !CombineLegendFilter);
+      layerConfiguration.olLayer!.set('legendFilterIsOff', !CombineLegendFilter);
       if (CombineLegendFilter) {
-        layerEntryConfig.olLayer?.set('layerFilter', filterValueToUse);
-        filterValueToUse = this.getViewFilter(layerEntryConfig);
+        layerConfiguration.olLayer?.set('layerFilter', filterValueToUse);
+        filterValueToUse = this.getViewFilter(layerPath);
       }
 
       // Convert date constants using the externalFragmentsOrder derived from the externalDateFormat
@@ -778,21 +770,21 @@ export class EsriDynamic extends AbstractGeoViewRaster {
           dateFound.index! + dateFound[0].length
         )}`;
       });
-      source.updateParams({ layerDefs: `{"${layerEntryConfig.layerId}": "${filterValueToUse}"}` });
-      layerEntryConfig.olLayer!.changed();
+      source.updateParams({ layerDefs: `{"${layerConfiguration.layerId}": "${filterValueToUse}"}` });
+      layerConfiguration.olLayer!.changed();
     }
   }
 
   /** ***************************************************************************************************************************
-   * Get the bounds of the layer represented in the layerConfig, returns updated bounds
+   * Get the bounds of the layer represented in the layerConfiguration, returns updated bounds
    *
-   * @param {TypeLayerEntryConfig} layerConfig Layer config to get bounds from.
+   * @param {TypeLayerEntryConfig} layerConfiguration Layer config to get bounds from.
    * @param {Extent | undefined} bounds The current bounding box to be adjusted.
    *
    * @returns {Extent} The layer bounding box.
    */
-  protected getBounds(layerConfig: TypeLayerEntryConfig, bounds: Extent | undefined): Extent | undefined {
-    const layerBounds = layerConfig!.initialSettings?.bounds || [];
+  protected getBounds(layerConfiguration: TypeLayerEntryConfig, bounds: Extent | undefined): Extent | undefined {
+    const layerBounds = layerConfiguration!.initialSettings?.bounds || [];
     const projection = this.metadata?.fullExtent?.spatialReference?.wkid || api.maps[this.mapId].currentProjection;
 
     if (this.metadata?.fullExtent) {

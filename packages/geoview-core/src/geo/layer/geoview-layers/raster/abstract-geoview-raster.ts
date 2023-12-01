@@ -36,21 +36,21 @@ export abstract class AbstractGeoViewRaster extends AbstractGeoViewLayer {
   /** ***************************************************************************************************************************
    * This method adds listeners for openlayers loadend events, indicating that the layer is visible on the map
    *
-   * @param {TypeLayerEntryConfig} layerEntryConfig The config of the layer to add the listener to.
+   * @param {TypeLayerEntryConfig} layerConfiguration The config of the layer to add the listener to.
    * @param {'tile' | 'image'} layerType The type of raster layer)
    */
-  addLoadendListener(layerEntryConfig: TypeLayerEntryConfig, layerType: 'tile' | 'image'): void {
+  addLoadendListener(layerConfiguration: TypeLayerEntryConfig, layerType: 'tile' | 'image'): void {
     let loadErrorHandler: () => void;
     const loadEndHandler = () => {
-      this.changeLayerStatus('loaded', layerEntryConfig);
-      layerEntryConfig.olLayer!.get('source').un(`${layerType}loaderror`, loadErrorHandler);
+      this.setLayerStatus('loaded', layerConfiguration);
+      layerConfiguration.olLayer!.get('source').un(`${layerType}loaderror`, loadErrorHandler);
     };
     loadErrorHandler = () => {
-      this.changeLayerStatus('error', layerEntryConfig);
-      layerEntryConfig.olLayer!.get('source').un(`${layerType}loadend`, loadEndHandler);
+      this.setLayerStatus('error', layerConfiguration);
+      layerConfiguration.olLayer!.get('source').un(`${layerType}loadend`, loadEndHandler);
     };
 
-    layerEntryConfig.olLayer!.get('source').once(`${layerType}loadend`, loadEndHandler);
-    layerEntryConfig.olLayer!.get('source').once(`${layerType}loaderror`, loadErrorHandler);
+    layerConfiguration.olLayer!.get('source').once(`${layerType}loadend`, loadEndHandler);
+    layerConfiguration.olLayer!.get('source').once(`${layerType}loaderror`, loadErrorHandler);
   }
 }

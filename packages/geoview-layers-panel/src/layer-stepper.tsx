@@ -629,7 +629,7 @@ function LayerStepper({ mapId, setAddLayerVisible }: Props): JSX.Element {
       valid = false;
       emitErrorEmpty(isMultiple() ? translations[displayLanguage].layer : translations[displayLanguage].name);
     }
-    const layerConfig: TypeGeoviewLayerConfig = {
+    const layerConfiguration: TypeGeoviewLayerConfig = {
       geoviewLayerId,
       geoviewLayerName: {
         en: name,
@@ -646,17 +646,17 @@ function LayerStepper({ mapId, setAddLayerVisible }: Props): JSX.Element {
     if (layerType === GEOJSON || layerType === XYZ_TILES || layerType === GEOPACKAGE) {
       // TODO probably want an option to add metadata if geojson or geopackage
       // need to clear our metadata path or it will give errors trying to find it
-      layerConfig.metadataAccessPath = {
+      layerConfiguration.metadataAccessPath = {
         en: '',
         fr: '',
       };
     }
     if (layerType === GEOCORE) {
-      delete layerConfig.metadataAccessPath;
+      delete layerConfiguration.metadataAccessPath;
     }
     if (layerType === OGC_FEATURE) {
       // make sure the metadataAccessPath is the root OGC API URL
-      layerConfig.metadataAccessPath = {
+      layerConfiguration.metadataAccessPath = {
         en: api.geoUtilities.getOGCServerUrl(layerURL),
         fr: api.geoUtilities.getOGCServerUrl(layerURL),
       };
@@ -671,15 +671,15 @@ function LayerStepper({ mapId, setAddLayerVisible }: Props): JSX.Element {
         }, 3000);
       }
 
-      if (layerConfig.geoviewLayerId) {
-        api.maps[mapId].layer.layerOrder.push(layerConfig.geoviewLayerId);
-      } else if (layerConfig.listOfLayerEntryConfig !== undefined) {
-        layerConfig.listOfLayerEntryConfig.forEach((subLayer: TypeLayerEntryConfig) => {
+      if (layerConfiguration.geoviewLayerId) {
+        api.maps[mapId].layer.layerOrder.push(layerConfiguration.geoviewLayerId);
+      } else if (layerConfiguration.listOfLayerEntryConfig !== undefined) {
+        layerConfiguration.listOfLayerEntryConfig.forEach((subLayer: TypeLayerEntryConfig) => {
           if (subLayer.layerId) api.maps[mapId].layer.layerOrder.unshift(subLayer.layerId);
         });
       }
 
-      api.maps[mapId].layer.addGeoviewLayer(layerConfig);
+      api.maps[mapId].layer.addGeoviewLayer(layerConfiguration);
     }
   };
 
