@@ -103,15 +103,15 @@ From [abstract-geoview-layers](../../packages/geoview-core/src/geo/layer/geoview
 ```
 protected abstract getServiceMetadata(): Promise<void>;
 protected abstract validateListOfLayerEntryConfig(listOfLayerEntryConfig: TypeListOfLayerEntryConfig): TypeListOfLayerEntryConfig;
-protected abstract processLayerMetadata(layerConfiguration: TypeLayerEntryConfig): Promise<void>;
-protected abstract processOneLayerEntry(layerConfiguration: TypeBaseLayerEntryConfig): Promise<BaseLayer | null>;
-protected abstract getFeatureInfoAtPixel(location: Pixel, layerPath: string): Promise<TypeArrayOfFeatureInfoEntries>;
-protected abstract getFeatureInfoAtCoordinate(location: Coordinate, layerPath: string): Promise<TypeArrayOfFeatureInfoEntries>;
-protected abstract getFeatureInfoAtLongLat(location: Coordinate, layerPath: string): Promise<TypeArrayOfFeatureInfoEntries>;
-protected abstract getFeatureInfoUsingBBox(location: Coordinate[], layerPath: string): Promise<TypeArrayOfFeatureInfoEntries>;
-protected abstract getFeatureInfoUsingPolygon(location: Coordinate[], layerPath: string): Promise<TypeArrayOfFeatureInfoEntries>;
-protected abstract getFieldDomain(fieldName: string, layerPath: string): null | codedValueType | rangeDomainType;
-protected abstract getFieldType(fieldName: string, layerPath: string): 'string' | 'date' | 'number';
+protected abstract processLayerMetadata(layerEntryConfig: TypeLayerEntryConfig): Promise<void>;
+protected abstract processOneLayerEntry(layerEntryConfig: TypeBaseLayerEntryConfig): Promise<BaseLayer | null>;
+protected abstract getFeatureInfoAtPixel(location: Pixel, layerConfig: TypeLayerEntryConfig): Promise<TypeArrayOfFeatureInfoEntries>;
+protected abstract getFeatureInfoAtCoordinate(location: Coordinate, layerConfig: TypeLayerEntryConfig): Promise<TypeArrayOfFeatureInfoEntries>;
+protected abstract getFeatureInfoAtLongLat(location: Coordinate, layerConfig: TypeLayerEntryConfig): Promise<TypeArrayOfFeatureInfoEntries>;
+protected abstract getFeatureInfoUsingBBox(location: Coordinate[], layerConfig: TypeLayerEntryConfig): Promise<TypeArrayOfFeatureInfoEntries>;
+protected abstract getFeatureInfoUsingPolygon(location: Coordinate[], layerConfig: TypeLayerEntryConfig): Promise<TypeArrayOfFeatureInfoEntries>;
+protected abstract getFieldDomain(fieldName: string, layerConfig: TypeLayerEntryConfig): null | codedValueType | rangeDomainType;
+protected abstract getFieldType(fieldName: string, layerConfig: TypeLayerEntryConfig): 'string' | 'date' | 'number';
 ```
 
 Once done I have a valid new static image layer type!
@@ -124,12 +124,12 @@ import my new class and add it to the `EVENT_NAMES.LAYER.EVENT_ADD_LAYER` switch
 ```
 import { ImageStatic, layerConfigIsImageStatic } from './geoview-layers/raster/image-static';
 ...
-  } else if (layerConfigIsImageStatic(layerConfigutation)) {
-    const imageStatic = new ImageStatic(this.mapId, layerConfigutation);
+  } else if (layerConfigIsImageStatic(layerConfig)) {
+    const imageStatic = new ImageStatic(this.mapId, layerConfig);
     imageStatic.createGeoViewLayers().then(() => {
       this.addToMap(imageStatic);
     });
-  } else if (layerConfigIsWFS(layerConfigutation)) {
+  } else if (layerConfigIsWFS(layerConfig)) {
 ...
 ```
 
@@ -221,17 +221,17 @@ Lastly create the layer entry config who will be use later in the loading proces
 
 ```
 private processLayerEntryConfig(rootLayerConfig: TypeGeoviewLayerConfig, parentLayerConfig: TypeGeoviewLayerConfig | TypeLayerGroupEntryConfig, listOfLayerEntryConfig: TypeListOfLayerEntryConfig) {
-...} else if (geoviewEntryIsImageStatic(layerConfiguration)) {
-    // Value for layerConfiguration.entryType can only be raster
-    if (!layerConfiguration.entryType) layerConfiguration.entryType = 'raster';
-    if (!layerConfiguration.source.dataAccessPath) {
+...} else if (geoviewEntryIsImageStatic(layerEntryConfig)) {
+    // Value for layerEntryConfig.entryType can only be raster
+    if (!layerEntryConfig.entryType) layerEntryConfig.entryType = 'raster';
+    if (!layerEntryConfig.source.dataAccessPath) {
       throw new Error(
-        `source.dataAccessPath on layer entry ${Layer.getLayerPath(layerConfiguration)} is mandatory for GeoView layer ${
+        `source.dataAccessPath on layer entry ${Layer.getLayerPath(layerEntryConfig)} is mandatory for GeoView layer ${
           rootLayerConfig.geoviewLayerId
         } of type ${rootLayerConfig.geoviewLayerType}`
       );
     }
-  } else if (geoviewEntryIsXYZTiles(layerConfiguration)) {...
+  } else if (geoviewEntryIsXYZTiles(layerEntryConfig)) {...
 }
 ```
 

@@ -171,9 +171,9 @@
           const geoviewLayer = cgpv.api.maps[mapId].layer.geoviewLayers[geoviewLayerId];
           Object.keys(cgpv.api.maps[mapId].layer.registeredLayers).forEach((layerPath) => {
             if (layerPath.startsWith(geoviewLayerId)) {
-              const layerConfigutation = cgpv.api.maps[mapId].layer.registeredLayers[layerPath];
+              const layerConfig = cgpv.api.maps[mapId].layer.registeredLayers[layerPath];
               const { geoviewRenderer } = cgpv.api.maps[mapId];
-              geoviewRenderer.getLegendStyles(layerConfigutation).then((legendStyle) => {
+              geoviewRenderer.getLegendStyles(layerConfig).then((legendStyle) => {
 
                 mapButtonsDiv = document.createElement('td');
                 mapButtonsDiv.style.width = '16.66%';
@@ -185,31 +185,31 @@
                 mapButtonsDiv.appendChild(geoviewLayerH1);
 
                   const layerConfigH2 = document.createElement('h2');
-                layerConfigH2.innerText = `${layerConfigutation.layerName.en}`;
+                layerConfigH2.innerText = `${layerConfig.layerName.en}`;
                 layerConfigH2.style.height = '15px';
                 mapButtonsDiv.appendChild(layerConfigH2);
 
                 const toggleLayerVisibility = document.createElement('button');
-                const visibilityFlag = geoviewLayer.getVisible(layerConfigutation);
+                const visibilityFlag = geoviewLayer.getVisible(layerConfig);
                 if (visibilityFlag) toggleLayerVisibility.innerText = 'Hide';
                 else toggleLayerVisibility.innerText = 'Show';
                 toggleLayerVisibility.addEventListener('click', function (e) {
-                  const visibilityFlag = !geoviewLayer.getVisible(layerConfigutation);
+                  const visibilityFlag = !geoviewLayer.getVisible(layerConfig);
                   if (visibilityFlag) toggleLayerVisibility.innerText = 'Hide';
                   else toggleLayerVisibility.innerText = 'Show';
-                  geoviewLayer.setVisible(visibilityFlag, layerConfigutation);
+                  geoviewLayer.setVisible(visibilityFlag, layerConfig);
                 });
                 layerConfigH2.appendChild(toggleLayerVisibility);
 
-                if (layerConfiguration.style) {
-                  Object.keys(layerConfiguration.style).forEach((geometry) => {
+                if (layerConfig.style) {
+                  Object.keys(layerConfig.style).forEach((geometry) => {
                     const geometryText = document.createElement("p");
                     geometryText.innerText = `Geometry = ${geometry}`;
                     geometryText.style.height = '15px';
                     mapButtonsDiv.appendChild(geometryText);
-                    if (layerConfiguration.style[geometry].styleType === 'uniqueValue') {
-                      if (layerConfiguration.style[geometry].defaultSettings) {
-                        if (layerConfiguration.style[geometry].defaultVisible === 'always') {
+                    if (layerConfig.style[geometry].styleType === 'uniqueValue') {
+                      if (layerConfig.style[geometry].defaultSettings) {
+                        if (layerConfig.style[geometry].defaultVisible === 'always') {
                           const alwaysDefaultLabel = document.createElement("label");
                           alwaysDefaultLabel.innerText =  `Always show `;
                           alwaysDefaultLabel.style.fontSize = '15px';
@@ -221,22 +221,22 @@
                           mapButtonsDiv.appendChild(br);
                         } else {
                           const toggleUniqueValueDefault = document.createElement("button");
-                          if (layerConfiguration.style[geometry].defaultVisible === 'yes')
-                            toggleUniqueValueDefault.innerText = `Hide ${layerConfiguration.style[geometry].defaultLabel}`;
-                          else if (layerConfiguration.style[geometry].defaultVisible === 'no')
-                            toggleUniqueValueDefault.innerText =  `Show ${layerConfiguration.style[geometry].defaultLabel}`;
+                          if (layerConfig.style[geometry].defaultVisible === 'yes')
+                            toggleUniqueValueDefault.innerText = `Hide ${layerConfig.style[geometry].defaultLabel}`;
+                          else if (layerConfig.style[geometry].defaultVisible === 'no')
+                            toggleUniqueValueDefault.innerText =  `Show ${layerConfig.style[geometry].defaultLabel}`;
                           toggleUniqueValueDefault.addEventListener('click', function (e) {
-                            if (layerConfiguration.style[geometry].defaultVisible === 'yes') {
-                              layerConfiguration.style[geometry].defaultVisible = 'no';
-                              toggleUniqueValueDefault.innerText = `Show ${layerConfiguration.style[geometry].defaultLabel}`;
-                            } else if (layerConfiguration.style[geometry].defaultVisible === 'no') {
-                              layerConfiguration.style[geometry].defaultVisible = 'yes';
-                              toggleUniqueValueDefault.innerText = `Hide ${layerConfiguration.style[geometry].defaultLabel}`;
+                            if (layerConfig.style[geometry].defaultVisible === 'yes') {
+                              layerConfig.style[geometry].defaultVisible = 'no';
+                              toggleUniqueValueDefault.innerText = `Show ${layerConfig.style[geometry].defaultLabel}`;
+                            } else if (layerConfig.style[geometry].defaultVisible === 'no') {
+                              layerConfig.style[geometry].defaultVisible = 'yes';
+                              toggleUniqueValueDefault.innerText = `Hide ${layerConfig.style[geometry].defaultLabel}`;
                             }
                             const checkbox = document.getElementById(`checkbox-${mapId}-${geoviewLayer.geoviewLayerId}`);
                             const filterInput = document.getElementById(`filter-input-${mapId}`);
-                            const filter = checkbox.value === 'true' ? filterInput.value : geoviewLayer.getLayerFilter(layerConfiguration);
-                            geoviewLayer.applyViewFilter(layerConfiguration, filter, checkbox.value !== 'true');
+                            const filter = checkbox.value === 'true' ? filterInput.value : geoviewLayer.getLayerFilter(layerConfig);
+                            geoviewLayer.applyViewFilter(layerConfig, filter, checkbox.value !== 'true');
                           });
                           mapButtonsDiv.appendChild(toggleUniqueValueDefault);
                           const br = document.createElement("br");
@@ -244,8 +244,8 @@
                           mapButtonsDiv.appendChild(br);
                         }
                       }
-                      for (let i = 0; i < layerConfiguration.style[geometry].uniqueValueStyleInfo.length; i++) {
-                        if (layerConfiguration.style[geometry].uniqueValueStyleInfo[i].visible === 'always') {
+                      for (let i = 0; i < layerConfig.style[geometry].uniqueValueStyleInfo.length; i++) {
+                        if (layerConfig.style[geometry].uniqueValueStyleInfo[i].visible === 'always') {
                           const alwaysEntry = document.createElement("label");
                           alwaysEntry.innerText =  `Always show `;
                           alwaysEntry.style.fontSize = '15px';
@@ -257,12 +257,12 @@
                           mapButtonsDiv.appendChild(br);
                         } else {
                           const toggleUniqueValueFeature = document.createElement("button");
-                          if (layerConfiguration.style[geometry].uniqueValueStyleInfo[i].visible === 'yes')
-                            toggleUniqueValueFeature.innerText = `Hide ${layerConfiguration.style[geometry].uniqueValueStyleInfo[i].label}`;
-                          else if (layerConfiguration.style[geometry].uniqueValueStyleInfo[i].visible === 'no')
-                            toggleUniqueValueFeature.innerText = `Show ${layerConfiguration.style[geometry].uniqueValueStyleInfo[i].label}`;
+                          if (layerConfig.style[geometry].uniqueValueStyleInfo[i].visible === 'yes')
+                            toggleUniqueValueFeature.innerText = `Hide ${layerConfig.style[geometry].uniqueValueStyleInfo[i].label}`;
+                          else if (layerConfig.style[geometry].uniqueValueStyleInfo[i].visible === 'no')
+                            toggleUniqueValueFeature.innerText = `Show ${layerConfig.style[geometry].uniqueValueStyleInfo[i].label}`;
                           toggleUniqueValueFeature.addEventListener('click', function (e) {
-                            const uniqueValueStyleInfoEntry = layerConfiguration.style[geometry].uniqueValueStyleInfo[i];
+                            const uniqueValueStyleInfoEntry = layerConfig.style[geometry].uniqueValueStyleInfo[i];
                             if (uniqueValueStyleInfoEntry.visible === 'yes') {
                               uniqueValueStyleInfoEntry.visible = 'no';
                               toggleUniqueValueFeature.innerText = `Show ${uniqueValueStyleInfoEntry.label}`;
@@ -272,8 +272,8 @@
                             }
                             const checkbox = document.getElementById(`checkbox-${mapId}-${geoviewLayer.geoviewLayerId}`);
                             const filterInput = document.getElementById(`filter-input-${mapId}`);
-                            const filter = checkbox.value === 'true' ? filterInput.value : geoviewLayer.getLayerFilter(layerConfiguration);
-                            geoviewLayer.applyViewFilter(layerConfiguration, filter, checkbox.value !== 'true');
+                            const filter = checkbox.value === 'true' ? filterInput.value : geoviewLayer.getLayerFilter(layerConfig);
+                            geoviewLayer.applyViewFilter(layerConfig, filter, checkbox.value !== 'true');
                           });
                           mapButtonsDiv.appendChild(toggleUniqueValueFeature);
                           mapButtonsDiv.appendChild(legendStyle[geometry].arrayOfCanvas[i]);
@@ -283,9 +283,9 @@
                           mapButtonsDiv.appendChild(br);
                         }
                       }
-                    } else if (layerConfiguration.style[geometry].styleType === 'classBreaks') {
-                      if (layerConfiguration.style[geometry].defaultSettings) {
-                        if (layerConfiguration.style[geometry].defaultVisible === 'always') {
+                    } else if (layerConfig.style[geometry].styleType === 'classBreaks') {
+                      if (layerConfig.style[geometry].defaultSettings) {
+                        if (layerConfig.style[geometry].defaultVisible === 'always') {
                           const alwaysDefaultLabel = document.createElement("label");
                           alwaysDefaultLabel.innerText =  `Always show `;
                           alwaysDefaultLabel.style.fontSize = '15px';
@@ -296,22 +296,22 @@
                           mapButtonsDiv.appendChild(br);
                         } else {
                           const toggleClassBreakDefault = document.createElement("button");
-                          if (layerConfiguration.style[geometry].defaultVisible === 'yes')
-                            toggleClassBreakDefault.innerText = `Hide ${layerConfiguration.style[geometry].defaultLabel}`;
-                          else if (layerConfiguration.style[geometry].defaultVisible === 'no')
-                            toggleClassBreakDefault.innerText = `Show ${layerConfiguration.style[geometry].defaultLabel}`;
+                          if (layerConfig.style[geometry].defaultVisible === 'yes')
+                            toggleClassBreakDefault.innerText = `Hide ${layerConfig.style[geometry].defaultLabel}`;
+                          else if (layerConfig.style[geometry].defaultVisible === 'no')
+                            toggleClassBreakDefault.innerText = `Show ${layerConfig.style[geometry].defaultLabel}`;
                           toggleClassBreakDefault.addEventListener('click', function (e) {
-                          if (layerConfiguration.style[geometry].defaultVisible === 'yes') {
-                            layerConfiguration.style[geometry].defaultVisible = 'no';
-                            toggleClassBreakDefault.innerText = `Show ${layerConfiguration.style[geometry].defaultLabel}`;
-                          } else if (layerConfiguration.style[geometry].defaultVisible === 'no') {
-                            layerConfiguration.style[geometry].defaultVisible = 'yes';
-                            toggleClassBreakDefault.innerText = `Hide ${layerConfiguration.style[geometry].defaultLabel}`;
+                          if (layerConfig.style[geometry].defaultVisible === 'yes') {
+                            layerConfig.style[geometry].defaultVisible = 'no';
+                            toggleClassBreakDefault.innerText = `Show ${layerConfig.style[geometry].defaultLabel}`;
+                          } else if (layerConfig.style[geometry].defaultVisible === 'no') {
+                            layerConfig.style[geometry].defaultVisible = 'yes';
+                            toggleClassBreakDefault.innerText = `Hide ${layerConfig.style[geometry].defaultLabel}`;
                           }
                             const checkbox = document.getElementById(`checkbox-${mapId}-${geoviewLayer.geoviewLayerId}`);
                             const filterInput = document.getElementById(`filter-input-${mapId}`);
-                            const filter = checkbox.value === 'true' ? filterInput.value : geoviewLayer.getLayerFilter(layerConfiguration);
-                            geoviewLayer.applyViewFilter(layerConfiguration, filter, checkbox.value !== 'true');
+                            const filter = checkbox.value === 'true' ? filterInput.value : geoviewLayer.getLayerFilter(layerConfig);
+                            geoviewLayer.applyViewFilter(layerConfig, filter, checkbox.value !== 'true');
                           });
                           mapButtonsDiv.appendChild(toggleClassBreakDefault);
                           const br = document.createElement("br");
@@ -319,8 +319,8 @@
                           mapButtonsDiv.appendChild(br);
                         }
                       }
-                      for (let i = 0; i < layerConfiguration.style[geometry].classBreakStyleInfo.length; i++) {
-                        if (layerConfiguration.style[geometry].classBreakStyleInfo[i].visible === 'always') {
+                      for (let i = 0; i < layerConfig.style[geometry].classBreakStyleInfo.length; i++) {
+                        if (layerConfig.style[geometry].classBreakStyleInfo[i].visible === 'always') {
                           const alwaysEntry = document.createElement("label");
                           alwaysEntry.innerText =  `Always show `;
                           alwaysEntry.style.fontSize = '15px';
@@ -332,12 +332,12 @@
                           mapButtonsDiv.appendChild(br);
                         } else {
                           const toggleClassBreakFeature = document.createElement("button");
-                          if (layerConfiguration.style[geometry].classBreakStyleInfo[i].visible === 'yes')
-                            toggleClassBreakFeature.innerText = `Hide ${layerConfiguration.style[geometry].classBreakStyleInfo[i].label}`;
-                          else if (layerConfiguration.style[geometry].classBreakStyleInfo[i].visible === 'no')
-                            toggleClassBreakFeature.innerText = `Show ${layerConfiguration.style[geometry].classBreakStyleInfo[i].label}`;
+                          if (layerConfig.style[geometry].classBreakStyleInfo[i].visible === 'yes')
+                            toggleClassBreakFeature.innerText = `Hide ${layerConfig.style[geometry].classBreakStyleInfo[i].label}`;
+                          else if (layerConfig.style[geometry].classBreakStyleInfo[i].visible === 'no')
+                            toggleClassBreakFeature.innerText = `Show ${layerConfig.style[geometry].classBreakStyleInfo[i].label}`;
                           toggleClassBreakFeature.addEventListener('click', function (e) {
-                            const classBreakStyleInfoEntry = layerConfiguration.style[geometry].classBreakStyleInfo[i];
+                            const classBreakStyleInfoEntry = layerConfig.style[geometry].classBreakStyleInfo[i];
                             if (classBreakStyleInfoEntry.visible === 'yes') {
                               classBreakStyleInfoEntry.visible = 'no';
                               toggleClassBreakFeature.innerText = `Show ${classBreakStyleInfoEntry.label}`;
@@ -347,8 +347,8 @@
                             }
                             const checkbox = document.getElementById(`checkbox-${mapId}-${geoviewLayer.geoviewLayerId}`);
                             const filterInput = document.getElementById(`filter-input-${mapId}`);
-                            const filter = checkbox.value === 'true' ? filterInput.value : geoviewLayer.getLayerFilter(layerConfiguration);
-                            geoviewLayer.applyViewFilter(layerConfiguration, filter, checkbox.value !== 'true');
+                            const filter = checkbox.value === 'true' ? filterInput.value : geoviewLayer.getLayerFilter(layerConfig);
+                            geoviewLayer.applyViewFilter(layerConfig, filter, checkbox.value !== 'true');
                           });
                           mapButtonsDiv.appendChild(toggleClassBreakFeature);
                           mapButtonsDiv.appendChild(legendStyle[geometry].arrayOfCanvas[i]);
@@ -367,11 +367,11 @@
                       layerFilterInput.id = `filter-input-${mapId}`;
                       layerFilterInput.style.width = '50%';
                       layerFilterText.appendChild(layerFilterInput);
-                      layerFilterInput.value = geoviewLayer.getLayerFilter(layerConfiguration) || '';
+                      layerFilterInput.value = geoviewLayer.getLayerFilter(layerConfig) || '';
                       const layerFilterButton = document.createElement("button");
                       layerFilterButton.addEventListener('click', function (e) {
                         const checkbox = document.getElementById(`checkbox-${mapId}-${geoviewLayer.geoviewLayerId}`);
-                        geoviewLayer.applyViewFilter(layerConfiguration, layerFilterInput.value, checkbox.value !== 'true');
+                        geoviewLayer.applyViewFilter(layerConfig, layerFilterInput.value, checkbox.value !== 'true');
                       });
                       layerFilterButton.innerText = 'Apply';
                       layerFilterText.appendChild(layerFilterButton);
@@ -382,7 +382,7 @@
                       checkboxInput.id = `checkbox-${mapId}-${geoviewLayer.geoviewLayerId}`;
                       checkboxInput.addEventListener('click', function (e) {
                         checkboxInput.value =checkboxInput.value === 'true' ? 'false' : 'true';
-                        geoviewLayer.applyViewFilter(layerConfiguration, layerFilterInput.value, checkboxInput.value !== 'true');
+                        geoviewLayer.applyViewFilter(layerConfig, layerFilterInput.value, checkboxInput.value !== 'true');
                       });
                       mapButtonsDiv.appendChild(checkboxInput);
                       const checkboxText = document.createElement("label");
@@ -518,7 +518,7 @@
     }
     // ==========================================================================================================================
     function addBoundsPolygon(mapId, bbox) {
-      const newBbox = cgpv.api.maps[mapId].transformAndDensifyExtent(bbox, `EPSG:${cgpv.api.maps[mapId].currentProjection}`, `EPSG:4326`);
+      const newBbox = cgpv.api.maps[mapId].transformAndDensifyExtent(bbox, `EPSG:${cgpv.api.maps[mapId].mapState.currentProjection}`, `EPSG:4326`);
 
     const geometry = cgpv.api.maps[mapId].layer.geometry;
     geometry.setActiveGeometryGroup();
