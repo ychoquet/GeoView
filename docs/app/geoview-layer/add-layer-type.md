@@ -49,7 +49,7 @@ export const geoviewLayerIsImageStatic = (verifyIfGeoViewLayer: AbstractGeoViewL
 };
 
 export const geoviewEntryIsImageStatic = (verifyIfGeoViewEntry: TypeLayerEntryConfig): verifyIfGeoViewEntry is TypeImageStaticLayerEntryConfig => {
-  return verifyIfGeoViewEntry?.geoviewLayerConfig?.geoviewLayerType === CONST_LAYER_TYPES.IMAGE_STATIC;
+  return verifyIfGeoViewEntry?.geoviewRootLayer?.geoviewLayerType === CONST_LAYER_TYPES.IMAGE_STATIC;
 };
 ```
 
@@ -220,15 +220,15 @@ private doExtraValidation(listOfGeoviewLayerConfig?: TypeListOfGeoviewLayerConfi
 Lastly create the layer entry config who will be use later in the loading process
 
 ```
-private processLayerEntryConfig(geoviewLayerConfig: TypeGeoviewLayerConfig, parentLayerConfig: TypeGeoviewLayerConfig | TypeLayerGroupEntryConfig, listOfLayerEntryConfig: TypeListOfLayerEntryConfig) {
+private processLayerEntryConfig(rootLayerConfig: TypeGeoviewLayerConfig, parentLayerConfig: TypeGeoviewLayerConfig | TypeLayerGroupEntryConfig, listOfLayerEntryConfig: TypeListOfLayerEntryConfig) {
 ...} else if (geoviewEntryIsImageStatic(layerConfig)) {
     // Value for layerConfig.entryType can only be raster
     if (!layerConfig.entryType) layerConfig.entryType = 'raster';
     if (!layerConfig.source.dataAccessPath) {
       throw new Error(
         `source.dataAccessPath on layer entry ${Layer.getLayerPath(layerConfig)} is mandatory for GeoView layer ${
-          geoviewLayerConfig.geoviewLayerId
-        } of type ${geoviewLayerConfig.geoviewLayerType}`
+          rootLayerConfig.geoviewLayerId
+        } of type ${rootLayerConfig.geoviewLayerType}`
       );
     }
   } else if (geoviewEntryIsXYZTiles(layerConfig)) {...

@@ -118,7 +118,7 @@
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">
                                 <span style="color: rgb(0, 0, 0); background-color: initial;">
                                     <font style="font-size: 12px;">
-                                        + geoviewLayerConfig
+                                        + geoviewRootLayer
                                     </font>
                                 </span>
                             </div>
@@ -126,7 +126,7 @@
                     </div>
                 </foreignObject>
                 <text x="327" y="835" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">
-                    + geoviewLayerConfig
+                    + geoviewRootLayer
                 </text>
             </switch>
         </g>
@@ -271,7 +271,7 @@
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">
                                 <span style="color: rgb(0, 0, 0); background-color: initial;">
                                     <font style="font-size: 12px;">
-                                        + geoviewLayerConfig
+                                        + geoviewRootLayer
                                     </font>
                                 </span>
                             </div>
@@ -279,7 +279,7 @@
                     </div>
                 </foreignObject>
                 <text x="47" y="835" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">
-                    + geoviewLayerConfig
+                    + geoviewRootLayer
                 </text>
             </switch>
         </g>
@@ -419,7 +419,7 @@
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">
                                 <span style="color: rgb(0, 0, 0); background-color: initial;">
                                     <font style="font-size: 12px;">
-                                        + geoviewLayerConfig
+                                        + geoviewRootLayer
                                     </font>
                                 </span>
                             </div>
@@ -427,7 +427,7 @@
                     </div>
                 </foreignObject>
                 <text x="327" y="315" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">
-                    + geoviewLayerConfig
+                    + geoviewRootLayer
                 </text>
             </switch>
         </g>
@@ -567,7 +567,7 @@
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">
                                 <span style="color: rgb(0, 0, 0); background-color: initial;">
                                     <font style="font-size: 12px;">
-                                        + geoviewLayerConfig
+                                        + geoviewRootLayer
                                     </font>
                                 </span>
                             </div>
@@ -575,7 +575,7 @@
                     </div>
                 </foreignObject>
                 <text x="327" y="555" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">
-                    + geoviewLayerConfig
+                    + geoviewRootLayer
                 </text>
             </switch>
         </g>
@@ -632,7 +632,7 @@
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">
                                 <span style="color: rgb(0, 0, 0); background-color: initial;">
                                     <font style="font-size: 12px;">
-                                        + geoviewLayerConfig
+                                        + geoviewRootLayer
                                     </font>
                                 </span>
                             </div>
@@ -640,7 +640,7 @@
                     </div>
                 </foreignObject>
                 <text x="47" y="315" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">
-                    + geoviewLayerConfig
+                    + geoviewRootLayer
                 </text>
             </switch>
         </g>
@@ -929,14 +929,14 @@
                         <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: left; max-height: 16px; overflow: hidden;">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">
                                 <span style="color: rgb(0, 0, 0);">
-                                    + geoviewLayerConfig
+                                    + geoviewRootLayer
                                 </span>
                             </div>
                         </div>
                     </div>
                 </foreignObject>
                 <text x="607" y="315" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">
-                    + geoviewLayerConfig
+                    + geoviewRootLayer
                 </text>
             </switch>
         </g>
@@ -991,7 +991,7 @@
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">
                                 <span style="color: rgb(0, 0, 0); background-color: initial;">
                                     <font style="font-size: 12px;">
-                                        + geoviewLayerConfig
+                                        + geoviewRootLayer
                                     </font>
                                 </span>
                             </div>
@@ -999,7 +999,7 @@
                     </div>
                 </foreignObject>
                 <text x="607" y="555" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">
-                    + geoviewLayerConfig
+                    + geoviewRootLayer
                 </text>
             </switch>
         </g>
@@ -1179,14 +1179,14 @@
                         <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: left; max-height: 16px; overflow: hidden;">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">
                                 <span style="color: rgb(0, 0, 0);">
-                                    + geoviewLayerConfig
+                                    + geoviewRootLayer
                                 </span>
                             </div>
                         </div>
                     </div>
                 </foreignObject>
                 <text x="607" y="835" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">
-                    + geoviewLayerConfig
+                    + geoviewRootLayer
                 </text>
             </switch>
         </g>
