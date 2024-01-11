@@ -84,7 +84,7 @@ next and final level of nesting. Its data type is polymorphic. It can therefore 
 
 ## Base Layer Entry Config Chaining
 
-All nodes at the lowest nesting level are linked to their parent node by the `parentLayerConfig` property and to their Geoview root node by the `geoviewLayerConfig` property. When both properties are equal, we know we are at the root of the tree. The chaining of layer entries is illustrated by the dotted lines in the figure [MapConfiguration](./README.md#TypeMapConfig). The red dotted line emphasizes that recursive groups are chained with their parent group nodes until the root of the tree is reached. The chaining of configuration nodes is more easily seen in the following figure.
+All nodes at the lowest nesting level are linked to their parent node by the `parentLayerConfig` property and to their Geoview root node by the `geoviewRootLayer` property. When both properties are equal, we know we are at the root of the tree. The chaining of layer entries is illustrated by the dotted lines in the figure [MapConfiguration](./README.md#TypeMapConfig). The red dotted line emphasizes that recursive groups are chained with their parent group nodes until the root of the tree is reached. The chaining of configuration nodes is more easily seen in the following figure.
 
 <p>&nbsp;</p>
 <p align="center">
