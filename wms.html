@@ -106,7 +106,7 @@
             'listOfLayerEntryConfig': [
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=1',
+                'layerPathEnding': 'style=1',
                 'source': {
                   'style': '1',
                   'serverType': 'qgis'
@@ -114,126 +114,126 @@
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=2',
+                'layerPathEnding': 'style=2',
                 'source': {
                   'style': '2'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=3',
+                'layerPathEnding': 'style=3',
                 'source': {
                   'style': '3'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=4',
+                'layerPathEnding': 'style=4',
                 'source': {
                   'style': '4'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=5',
+                'layerPathEnding': 'style=5',
                 'source': {
                   'style': '5'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=6',
+                'layerPathEnding': 'style=6',
                 'source': {
                   'style': '6'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=7',
+                'layerPathEnding': 'style=7',
                 'source': {
                   'style': '7'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=8',
+                'layerPathEnding': 'style=8',
                 'source': {
                   'style': '8'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=9',
+                'layerPathEnding': 'style=9',
                 'source': {
                   'style': '9'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=10',
+                'layerPathEnding': 'style=10',
                 'source': {
                   'style': '10'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=11',
+                'layerPathEnding': 'style=11',
                 'source': {
                   'style': '11'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=12',
+                'layerPathEnding': 'style=12',
                 'source': {
                   'style': '12'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=13',
+                'layerPathEnding': 'style=13',
                 'source': {
                   'style': '13'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=14',
+                'layerPathEnding': 'style=14',
                 'source': {
                   'style': '14'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=15',
+                'layerPathEnding': 'style=15',
                 'source': {
                   'style': '15'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=16',
+                'layerPathEnding': 'style=16',
                 'source': {
                   'style': '16'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=17',
+                'layerPathEnding': 'style=17',
                 'source': {
                   'style': '17'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=18',
+                'layerPathEnding': 'style=18',
                 'source': {
                   'style': '18'
                 }
               },
               {
                 'layerId': 'landcover_2015_19classes',
-                'layerIdExtension': 'style=19',
+                'layerPathEnding': 'style=19',
                 'source': {
                   'style': '19'
                 }
@@ -419,8 +419,7 @@
           createTableOfFilter('LYR4');
 
           const intervalId = window.setInterval(() => {
-            // If metadata are processed
-            if (cgpv.api.maps.LYR3?.layer?.geoviewLayers?.['wmsLYR3-Root']?.allLayerStatusAreIn(['processed', 'loading', 'loaded', 'error'])) {
+            if (cgpv.api.maps.LYR3?.layer?.geoviewLayers?.['wmsLYR3-Root']?.allLayerEntryConfigProcessed()) {
               const lyr3LayerConfig = cgpv.api.maps.LYR3.layer.registeredLayers['wmsLYR3-Root/landcover_2015_19classes'];
               if (Array.isArray(lyr3LayerConfig?.source?.style)) {
                 const dropDownContent = document.getElementById('style');
@@ -474,8 +473,8 @@
       cgpv.api.event.on(
         cgpv.api.eventNames.GET_FEATURE_INFO.ALL_QUERIES_DONE,
         (payload) => {
-          const { layerSetId, resultSets, eventType } = payload;
-          createInfoTable('LYR1', 'ResultSetId1', resultSets, eventType);
+          const { layerSetId, resultsSet, eventType } = payload;
+          createInfoTable('LYR1', 'ResultSetId1', resultsSet, eventType);
         },
         'LYR1/FeatureInfoLayerSet'
       );
@@ -484,8 +483,8 @@
       cgpv.api.event.on(
         cgpv.api.eventNames.GET_LEGENDS.LEGENDS_LAYERSET_UPDATED,
         (payload) => {
-          const { resultSets } = payload;
-          displayLegend('LegendsId1', resultSets);
+          const { resultsSet } = payload;
+          displayLegend('LegendsId1', resultsSet);
         },
         'LYR1/LegendsLayerSet'
       );
@@ -504,8 +503,8 @@
       cgpv.api.event.on(
         cgpv.api.eventNames.GET_FEATURE_INFO.ALL_QUERIES_DONE,
         (payload) => {
-          const { layerSetId, resultSets, eventType } = payload;
-          createInfoTable('LYR2', 'ResultSetId2', resultSets, eventType);
+          const { layerSetId, resultsSet, eventType } = payload;
+          createInfoTable('LYR2', 'ResultSetId2', resultsSet, eventType);
         },
         'LYR2/FeatureInfoLayerSet'
       );
@@ -514,8 +513,8 @@
       cgpv.api.event.on(
         cgpv.api.eventNames.GET_LEGENDS.LEGENDS_LAYERSET_UPDATED,
         (payload) => {
-          const { resultSets } = payload;
-          displayLegend('LegendsId2', resultSets);
+          const { resultsSet } = payload;
+          displayLegend('LegendsId2', resultsSet);
         },
         'LYR2/LegendsLayerSet'
       );
@@ -527,8 +526,8 @@
       cgpv.api.event.on(
         cgpv.api.eventNames.GET_FEATURE_INFO.ALL_QUERIES_DONE,
         (payload) => {
-          const { layerSetId, resultSets, eventType } = payload;
-          createInfoTable('LYR3', 'ResultSetId3', resultSets, eventType);
+          const { layerSetId, resultsSet, eventType } = payload;
+          createInfoTable('LYR3', 'ResultSetId3', resultsSet, eventType);
         },
         'LYR3/FeatureInfoLayerSet'
       );
@@ -537,8 +536,8 @@
       cgpv.api.event.on(
         cgpv.api.eventNames.GET_LEGENDS.LEGENDS_LAYERSET_UPDATED,
         (payload) => {
-          const { resultSets } = payload;
-          displayLegend('LegendsId3', resultSets);
+          const { resultsSet } = payload;
+          displayLegend('LegendsId3', resultsSet);
         },
         'LYR3/LegendsLayerSet'
       );
@@ -550,8 +549,8 @@
       cgpv.api.event.on(
         cgpv.api.eventNames.GET_LEGENDS.LEGENDS_LAYERSET_UPDATED,
         (payload) => {
-          const { resultSets } = payload;
-          displayLegend('LegendsId4', resultSets);
+          const { resultsSet } = payload;
+          displayLegend('LegendsId4', resultsSet);
         },
         'LYR4/LegendsLayerSet'
       );
