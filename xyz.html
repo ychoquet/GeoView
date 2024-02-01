@@ -15,7 +15,7 @@
               {
                 'geoviewLayerId': 'xyzTilesLYR1',
                 'geoviewLayerName': {
-                  'en': 'statmen toner'
+                  'en': 'World_Topo_Map'
                 },
                 'geoviewLayerType': 'xyzTiles',
                 'listOfLayerEntryConfig': [
@@ -53,12 +53,13 @@
               {
                 'geoviewLayerId': 'xyzTilesLYR1',
                 'geoviewLayerName': {
-                  'en': 'statmen toner'
+                  'en': 'World_Topo_Map'
                 },
                 'geoviewLayerType': 'xyzTiles',
                 'listOfLayerEntryConfig': [
                   {
-                    'layerId': 'toner',
+                    'layerId': 'topo',
+                    'layerName': {'en': 'World Topo Map'},
                     'initialSettings': { 'minZoom': 3, 'maxZoom': 8 },
                     'source': {
                       'dataAccessPath': {
@@ -85,6 +86,8 @@
       });
 
       listenToLegendLayerSetChanges('HLYR1-state', 'LYR1/LegendsLayerSet');
+      listenToLegendLayerSetChanges('HLYR2-state', 'LYR2/LegendsLayerSet');
+
       //create snippets
       createCodeSnippet();
       createConfigSnippet();</script></body></html>
