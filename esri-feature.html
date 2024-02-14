@@ -47,7 +47,8 @@
                   {
                     'layerId': '8',
                     'layerFilter': 'Total_CSO_Volume > 5000000',
-                    'initialSettings': { 'visible': 'yes' }
+                    'initialSettings': { 'visible': 'yes' },
+                    'source': { 'featureInfo': { 'queryable': true } }
                   }
                 ]
               }
@@ -281,10 +282,13 @@
           const lyr1RegisteredLayers = cgpv.api.maps.LYR1.layer.registeredLayers;
           const dropDownContent = document.getElementById('dropdown1');
           Object.keys(lyr1RegisteredLayers).forEach((layerPath) => {
-            element = document.createElement('option');
-            element.value = layerPath;
-            element.innerText = lyr1RegisteredLayers[layerPath].layerName.en;
-            dropDownContent.appendChild(element);
+            if (lyr1RegisteredLayers[layerPath].layerStatus === 'loaded') {
+              const layerName = lyr1RegisteredLayers[layerPath]?.layerName?.en;
+              element = document.createElement('option');
+              element.value = layerPath;
+              element.innerText = layerName ? layerName : lyr1RegisteredLayers[layerPath].layerId;
+              dropDownContent.appendChild(element);
+            }
           });
           dropDownContent.addEventListener('click', (e) => {
             cgpv.api.getFeatureInfoLayerSet('LYR1').triggerGetAllFeatureInfo(e.currentTarget.value, 'all');
