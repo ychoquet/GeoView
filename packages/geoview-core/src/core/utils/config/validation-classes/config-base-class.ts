@@ -10,7 +10,7 @@ import {
   layerEntryIsGroupLayer,
 } from '@/geo/map/map-schema-types';
 import { logger } from '@/core/utils/logger';
-import { Cast, TypeJsonValue, api } from '@/core/types/cgpv-types';
+import { Cast, TypeJsonValue, TypeJsonObject, api } from '@/core/types/cgpv-types';
 
 import { GroupLayerEntryConfig } from './group-layer-entry-config';
 import { AbstractBaseLayerEntryConfig } from './abstract-base-layer-entry-config';
@@ -19,8 +19,11 @@ import { AbstractBaseLayerEntryConfig } from './abstract-base-layer-entry-config
  * Base type used to define a GeoView layer to display on the map. Unless specified,its properties are not part of the schema.
  */
 export class ConfigBaseClass {
+  /** The layer path to this instance. */
+  protected layerPath = '';
+
   /** The identifier of the layer to display on the map. This element is part of the schema. */
-  private _layerId = '';
+  protected layerId = '';
 
   /** The ending extension (element) of the layer identifier. This element is part of the schema. */
   layerIdExtension?: string;
@@ -45,9 +48,6 @@ export class ConfigBaseClass {
 
   /** It is used to link the layer entry config to the parent's layer config. */
   parentLayerConfig?: TypeGeoviewLayerConfig | GroupLayerEntryConfig;
-
-  /** The layer path to this instance. */
-  protected _layerPath = '';
 
   // TODO: Refactor - There shouldn't be a coupling to an OpenLayers `BaseLayer` inside a Configuration class.
   // TO.DOCONT: That logic should be elsewhere so that the Configuration class remains portable and immutable.
@@ -77,21 +77,18 @@ export class ConfigBaseClass {
    * The class constructor.
    * @param {ConfigBaseClass} layerConfig The layer configuration we want to instanciate.
    */
-  constructor(layerConfig: ConfigBaseClass) {
+  constructor(layerConfig: TypeJsonObject) {
     Object.assign(this, layerConfig);
-    // eslint-disable-next-line no-underscore-dangle
-    if (this.geoviewLayerConfig) this._layerPath = ConfigBaseClass.evaluateLayerPath(layerConfig);
+    if (this.geoviewLayerConfig) this.layerPath = this.evaluateLayerPath(layerConfig);
     else logger.logError("Couldn't calculate layerPath because geoviewLayerConfig has an invalid value");
   }
 
   /**
    * The layerPath getter method for the ConfigBaseClass class and its descendant classes.
    */
-  get layerPath() {
-    // eslint-disable-next-line no-underscore-dangle
-    this._layerPath = ConfigBaseClass.evaluateLayerPath(this);
-    // eslint-disable-next-line no-underscore-dangle
-    return this._layerPath;
+  getLayerPath() {
+    this.layerPath = this.evaluateLayerPath(Cast<TypeJsonObject>(this));
+    return this.layerPath;
   }
 
   /**
@@ -101,35 +98,37 @@ export class ConfigBaseClass {
    *
    * @returns {string} Returns the layer path.
    */
-  static evaluateLayerPath(layerConfig: ConfigBaseClass, layerPath?: string): string {
+  private evaluateLayerPath(layerConfig: TypeJsonObject, layerPath?: string): string {
     let pathEnding = layerPath;
     if (pathEnding === undefined)
       pathEnding =
-        layerConfig.layerIdExtension === undefined ? layerConfig.layerId : `${layerConfig.layerId}.${layerConfig.layerIdExtension}`;
+        layerConfig.layerIdExtension === undefined
+          ? (layerConfig.layerId as string)
+          : `${layerConfig.layerId}.${layerConfig.layerIdExtension}`;
     if (!layerConfig.parentLayerConfig) return `${layerConfig.geoviewLayerConfig!.geoviewLayerId!}/${pathEnding}`;
     return this.evaluateLayerPath(
-      layerConfig.parentLayerConfig as GroupLayerEntryConfig,
-      `${(layerConfig.parentLayerConfig as GroupLayerEntryConfig).layerId}/${pathEnding}`
+      layerConfig.parentLayerConfig as TypeJsonObject,
+      `${(layerConfig.parentLayerConfig as TypeJsonObject).layerId}/${pathEnding}`
     );
   }
 
   /**
    * The layerId getter method for the ConfigBaseClass class and its descendant classes.
    */
-  get layerId() {
+  getLayerId() {
     // eslint-disable-next-line no-underscore-dangle
-    return this._layerId;
+    return this.layerId;
   }
 
   /**
    * The layerId setter method for the ConfigBaseClass class and its descendant classes.
    * @param {string} newLayerId The new layerId value.
    */
-  set layerId(newLayerId: string) {
+  setLayerId(newLayerId: string) {
     // eslint-disable-next-line no-underscore-dangle
-    this._layerId = newLayerId;
+    this.layerId = newLayerId;
     // eslint-disable-next-line no-underscore-dangle
-    this._layerPath = ConfigBaseClass.evaluateLayerPath(this);
+    this.layerPath = this.evaluateLayerPath(Cast<TypeJsonObject>(this));
   }
 
   /**

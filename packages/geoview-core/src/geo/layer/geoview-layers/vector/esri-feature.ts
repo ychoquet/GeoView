@@ -30,11 +30,11 @@ import {
   commonValidateListOfLayerEntryConfig,
 } from '../esri-layer-common';
 
-export interface TypeSourceEsriFeatureInitialConfig extends Omit<TypeVectorSourceInitialConfig, 'format'> {
+export interface TypeSourceEsriFeatureInitialConfig extends TypeVectorSourceInitialConfig {
   format: 'EsriJSON';
 }
 
-export interface TypeEsriFeatureLayerConfig extends Omit<TypeGeoviewLayerConfig, 'listOfLayerEntryConfig'> {
+export interface TypeEsriFeatureLayerConfig extends TypeGeoviewLayerConfig {
   geoviewLayerType: typeof CONST_LAYER_TYPES.ESRI_FEATURE;
   listOfLayerEntryConfig: EsriFeatureLayerEntryConfig[];
 }

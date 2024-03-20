@@ -1,6 +1,7 @@
 import { TypeSourceWFSVectorInitialConfig } from '@/geo/layer/geoview-layers/vector/wfs';
 import { TypeLocalizedString } from '@/geo/map/map-schema-types';
 import { VectorLayerEntryConfig } from '../vector-layer-entry-config';
+import { TypeJsonObject } from '@/app';
 
 export class WfsLayerEntryConfig extends VectorLayerEntryConfig {
   declare source: TypeSourceWFSVectorInitialConfig;
@@ -9,7 +10,7 @@ export class WfsLayerEntryConfig extends VectorLayerEntryConfig {
    * The class constructor.
    * @param {WfsLayerEntryConfig} layerConfig The layer configuration we want to instanciate.
    */
-  constructor(layerConfig: WfsLayerEntryConfig) {
+  constructor(layerConfig: TypeJsonObject) {
     super(layerConfig);
     Object.assign(this, layerConfig);
 

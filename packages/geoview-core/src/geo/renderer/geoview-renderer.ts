@@ -1315,7 +1315,7 @@ export class GeoviewRenderer {
     layerConfig: VectorTilesLayerEntryConfig | VectorLayerEntryConfig
   ): TypeStyleConfig | undefined {
     if (layerConfig.style === undefined) layerConfig.style = {};
-    const label = getLocalizedValue(layerConfig.layerName, this.mapId) || layerConfig.layerId;
+    const label = getLocalizedValue(layerConfig.layerName, this.mapId) || layerConfig.getLayerId();
     if (geometryType === 'Point') {
       const settings: TypeSimpleSymbolVectorConfig = {
         type: 'simpleSymbol',

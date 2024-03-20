@@ -1,6 +1,7 @@
 import { TypeSourceGeoJSONInitialConfig } from '@/geo/layer/geoview-layers/vector/geojson';
 import { CONST_LAYER_ENTRY_TYPES, TypeLocalizedString } from '@/geo/map/map-schema-types';
 import { VectorLayerEntryConfig } from '../vector-layer-entry-config';
+import { TypeJsonObject } from '@/core/types/global-types';
 
 export class GeoJSONLayerEntryConfig extends VectorLayerEntryConfig {
   declare source: TypeSourceGeoJSONInitialConfig;
@@ -9,7 +10,7 @@ export class GeoJSONLayerEntryConfig extends VectorLayerEntryConfig {
    * The class constructor.
    * @param {GeoJSONLayerEntryConfig} layerConfig The layer configuration we want to instanciate.
    */
-  constructor(layerConfig: GeoJSONLayerEntryConfig) {
+  constructor(layerConfig: TypeJsonObject) {
     super(layerConfig);
     Object.assign(this, layerConfig);
 

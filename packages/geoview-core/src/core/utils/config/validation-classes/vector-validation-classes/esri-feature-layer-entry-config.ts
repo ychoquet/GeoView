@@ -1,15 +1,16 @@
 import { TypeSourceEsriFeatureInitialConfig } from '@/geo/layer/geoview-layers/vector/esri-feature';
 import { TypeLocalizedString } from '@/geo/map/map-schema-types';
 import { VectorLayerEntryConfig } from '../vector-layer-entry-config';
+import { TypeJsonObject } from '@/app';
 
 export class EsriFeatureLayerEntryConfig extends VectorLayerEntryConfig {
   declare source: TypeSourceEsriFeatureInitialConfig;
 
   /**
    * The class constructor.
-   * @param {EsriFeatureLayerEntryConfig} layerConfig The layer configuration we want to instanciate.
+   * @param {TypeJsonObject} layerConfig The layer configuration we want to instanciate.
    */
-  constructor(layerConfig: EsriFeatureLayerEntryConfig) {
+  constructor(layerConfig: TypeJsonObject) {
     super(layerConfig);
     Object.assign(this, layerConfig);
 

@@ -156,14 +156,14 @@ export class LegendEventProcessor extends AbstractEventProcessor {
           const legendLayerEntry: TypeLegendLayer = {
             bounds: undefined,
             controls,
-            layerId: layerConfig.layerId,
+            layerId: layerConfig.getLayerId(),
             layerPath: entryLayerPath,
             layerStatus: legendResultSetEntry.layerStatus,
             layerName:
               legendResultSetEntry.layerName ||
               getLocalizedValue(layerConfig.layerName, mapId) ||
               getLocalizedValue(layerConfig.geoviewLayerInstance?.geoviewLayerName, mapId) ||
-              layerConfig.layerPath,
+              layerConfig.getLayerPath(),
             type: layerConfig.entryType as TypeGeoviewLayerType,
             canToggle: legendResultSetEntry.data?.type !== CONST_LAYER_TYPES.ESRI_IMAGE,
             opacity: layerConfig.initialSettings?.states?.opacity ? layerConfig.initialSettings.states.opacity : 1,
@@ -188,7 +188,7 @@ export class LegendEventProcessor extends AbstractEventProcessor {
             legendResultSetEntry.layerName ||
             getLocalizedValue(layerConfig.layerName, mapId) ||
             getLocalizedValue(layerConfig.geoviewLayerInstance?.geoviewLayerName, mapId) ||
-            layerConfig.layerPath,
+            layerConfig.getLayerPath(),
           layerStatus: legendResultSetEntry.layerStatus,
           styleConfig: legendResultSetEntry.data?.styleConfig,
           type: legendResultSetEntry.data?.type,

@@ -1,6 +1,7 @@
 import { TypeSourceCSVInitialConfig } from '@/geo/layer/geoview-layers/vector/csv';
 import { CONST_LAYER_ENTRY_TYPES, TypeLocalizedString } from '@/geo/map/map-schema-types';
 import { VectorLayerEntryConfig } from '../vector-layer-entry-config';
+import { TypeJsonObject } from '@/app';
 
 export class CsvLayerEntryConfig extends VectorLayerEntryConfig {
   declare source: TypeSourceCSVInitialConfig;
@@ -10,9 +11,9 @@ export class CsvLayerEntryConfig extends VectorLayerEntryConfig {
 
   /**
    * The class constructor.
-   * @param {CsvLayerEntryConfig} layerConfig The layer configuration we want to instanciate.
+   * @param {TypeJsonObject} layerConfig The layer configuration we want to instanciate.
    */
-  constructor(layerConfig: CsvLayerEntryConfig) {
+  constructor(layerConfig: TypeJsonObject) {
     super(layerConfig);
     Object.assign(this, layerConfig);
 

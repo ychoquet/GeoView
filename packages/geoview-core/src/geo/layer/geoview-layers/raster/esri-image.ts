@@ -7,7 +7,7 @@ import { Extent } from 'ol/extent';
 import { getLocalizedValue, getMinOrMaxExtents } from '@/core/utils/utilities';
 import { api } from '@/app';
 import { MapEventProcessor } from '@/api/event-processors/event-processor-children/map-event-processor';
-import { TypeJsonObject } from '@/core/types/global-types';
+import { TypeGeoviewLayerConfig, TypeJsonObject } from '@/core/types/global-types';
 import { logger } from '@/core/utils/logger';
 import { EsriImageLayerEntryConfig } from '@/core/utils/config/validation-classes/raster-validation-classes/esri-image-layer-entry-config';
 import { AbstractBaseLayerEntryConfig } from '@/core/utils/config/validation-classes/abstract-base-layer-entry-config';
@@ -16,7 +16,6 @@ import { AbstractGeoViewLayer, CONST_LAYER_TYPES, TypeLegend } from '@/geo/layer
 import { AbstractGeoViewRaster, TypeBaseRasterLayer } from '@/geo/layer/geoview-layers/raster/abstract-geoview-raster';
 import {
   TypeLayerEntryConfig,
-  TypeGeoviewLayerConfig,
   TypeUniqueValueStyleConfig,
   TypeListOfLayerEntryConfig,
   layerEntryIsGroupLayer,
@@ -33,7 +32,7 @@ import {
   commonProcessTemporalDimension,
 } from '../esri-layer-common';
 
-export interface TypeEsriImageLayerConfig extends Omit<TypeGeoviewLayerConfig, 'listOfLayerEntryConfig'> {
+export interface TypeEsriImageLayerConfig extends TypeGeoviewLayerConfig {
   geoviewLayerType: typeof CONST_LAYER_TYPES.ESRI_IMAGE;
   listOfLayerEntryConfig: EsriImageLayerEntryConfig[];
 }
@@ -138,7 +137,7 @@ export class EsriImage extends AbstractGeoViewRaster {
       if (legendJson.layers && legendJson.layers.length === 1) {
         legendInfo = legendJson.layers[0].legend;
       } else if (legendJson.layers.length) {
-        const layerInfo = legendJson.layers.find((layer) => layer.layerId === layerConfig.layerId);
+        const layerInfo = legendJson.layers.find((layer) => layer.layerId === layerConfig.getLayerId());
         if (layerInfo) legendInfo = layerInfo.legend;
       }
       if (!legendInfo) {
@@ -203,7 +202,7 @@ export class EsriImage extends AbstractGeoViewRaster {
    */
   protected validateListOfLayerEntryConfig(listOfLayerEntryConfig: TypeListOfLayerEntryConfig) {
     listOfLayerEntryConfig.forEach((layerConfig: TypeLayerEntryConfig) => {
-      const { layerPath } = layerConfig;
+      const layerPath = layerConfig.getLayerPath();
       if (layerEntryIsGroupLayer(layerConfig)) {
         this.validateListOfLayerEntryConfig(layerConfig.listOfLayerEntryConfig!);
         if (!layerConfig.listOfLayerEntryConfig.length) {
@@ -296,7 +295,7 @@ export class EsriImage extends AbstractGeoViewRaster {
     const sourceOptions: SourceOptions = {};
     sourceOptions.attributions = [(this.metadata!.copyrightText ? this.metadata!.copyrightText : '') as string];
     sourceOptions.url = getLocalizedValue(layerConfig.source.dataAccessPath!, this.mapId);
-    sourceOptions.params = { LAYERS: `show:${layerConfig.layerId}` };
+    sourceOptions.params = { LAYERS: `show:${layerConfig.getLayerId()}` };
     if (layerConfig.source.transparent) Object.defineProperty(sourceOptions.params, 'transparent', layerConfig.source.transparent!);
     if (layerConfig.source.format) Object.defineProperty(sourceOptions.params, 'format', layerConfig.source.format!);
     if (layerConfig.source.crossOrigin) {

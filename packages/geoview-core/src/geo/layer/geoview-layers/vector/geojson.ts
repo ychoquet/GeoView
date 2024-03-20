@@ -26,11 +26,11 @@ import { GeoJSONLayerEntryConfig } from '@/core/utils/config/validation-classes/
 import { VectorLayerEntryConfig } from '@/core/utils/config/validation-classes/vector-layer-entry-config';
 import { AbstractBaseLayerEntryConfig } from '@/core/utils/config/validation-classes/abstract-base-layer-entry-config';
 
-export interface TypeSourceGeoJSONInitialConfig extends Omit<TypeVectorSourceInitialConfig, 'format'> {
+export interface TypeSourceGeoJSONInitialConfig extends TypeVectorSourceInitialConfig {
   format: 'GeoJSON';
 }
 
-export interface TypeGeoJSONLayerConfig extends Omit<TypeGeoviewLayerConfig, 'listOfLayerEntryConfig'> {
+export interface TypeGeoJSONLayerConfig extends TypeGeoviewLayerConfig {
   geoviewLayerType: typeof CONST_LAYER_TYPES.GEOJSON;
   listOfLayerEntryConfig: GeoJSONLayerEntryConfig[];
 }

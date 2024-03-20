@@ -39,7 +39,7 @@ export interface TypeSourceGeoPackageInitialConfig extends TypeVectorSourceIniti
   format: 'GeoPackage';
 }
 
-export interface TypeGeoPackageLayerConfig extends Omit<TypeGeoviewLayerConfig, 'listOfLayerEntryConfig' | 'geoviewLayerType'> {
+export interface TypeGeoPackageLayerConfig extends TypeGeoviewLayerConfig {
   geoviewLayerType: typeof CONST_LAYER_TYPES.GEOPACKAGE;
   listOfLayerEntryConfig: GeoPackageLayerEntryConfig[];
 }
@@ -143,7 +143,7 @@ export class GeoPackage extends AbstractGeoViewVector {
    */
   protected validateListOfLayerEntryConfig(listOfLayerEntryConfig: TypeListOfLayerEntryConfig) {
     listOfLayerEntryConfig.forEach((layerConfig: TypeLayerEntryConfig) => {
-      const { layerPath } = layerConfig;
+      const layerPath = layerConfig.getLayerPath();
       if (layerEntryIsGroupLayer(layerConfig)) {
         this.validateListOfLayerEntryConfig(layerConfig.listOfLayerEntryConfig!);
         if (!layerConfig.listOfLayerEntryConfig.length) {
@@ -182,8 +182,8 @@ export class GeoPackage extends AbstractGeoViewVector {
             resolve(groupReturned);
           } else {
             this.layerLoadError.push({
-              layer: listOfLayerEntryConfig[0].layerPath,
-              loggerMessage: `Unable to create group layer ${listOfLayerEntryConfig[0].layerPath} on map ${this.mapId}`,
+              layer: listOfLayerEntryConfig[0].getLayerPath(),
+              loggerMessage: `Unable to create group layer ${listOfLayerEntryConfig[0].getLayerPath()} on map ${this.mapId}`,
             });
             resolve(null);
           }
@@ -204,8 +204,8 @@ export class GeoPackage extends AbstractGeoViewVector {
                 layerGroup!.getLayers().push(groupReturned);
               } else {
                 this.layerLoadError.push({
-                  layer: listOfLayerEntryConfig[0].layerPath,
-                  loggerMessage: `Unable to create group layer ${layerConfig.layerPath} on map ${this.mapId}`,
+                  layer: listOfLayerEntryConfig[0].getLayerPath(),
+                  loggerMessage: `Unable to create group layer ${layerConfig.getLayerPath()} on map ${this.mapId}`,
                 });
                 resolve(null);
               }
@@ -217,8 +217,8 @@ export class GeoPackage extends AbstractGeoViewVector {
                 layerConfig.layerStatus = 'processed';
               } else {
                 this.layerLoadError.push({
-                  layer: listOfLayerEntryConfig[0].layerPath,
-                  loggerMessage: `Unable to create layer ${layerConfig.layerPath} on map ${this.mapId}`,
+                  layer: listOfLayerEntryConfig[0].getLayerPath(),
+                  loggerMessage: `Unable to create layer ${layerConfig.getLayerPath()} on map ${this.mapId}`,
                 });
                 layerConfig.layerStatus = 'error';
               }
@@ -234,8 +234,8 @@ export class GeoPackage extends AbstractGeoViewVector {
             resolve(layer);
           } else {
             this.layerLoadError.push({
-              layer: listOfLayerEntryConfig[0].layerPath,
-              loggerMessage: `Unable to create layer ${listOfLayerEntryConfig[0].layerPath} on map ${this.mapId}`,
+              layer: listOfLayerEntryConfig[0].getLayerPath(),
+              loggerMessage: `Unable to create layer ${listOfLayerEntryConfig[0].getLayerPath()} on map ${this.mapId}`,
             });
             listOfLayerEntryConfig[0].layerStatus = 'error';
           }
@@ -557,8 +557,8 @@ export class GeoPackage extends AbstractGeoViewVector {
               resolve(layerGroup || baseLayer);
             } else {
               this.layerLoadError.push({
-                layer: layerConfig.layerPath,
-                loggerMessage: `Unable to create layer ${layerConfig.layerPath} on map ${this.mapId}`,
+                layer: layerConfig.getLayerPath(),
+                loggerMessage: `Unable to create layer ${layerConfig.getLayerPath()} on map ${this.mapId}`,
               });
               layerConfig.layerStatus = 'error';
               resolve(null);
@@ -570,7 +570,7 @@ export class GeoPackage extends AbstractGeoViewVector {
           const newLayerGroup = this.createLayerGroup(layerConfig, layerConfig.initialSettings!);
           for (let i = 0; i < layers.length; i++) {
             const newLayerEntryConfig = cloneDeep(layerConfig) as AbstractBaseLayerEntryConfig;
-            newLayerEntryConfig.layerId = layers[i].name;
+            newLayerEntryConfig.setLayerId(layers[i].name);
             newLayerEntryConfig.layerName = createLocalizedString(layers[i].name);
             newLayerEntryConfig.entryType = CONST_LAYER_ENTRY_TYPES.VECTOR;
             newLayerEntryConfig.parentLayerConfig = Cast<GroupLayerEntryConfig>(layerConfig);
@@ -582,8 +582,8 @@ export class GeoPackage extends AbstractGeoViewVector {
                 layerConfig.layerStatus = 'processed';
               } else {
                 this.layerLoadError.push({
-                  layer: layerConfig.layerPath,
-                  loggerMessage: `Unable to create layer ${layerConfig.layerPath} on map ${this.mapId}`,
+                  layer: layerConfig.getLayerPath(),
+                  loggerMessage: `Unable to create layer ${layerConfig.getLayerPath()} on map ${this.mapId}`,
                 });
                 layerConfig.layerStatus = 'error';
                 resolve(null);

@@ -132,7 +132,7 @@ export class TimeSliderEventProcessor extends AbstractEventProcessor {
    */
   static getInitialTimeSliderValues(mapId: string, layerPath: string): TimeSliderLayerSet {
     const layerConfig = api.maps[mapId].layer.registeredLayers[layerPath];
-    const name = getLocalizedValue(layerConfig.layerName, mapId) || layerConfig.layerId;
+    const name = getLocalizedValue(layerConfig.layerName, mapId) || layerConfig.getLayerId();
     const temporalDimensionInfo = api.maps[mapId].layer.geoviewLayer(layerPath).getTemporalDimension();
     const { range } = temporalDimensionInfo.range;
     const defaultValueIsArray = Array.isArray(temporalDimensionInfo.default);

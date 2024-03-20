@@ -15,7 +15,7 @@ import { Extent } from 'ol/extent';
 import cloneDeep from 'lodash/cloneDeep';
 
 import Static from 'ol/source/ImageStatic';
-import { Cast, toJsonObject, TypeJsonArray, TypeJsonObject } from '@/core/types/global-types';
+import { Cast, toJsonObject, TypeGeoviewLayerConfig, TypeJsonArray, TypeJsonObject } from '@/core/types/global-types';
 import {
   AbstractGeoViewLayer,
   CONST_LAYER_TYPES,
@@ -26,7 +26,6 @@ import {
 import { AbstractGeoViewRaster, TypeBaseRasterLayer } from '@/geo/layer/geoview-layers/raster/abstract-geoview-raster';
 import {
   TypeLayerEntryConfig,
-  TypeGeoviewLayerConfig,
   TypeListOfLayerEntryConfig,
   layerEntryIsGroupLayer,
   CONST_LAYER_ENTRY_TYPES,
@@ -40,7 +39,7 @@ import { AbstractBaseLayerEntryConfig } from '@/core/utils/config/validation-cla
 import { GroupLayerEntryConfig } from '@/core/utils/config/validation-classes/group-layer-entry-config';
 import { TypeFeatureInfoEntry } from '@/geo/utils/layer-set';
 
-export interface TypeWMSLayerConfig extends Omit<TypeGeoviewLayerConfig, 'listOfLayerEntryConfig'> {
+export interface TypeWMSLayerConfig extends TypeGeoviewLayerConfig {
   geoviewLayerType: typeof CONST_LAYER_TYPES.WMS;
   listOfLayerEntryConfig: OgcWmsLayerEntryConfig[];
 }

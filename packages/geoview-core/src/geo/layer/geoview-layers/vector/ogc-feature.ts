@@ -8,13 +8,12 @@ import { ReadOptions } from 'ol/format/Feature';
 import { Vector as VectorSource } from 'ol/source';
 import Feature from 'ol/Feature';
 
-import { TypeJsonObject } from '@/core/types/global-types';
+import { TypeGeoviewLayerConfig, TypeJsonObject } from '@/core/types/global-types';
 import { AbstractGeoViewLayer, CONST_LAYER_TYPES } from '@/geo/layer/geoview-layers/abstract-geoview-layers';
 import { AbstractGeoViewVector } from '@/geo/layer/geoview-layers/vector/abstract-geoview-vector';
 import {
   TypeLayerEntryConfig,
   TypeVectorSourceInitialConfig,
-  TypeGeoviewLayerConfig,
   TypeListOfLayerEntryConfig,
   layerEntryIsGroupLayer,
   TypeBaseSourceVectorInitialConfig,
@@ -32,7 +31,7 @@ export interface TypeSourceOgcFeatureInitialConfig extends TypeVectorSourceIniti
   format: 'featureAPI';
 }
 
-export interface TypeOgcFeatureLayerConfig extends Omit<TypeGeoviewLayerConfig, 'listOfLayerEntryConfig' | 'geoviewLayerType'> {
+export interface TypeOgcFeatureLayerConfig extends TypeGeoviewLayerConfig {
   geoviewLayerType: typeof CONST_LAYER_TYPES.OGC_FEATURE;
   listOfLayerEntryConfig: OgcFeatureLayerEntryConfig[];
 }
@@ -112,7 +111,7 @@ export class OgcFeature extends AbstractGeoViewVector {
    * @returns {'string' | 'date' | 'number'} The type of the field.
    */
   protected getFieldType(fieldName: string, layerConfig: TypeLayerEntryConfig): 'string' | 'date' | 'number' {
-    const fieldDefinitions = this.layerMetadata[layerConfig.layerPath];
+    const fieldDefinitions = this.layerMetadata[layerConfig.getLayerPath()];
     const fieldEntryType = (fieldDefinitions[fieldName].type as string).split(':').slice(-1)[0] as string;
     if (fieldEntryType === 'date') return 'date';
     if (['int', 'number'].includes(fieldEntryType)) return 'number';
@@ -155,7 +154,7 @@ export class OgcFeature extends AbstractGeoViewVector {
    */
   protected validateListOfLayerEntryConfig(listOfLayerEntryConfig: TypeListOfLayerEntryConfig) {
     listOfLayerEntryConfig.forEach((layerConfig: TypeLayerEntryConfig) => {
-      const { layerPath } = layerConfig;
+      const layerPath = layerConfig.getLayerPath();
       if (layerEntryIsGroupLayer(layerConfig)) {
         this.validateListOfLayerEntryConfig(layerConfig.listOfLayerEntryConfig!);
         if (!layerConfig.listOfLayerEntryConfig.length) {
@@ -173,7 +172,7 @@ export class OgcFeature extends AbstractGeoViewVector {
       // Note that the code assumes ogc-feature collections does not contains metadata layer group. If you need layer group,
       // you can define them in the configuration section.
       if (Array.isArray(this.metadata!.collections)) {
-        const foundCollection = this.metadata!.collections.find((layerMetadata) => layerMetadata.id === layerConfig.layerId);
+        const foundCollection = this.metadata!.collections.find((layerMetadata) => layerMetadata.id === layerConfig.getLayerId());
         if (!foundCollection) {
           this.layerLoadError.push({
             layer: layerPath,
@@ -225,16 +224,16 @@ export class OgcFeature extends AbstractGeoViewVector {
       const metadataUrl = getLocalizedValue(this.metadataAccessPath, this.mapId);
       if (metadataUrl) {
         const queryUrl = metadataUrl.endsWith('/')
-          ? `${metadataUrl}collections/${String(layerConfig.layerId)}/queryables?f=json`
-          : `${metadataUrl}/collections/${String(layerConfig.layerId)}/queryables?f=json`;
+          ? `${metadataUrl}collections/${String(layerConfig.getLayerId())}/queryables?f=json`
+          : `${metadataUrl}/collections/${String(layerConfig.getLayerId())}/queryables?f=json`;
         const queryResult = await axios.get<TypeJsonObject>(queryUrl);
         if (queryResult.data.properties) {
-          this.layerMetadata[layerConfig.layerPath] = queryResult.data.properties;
+          this.layerMetadata[layerConfig.getLayerPath()] = queryResult.data.properties;
           this.processFeatureInfoConfig(queryResult.data.properties, layerConfig);
         }
       }
     } catch (error) {
-      logger.logError(`Error processing layer metadata for layer path "${layerConfig.layerPath}`, error);
+      logger.logError(`Error processing layer metadata for layer path "${layerConfig.getLayerPath()}`, error);
       layerConfig.layerStatus = 'error';
     }
     return layerConfig;
@@ -303,7 +302,7 @@ export class OgcFeature extends AbstractGeoViewVector {
   ): VectorSource<Feature> {
     readOptions.dataProjection = (layerConfig.source as TypeBaseSourceVectorInitialConfig).dataProjection;
     sourceOptions.url = getLocalizedValue(layerConfig.source!.dataAccessPath!, this.mapId);
-    sourceOptions.url = `${sourceOptions.url}/collections/${layerConfig.layerId}/items?f=json`;
+    sourceOptions.url = `${sourceOptions.url}/collections/${layerConfig.getLayerId()}/items?f=json`;
     sourceOptions.format = new FormatGeoJSON();
     const vectorSource = super.createVectorSource(layerConfig, sourceOptions, readOptions);
     return vectorSource;

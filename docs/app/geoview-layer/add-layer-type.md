@@ -57,11 +57,11 @@ The first function verifies if my layer is type of `TypeImageStaticLayerConfig` 
 These 2 types does not exist in my class yet so I have to create them.
 
 ```
-export interface TypeImageStaticLayerEntryConfig extends Omit<TypeImageLayerEntryConfig, 'source'> {
+export interface TypeImageStaticLayerEntryConfig extends TypeImageLayerEntryConfig {
   source: TypeSourceImageStaticInitialConfig;
 }
 
-export interface TypeImageStaticLayerConfig extends Omit<TypeGeoviewLayerConfig, 'listOfLayerEntryConfig'> {
+export interface TypeImageStaticLayerConfig extends TypeGeoviewLayerConfig {
   geoviewLayerType: 'imageStatic';
   listOfLayerEntryConfig: TypeImageStaticLayerEntryConfig[];
 }

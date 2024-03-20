@@ -2,6 +2,7 @@ import { CONST_LAYER_TYPES } from '@/geo/layer/geoview-layers/abstract-geoview-l
 import { CONST_LAYER_ENTRY_TYPES, GeoviewChild, TypeSourceImageWmsInitialConfig, TypeStyleConfig } from '@/geo/map/map-schema-types';
 import { AbstractBaseLayerEntryConfig } from '../abstract-base-layer-entry-config';
 import { createLocalizedString } from '../../../utilities';
+import { TypeJsonObject } from '@/core/types/global-types';
 
 /** ******************************************************************************************************************************
  * Type used to define a GeoView image layer to display on the map.
@@ -26,7 +27,7 @@ export class OgcWmsLayerEntryConfig extends AbstractBaseLayerEntryConfig {
    * The class constructor.
    * @param {OgcWmsLayerEntryConfig} layerConfig The layer configuration we want to instanciate.
    */
-  constructor(layerConfig: OgcWmsLayerEntryConfig) {
+  constructor(layerConfig: TypeJsonObject) {
     super(layerConfig);
     Object.assign(this, layerConfig);
 

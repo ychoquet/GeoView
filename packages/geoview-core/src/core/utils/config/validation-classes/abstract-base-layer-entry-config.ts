@@ -19,7 +19,7 @@ import {
   layerEntryIsGroupLayer,
 } from '@/geo/map/map-schema-types';
 import { logger } from '../../logger';
-import { TypeJsonValue } from '@/app';
+import { TypeJsonObject, TypeJsonValue } from '@/app';
 import { ConfigBaseClass } from '@/core/utils/config/validation-classes/config-base-class';
 
 /** ******************************************************************************************************************************
@@ -56,7 +56,7 @@ export abstract class AbstractBaseLayerEntryConfig extends ConfigBaseClass {
    * The class constructor.
    * @param {AbstractBaseLayerEntryConfig} layerConfig The layer configuration we want to instanciate.
    */
-  constructor(layerConfig: AbstractBaseLayerEntryConfig) {
+  constructor(layerConfig: TypeJsonObject) {
     super(layerConfig);
     Object.assign(this, layerConfig);
   }

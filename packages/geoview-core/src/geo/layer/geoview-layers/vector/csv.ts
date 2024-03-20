@@ -26,12 +26,12 @@ import { CsvLayerEntryConfig } from '@/core/utils/config/validation-classes/vect
 import { VectorLayerEntryConfig } from '@/core/utils/config/validation-classes/vector-layer-entry-config';
 import { AbstractBaseLayerEntryConfig } from '@/core/utils/config/validation-classes/abstract-base-layer-entry-config';
 
-export interface TypeSourceCSVInitialConfig extends Omit<TypeVectorSourceInitialConfig, 'format'> {
+export interface TypeSourceCSVInitialConfig extends TypeVectorSourceInitialConfig {
   format: 'CSV';
   separator?: ',';
 }
 
-export interface TypeCSVLayerConfig extends Omit<TypeGeoviewLayerConfig, 'listOfLayerEntryConfig'> {
+export interface TypeCSVLayerConfig extends TypeGeoviewLayerConfig {
   geoviewLayerType: typeof CONST_LAYER_TYPES.CSV;
   listOfLayerEntryConfig: CsvLayerEntryConfig[];
 }

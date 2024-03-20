@@ -45,7 +45,7 @@ import {
   commonValidateListOfLayerEntryConfig,
 } from '../esri-layer-common';
 
-export interface TypeEsriDynamicLayerConfig extends Omit<TypeGeoviewLayerConfig, 'listOfLayerEntryConfig'> {
+export interface TypeEsriDynamicLayerConfig extends TypeGeoviewLayerConfig {
   geoviewLayerType: typeof CONST_LAYER_TYPES.ESRI_DYNAMIC;
   listOfLayerEntryConfig: EsriDynamicLayerEntryConfig[];
 }

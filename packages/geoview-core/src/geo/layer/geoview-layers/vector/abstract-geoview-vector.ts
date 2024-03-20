@@ -73,7 +73,7 @@ export abstract class AbstractGeoViewVector extends AbstractGeoViewLayer {
    * @returns {'string' | 'date' | 'number'} The type of the field.
    */
   protected getFieldType(fieldName: string, layerConfig: TypeLayerEntryConfig): 'string' | 'date' | 'number' {
-    const fieldDefinitions = this.layerMetadata[layerConfig.layerPath].source.featureInfo;
+    const fieldDefinitions = this.layerMetadata[layerConfig.getLayerPath()].source.featureInfo;
     const fieldIndex = getLocalizedValue(Cast<TypeLocalizedString>(fieldDefinitions.outfields), this.mapId)?.split(',').indexOf(fieldName);
     if (!fieldIndex || fieldIndex === -1) return 'string';
     return (fieldDefinitions.fieldTypes as string).split(',')[fieldIndex!] as 'string' | 'date' | 'number';
@@ -109,7 +109,7 @@ export abstract class AbstractGeoViewVector extends AbstractGeoViewLayer {
     sourceOptions: SourceOptions<Feature> = {},
     readOptions: ReadOptions = {}
   ): VectorSource<Feature> {
-    const { layerPath } = layerConfig;
+    const layerPath = layerConfig.getLayerPath();
     // The line below uses var because a var declaration has a wider scope than a let declaration.
     let vectorSource: VectorSource<Feature>;
     if (this.attributions.length !== 0) sourceOptions.attributions = this.attributions;
@@ -209,7 +209,7 @@ export abstract class AbstractGeoViewVector extends AbstractGeoViewLayer {
    * @returns {VectorLayer<VectorSource>} The vector layer created.
    */
   protected createVectorLayer(layerConfig: VectorLayerEntryConfig, vectorSource: VectorSource<Feature>): VectorLayer<VectorSource> {
-    const { layerPath } = layerConfig;
+    const layerPath = layerConfig.getLayerPath();
 
     const layerOptions: VectorLayerOptions<VectorSource> = {
       properties: { layerConfig },

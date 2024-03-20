@@ -5,22 +5,17 @@ import Static, { Options as SourceOptions } from 'ol/source/ImageStatic';
 import { Options as ImageOptions } from 'ol/layer/BaseImage';
 import { Extent } from 'ol/extent';
 
-import { Cast, TypeJsonObject } from '@/core/types/global-types';
+import { Cast, TypeGeoviewLayerConfig, TypeJsonObject } from '@/core/types/global-types';
 import { AbstractGeoViewLayer, CONST_LAYER_TYPES, TypeLegend } from '@/geo/layer/geoview-layers/abstract-geoview-layers';
 import { AbstractGeoViewRaster, TypeBaseRasterLayer } from '@/geo/layer/geoview-layers/raster/abstract-geoview-raster';
-import {
-  TypeLayerEntryConfig,
-  TypeGeoviewLayerConfig,
-  TypeListOfLayerEntryConfig,
-  layerEntryIsGroupLayer,
-} from '@/geo/map/map-schema-types';
+import { TypeLayerEntryConfig, TypeListOfLayerEntryConfig, layerEntryIsGroupLayer } from '@/geo/map/map-schema-types';
 import { getLocalizedValue, getMinOrMaxExtents } from '@/core/utils/utilities';
 import { api } from '@/app';
 import { MapEventProcessor } from '@/api/event-processors/event-processor-children/map-event-processor';
 import { logger } from '@/core/utils/logger';
 import { ImageStaticLayerEntryConfig } from '@/core/utils/config/validation-classes/raster-validation-classes/image-static-layer-entry-config';
 
-export interface TypeImageStaticLayerConfig extends Omit<TypeGeoviewLayerConfig, 'listOfLayerEntryConfig'> {
+export interface TypeImageStaticLayerConfig extends TypeGeoviewLayerConfig {
   geoviewLayerType: typeof CONST_LAYER_TYPES.IMAGE_STATIC;
   listOfLayerEntryConfig: ImageStaticLayerEntryConfig[];
 }
@@ -149,7 +144,7 @@ export class ImageStatic extends AbstractGeoViewRaster {
       if (!legendImage) {
         const legend: TypeLegend = {
           type: this.type,
-          layerPath: layerConfig.layerPath,
+          layerPath: layerConfig.getLayerPath(),
           layerName: layerConfig!.layerName,
           legend: null,
         };
@@ -164,7 +159,7 @@ export class ImageStatic extends AbstractGeoViewRaster {
         drawingContext.drawImage(image, 0, 0);
         const legend: TypeLegend = {
           type: this.type,
-          layerPath: layerConfig.layerPath,
+          layerPath: layerConfig.getLayerPath(),
           layerName: layerConfig!.layerName,
           legend: drawingCanvas,
         };
@@ -172,7 +167,7 @@ export class ImageStatic extends AbstractGeoViewRaster {
       }
       const legend: TypeLegend = {
         type: this.type,
-        layerPath: layerConfig.layerPath,
+        layerPath: layerConfig.getLayerPath(),
         layerName: layerConfig!.layerName,
         legend: null,
       };
@@ -193,7 +188,7 @@ export class ImageStatic extends AbstractGeoViewRaster {
    */
   protected validateListOfLayerEntryConfig(listOfLayerEntryConfig: TypeListOfLayerEntryConfig) {
     listOfLayerEntryConfig.forEach((layerConfig: TypeLayerEntryConfig) => {
-      const { layerPath } = layerConfig;
+      const layerPath = layerConfig.getLayerPath();
       if (layerEntryIsGroupLayer(layerConfig)) {
         this.validateListOfLayerEntryConfig(layerConfig.listOfLayerEntryConfig!);
         if (!layerConfig.listOfLayerEntryConfig.length) {
@@ -217,7 +212,7 @@ export class ImageStatic extends AbstractGeoViewRaster {
       // you can define them in the configuration section.
       if (Array.isArray(this.metadata?.listOfLayerEntryConfig)) {
         const metadataLayerList = Cast<TypeLayerEntryConfig[]>(this.metadata?.listOfLayerEntryConfig);
-        const foundEntry = metadataLayerList.find((layerMetadata) => layerMetadata.layerId === layerConfig.layerId);
+        const foundEntry = metadataLayerList.find((layerMetadata) => layerMetadata.getLayerId() === layerConfig.getLayerId());
         if (!foundEntry) {
           this.layerLoadError.push({
             layer: layerPath,

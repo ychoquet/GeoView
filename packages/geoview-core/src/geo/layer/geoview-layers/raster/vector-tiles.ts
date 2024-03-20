@@ -16,14 +16,13 @@ import { AbstractGeoViewRaster, TypeBaseRasterLayer } from '@/geo/layer/geoview-
 import {
   TypeLayerEntryConfig,
   TypeSourceTileInitialConfig,
-  TypeGeoviewLayerConfig,
   TypeListOfLayerEntryConfig,
   layerEntryIsGroupLayer,
   TypeLocalizedString,
   TypeTileGrid,
 } from '@/geo/map/map-schema-types';
 import { getLocalizedValue, getMinOrMaxExtents, showError } from '@/core/utils/utilities';
-import { Cast, TypeJsonObject } from '@/core/types/global-types';
+import { Cast, TypeGeoviewLayerConfig, TypeJsonObject } from '@/core/types/global-types';
 import { api } from '@/app';
 import { MapEventProcessor } from '@/api/event-processors/event-processor-children/map-event-processor';
 import { VectorTilesLayerEntryConfig } from '@/core/utils/config/validation-classes/raster-validation-classes/vector-tiles-layer-entry-config';
@@ -35,7 +34,7 @@ import { TileLayerEntryConfig } from '@/core/utils/config/validation-classes/til
 
 export type TypeSourceVectorTilesInitialConfig = TypeSourceTileInitialConfig;
 
-export interface TypeVectorTilesConfig extends Omit<TypeGeoviewLayerConfig, 'listOfLayerEntryConfig'> {
+export interface TypeVectorTilesConfig extends TypeGeoviewLayerConfig {
   geoviewLayerType: typeof CONST_LAYER_TYPES.VECTOR_TILES;
   listOfLayerEntryConfig: VectorTilesLayerEntryConfig[];
 }
@@ -111,7 +110,7 @@ export class VectorTiles extends AbstractGeoViewRaster {
    * @returns {'string' | 'date' | 'number'} The type of the field.
    */
   protected getFieldType(fieldName: string, layerConfig: TypeLayerEntryConfig): 'string' | 'date' | 'number' {
-    const fieldDefinitions = this.layerMetadata[layerConfig.layerPath].source.featureInfo;
+    const fieldDefinitions = this.layerMetadata[layerConfig.getLayerPath()].source.featureInfo;
     const fieldIndex = getLocalizedValue(Cast<TypeLocalizedString>(fieldDefinitions.outfields), this.mapId)?.split(',').indexOf(fieldName);
     if (!fieldIndex || fieldIndex === -1) return 'string';
     return (fieldDefinitions.fieldTypes as string).split(',')[fieldIndex!] as 'string' | 'date' | 'number';
@@ -125,7 +124,7 @@ export class VectorTiles extends AbstractGeoViewRaster {
    */
   protected validateListOfLayerEntryConfig(listOfLayerEntryConfig: TypeListOfLayerEntryConfig) {
     listOfLayerEntryConfig.forEach((layerConfig: TypeLayerEntryConfig) => {
-      const { layerPath } = layerConfig;
+      const layerPath = layerConfig.getLayerPath();
       if (layerEntryIsGroupLayer(layerConfig)) {
         this.validateListOfLayerEntryConfig(layerConfig.listOfLayerEntryConfig!);
         if (!layerConfig?.listOfLayerEntryConfig?.length) {
@@ -163,8 +162,8 @@ export class VectorTiles extends AbstractGeoViewRaster {
       this.metadata?.tileInfo?.spatialReference?.wkid &&
       MapEventProcessor.getMapState(this.mapId).currentProjection !== this.metadata.tileInfo.spatialReference.wkid
     ) {
-      showError(this.mapId, `Error: vector tile layer (${layerConfig.layerId}) projection does not match map projection`);
-      logger.logError(`Error: vector tile layer (${layerConfig.layerId}) projection does not match map projection`);
+      showError(this.mapId, `Error: vector tile layer (${layerConfig.getLayerId()}) projection does not match map projection`);
+      logger.logError(`Error: vector tile layer (${layerConfig.getLayerId()}) projection does not match map projection`);
       // eslint-disable-next-line no-param-reassign
       layerConfig.layerStatus = 'error';
       return Promise.resolve(null);

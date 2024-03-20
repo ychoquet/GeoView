@@ -170,14 +170,16 @@ export abstract class AbstractGeoViewLayer {
     if (listOfLayerEntryConfig.length === 0) return;
     if (listOfLayerEntryConfig.length === 1) this.listOfLayerEntryConfig = listOfLayerEntryConfig;
     else {
-      const layerGroup = new GroupLayerEntryConfig({
-        geoviewLayerConfig: listOfLayerEntryConfig[0].geoviewLayerConfig,
-        layerId: this.geoviewLayerId,
-        layerName: this.geoviewLayerName,
-        isMetadataLayerGroup: false,
-        initialSettings: mapLayerConfig.initialSettings,
-        listOfLayerEntryConfig,
-      } as GroupLayerEntryConfig);
+      const layerGroup = new GroupLayerEntryConfig(
+        Cast<TypeJsonObject>({
+          geoviewLayerConfig: listOfLayerEntryConfig[0].geoviewLayerConfig,
+          layerId: this.geoviewLayerId,
+          layerName: this.geoviewLayerName,
+          isMetadataLayerGroup: false,
+          initialSettings: mapLayerConfig.initialSettings,
+          listOfLayerEntryConfig,
+        })
+      );
       this.listOfLayerEntryConfig = [layerGroup];
       layerGroup.listOfLayerEntryConfig.forEach((layerConfig, i) => {
         (layerGroup.listOfLayerEntryConfig[i] as AbstractBaseLayerEntryConfig).parentLayerConfig = layerGroup;
@@ -313,8 +315,8 @@ export abstract class AbstractGeoViewLayer {
     listOfLayerEntryConfig.forEach((layerConfig: TypeLayerEntryConfig, i) => {
       if (layerApi.isRegistered(layerConfig)) {
         this.layerLoadError.push({
-          layer: layerConfig.layerPath,
-          loggerMessage: `Duplicate layerPath (mapId:  ${this.mapId}, layerPath: ${layerConfig.layerPath})`,
+          layer: layerConfig.getLayerPath(),
+          loggerMessage: `Duplicate layerPath (mapId:  ${this.mapId}, layerPath: ${layerConfig.getLayerPath()})`,
         });
         // Duplicat layer can't be kept because it has the same layer path than the first encontered layer.
         delete listOfLayerEntryConfig[i];
@@ -352,7 +354,7 @@ export abstract class AbstractGeoViewLayer {
 
         // Try to get a key for logging timings
         let logTimingsKey;
-        if (this.listOfLayerEntryConfig.length > 0) logTimingsKey = `${this.mapId} | ${this.listOfLayerEntryConfig[0].layerPath}`;
+        if (this.listOfLayerEntryConfig.length > 0) logTimingsKey = `${this.mapId} | ${this.listOfLayerEntryConfig[0].getLayerPath()}`;
 
         // Log
         if (logTimingsKey) logger.logMarkerStart(logTimingsKey);
@@ -460,8 +462,8 @@ export abstract class AbstractGeoViewLayer {
       const arrayOfLayerConfigs = await Promise.all(promisedAllLayerDone);
       arrayOfLayerConfigs.forEach((layerConfig) => {
         if (layerConfig.layerStatus === 'error') {
-          const message = `Error while loading layer path "${layerConfig.layerPath})" on map "${this.mapId}"`;
-          this.layerLoadError.push({ layer: layerConfig.layerPath, loggerMessage: message });
+          const message = `Error while loading layer path "${layerConfig.getLayerPath()})" on map "${this.mapId}"`;
+          this.layerLoadError.push({ layer: layerConfig.getLayerPath(), loggerMessage: message });
           throw new Error(message);
         } else {
           // When we get here, we know that the metadata (if the service provide some) are processed.
@@ -541,14 +543,14 @@ export abstract class AbstractGeoViewLayer {
             return groupReturned;
           }
           this.layerLoadError.push({
-            layer: listOfLayerEntryConfig[0].layerPath,
-            loggerMessage: `Unable to create group layer ${listOfLayerEntryConfig[0].layerPath} on map ${this.mapId}`,
+            layer: listOfLayerEntryConfig[0].getLayerPath(),
+            loggerMessage: `Unable to create group layer ${listOfLayerEntryConfig[0].getLayerPath()} on map ${this.mapId}`,
           });
           return null;
         }
 
         if ((listOfLayerEntryConfig[0] as AbstractBaseLayerEntryConfig).layerStatus === 'error') return null;
-        const { layerPath } = listOfLayerEntryConfig[0];
+        const layerPath = listOfLayerEntryConfig[0].getLayerPath();
         const baseLayer = await this.processOneLayerEntry(listOfLayerEntryConfig[0] as AbstractBaseLayerEntryConfig);
         if (baseLayer) {
           this.registerToLayerSets(listOfLayerEntryConfig[0] as AbstractBaseLayerEntryConfig);
@@ -556,8 +558,8 @@ export abstract class AbstractGeoViewLayer {
           return layerGroup || baseLayer;
         }
         this.layerLoadError.push({
-          layer: listOfLayerEntryConfig[0].layerPath,
-          loggerMessage: `Unable to create layer ${listOfLayerEntryConfig[0].layerPath} on map ${this.mapId}`,
+          layer: listOfLayerEntryConfig[0].getLayerPath(),
+          loggerMessage: `Unable to create layer ${listOfLayerEntryConfig[0].getLayerPath()} on map ${this.mapId}`,
         });
         this.getLayerConfig(layerPath)!.layerStatus = 'error';
         return null;
@@ -583,7 +585,7 @@ export abstract class AbstractGeoViewLayer {
       });
       const listOfLayerCreated = await Promise.all(promiseOfLayerCreated);
       listOfLayerCreated.forEach((baseLayer, i) => {
-        const { layerPath } = listOfLayerEntryConfig[i];
+        const layerPath = listOfLayerEntryConfig[i].getLayerPath();
         if (baseLayer) {
           const layerConfig = baseLayer?.get('layerConfig') as AbstractBaseLayerEntryConfig;
           if (layerConfig) {
@@ -594,10 +596,10 @@ export abstract class AbstractGeoViewLayer {
           }
         } else {
           this.layerLoadError.push({
-            layer: listOfLayerEntryConfig[i].layerPath,
+            layer: listOfLayerEntryConfig[i].getLayerPath(),
             loggerMessage: `Unable to create ${
               layerEntryIsGroupLayer(listOfLayerEntryConfig[i]) ? CONST_LAYER_ENTRY_TYPES.GROUP : ''
-            } layer ${listOfLayerEntryConfig[i].layerPath} on map ${this.mapId}`,
+            } layer ${listOfLayerEntryConfig[i].getLayerPath()} on map ${this.mapId}`,
           });
           this.getLayerConfig(layerPath)!.layerStatus = 'error';
         }
@@ -827,7 +829,7 @@ export abstract class AbstractGeoViewLayer {
   unregisterFromLayerSets(layerConfig: AbstractBaseLayerEntryConfig): void {
     // TODO: Refactor - This function should be deleted eventually. It's up to the layer orchestrator to manage the layers.
     // TO.DOCONT: The layer itself shouldn't know about it nor should have an explicit function mentioning the layer sets.
-    const { layerPath } = layerConfig;
+    const layerPath = layerConfig.getLayerPath();
 
     // Emit the layer unregistration
     this.emitGeoViewLayerRegistration({ layerPath, layerConfig, action: 'remove' });
@@ -1345,7 +1347,7 @@ export abstract class AbstractGeoViewLayer {
         listOfLayerEntryConfig.forEach((layerConfig) => {
           if (layerEntryIsGroupLayer(layerConfig)) processGroupLayerBounds(layerConfig.listOfLayerEntryConfig);
           else {
-            bounds = this.getBounds(layerConfig.layerPath, bounds);
+            bounds = this.getBounds(layerConfig.getLayerPath(), bounds);
           }
         });
       };
@@ -1378,7 +1380,7 @@ export abstract class AbstractGeoViewLayer {
         if (layerConfig.layerStatus === 'error') return;
         layerConfig.layerStatus = newStatus;
         if (newStatus === 'error') {
-          const { layerPath } = layerConfig;
+          const layerPath = layerConfig.getLayerPath();
           this.layerLoadError.push({
             layer: layerPath,
             loggerMessage: `${errorMessage} for layer ${layerPath} of map ${this.mapId}`,

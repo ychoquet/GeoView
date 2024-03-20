@@ -414,7 +414,7 @@ export class MapEventProcessor extends AbstractEventProcessor {
     const { orderedLayerInfo } = this.getMapStateProtected(mapId);
     const layerPath = (geoviewLayerConfig as TypeGeoviewLayerConfig).geoviewLayerId
       ? `${(geoviewLayerConfig as TypeGeoviewLayerConfig).geoviewLayerId}/${(geoviewLayerConfig as TypeGeoviewLayerConfig).geoviewLayerId}`
-      : (geoviewLayerConfig as TypeLayerEntryConfig).layerPath;
+      : (geoviewLayerConfig as TypeLayerEntryConfig).getLayerPath();
     const index = this.getMapIndexFromOrderedLayerInfo(mapId, layerPathToReplace || layerPath);
     const replacedLayers = orderedLayerInfo.filter((layerInfo) => layerInfo.layerPath.startsWith(layerPathToReplace || layerPath));
     const newOrderedLayerInfo = api.maps[mapId].layer.generateArrayOfLayerOrderInfo(geoviewLayerConfig);

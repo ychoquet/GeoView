@@ -9,6 +9,7 @@ import {
 } from '@/geo/map/map-schema-types';
 import { logger } from '@/core/utils/logger';
 import { ConfigBaseClass } from '@/core/utils/config/validation-classes/config-base-class';
+import { TypeJsonObject } from '@/core/types/cgpv-types';
 
 /** ******************************************************************************************************************************
  * Type used to define a layer group.
@@ -42,7 +43,7 @@ export class GroupLayerEntryConfig extends ConfigBaseClass {
    * The class constructor.
    * @param {GroupLayerEntryConfig} layerConfig The layer configuration we want to instanciate.
    */
-  constructor(layerConfig: GroupLayerEntryConfig) {
+  constructor(layerConfig: TypeJsonObject) {
     super(layerConfig);
     Object.assign(this, layerConfig);
   }

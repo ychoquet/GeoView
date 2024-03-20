@@ -120,7 +120,7 @@ export class LayerApi {
     const newOrderedLayerInfos: TypeOrderedLayerInfo[] = [];
 
     const addSubLayerPathToLayerOrder = (layerEntryConfig: TypeLayerEntryConfig, layerPath: string): void => {
-      const subLayerPath = layerPath.endsWith(layerEntryConfig.layerId) ? layerPath : `${layerPath}/${layerEntryConfig.layerId}`;
+      const subLayerPath = layerPath.endsWith(layerEntryConfig.getLayerId()) ? layerPath : `${layerPath}/${layerEntryConfig.getLayerId()}`;
       const layerInfo: TypeOrderedLayerInfo = {
         layerPath: subLayerPath,
         visible: layerEntryConfig.initialSettings?.states?.visible !== false,
@@ -151,9 +151,10 @@ export class LayerApi {
         });
       } else {
         const layerEntryConfig = (geoviewLayerConfig as TypeGeoviewLayerConfig).listOfLayerEntryConfig[0];
-        addSubLayerPathToLayerOrder(layerEntryConfig, layerEntryConfig.layerPath);
+        addSubLayerPathToLayerOrder(layerEntryConfig, layerEntryConfig.getLayerPath());
       }
-    } else addSubLayerPathToLayerOrder(geoviewLayerConfig as TypeLayerEntryConfig, (geoviewLayerConfig as TypeLayerEntryConfig).layerPath);
+    } else
+      addSubLayerPathToLayerOrder(geoviewLayerConfig as TypeLayerEntryConfig, (geoviewLayerConfig as TypeLayerEntryConfig).getLayerPath());
 
     return newOrderedLayerInfos;
   }
@@ -278,7 +279,7 @@ export class LayerApi {
    * @returns {boolean} Returns true if the layer configuration is registered.
    */
   isRegistered(layerConfig: TypeLayerEntryConfig): boolean {
-    const { layerPath } = layerConfig;
+    const layerPath = layerConfig.getLayerPath();
     return this.registeredLayers[layerPath] !== undefined;
   }
 

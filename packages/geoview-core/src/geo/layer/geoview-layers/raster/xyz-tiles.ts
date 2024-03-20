@@ -10,13 +10,12 @@ import { AbstractGeoViewRaster, TypeBaseRasterLayer } from '@/geo/layer/geoview-
 import {
   TypeLayerEntryConfig,
   TypeSourceTileInitialConfig,
-  TypeGeoviewLayerConfig,
   TypeListOfLayerEntryConfig,
   layerEntryIsGroupLayer,
   TypeLocalizedString,
 } from '@/geo/map/map-schema-types';
 import { getLocalizedValue, getMinOrMaxExtents } from '@/core/utils/utilities';
-import { Cast, toJsonObject } from '@/core/types/global-types';
+import { Cast, TypeGeoviewLayerConfig, toJsonObject } from '@/core/types/global-types';
 import { api } from '@/app';
 import { MapEventProcessor } from '@/api/event-processors/event-processor-children/map-event-processor';
 import { XYZTilesLayerEntryConfig } from '@/core/utils/config/validation-classes/raster-validation-classes/xyz-layer-entry-config';
@@ -32,7 +31,7 @@ import { XYZTilesLayerEntryConfig } from '@/core/utils/config/validation-classes
 
 export type TypeSourceImageXYZTilesInitialConfig = TypeSourceTileInitialConfig;
 
-export interface TypeXYZTilesConfig extends Omit<TypeGeoviewLayerConfig, 'listOfLayerEntryConfig'> {
+export interface TypeXYZTilesConfig extends TypeGeoviewLayerConfig {
   geoviewLayerType: typeof CONST_LAYER_TYPES.XYZ_TILES;
   listOfLayerEntryConfig: XYZTilesLayerEntryConfig[];
 }
@@ -106,7 +105,7 @@ export class XYZTiles extends AbstractGeoViewRaster {
    * @returns {'string' | 'date' | 'number'} The type of the field.
    */
   protected getFieldType(fieldName: string, layerConfig: TypeLayerEntryConfig): 'string' | 'date' | 'number' {
-    const fieldDefinitions = this.layerMetadata[layerConfig.layerPath].source.featureInfo;
+    const fieldDefinitions = this.layerMetadata[layerConfig.getLayerPath()].source.featureInfo;
     const fieldIndex = getLocalizedValue(Cast<TypeLocalizedString>(fieldDefinitions.outfields), this.mapId)?.split(',').indexOf(fieldName);
     if (!fieldIndex || fieldIndex === -1) return 'string';
     return (fieldDefinitions.fieldTypes as string).split(',')[fieldIndex!] as 'string' | 'date' | 'number';
@@ -120,7 +119,7 @@ export class XYZTiles extends AbstractGeoViewRaster {
    */
   protected validateListOfLayerEntryConfig(listOfLayerEntryConfig: TypeListOfLayerEntryConfig) {
     listOfLayerEntryConfig.forEach((layerConfig: TypeLayerEntryConfig) => {
-      const { layerPath } = layerConfig;
+      const layerPath = layerConfig.getLayerPath();
       if (layerEntryIsGroupLayer(layerConfig)) {
         this.validateListOfLayerEntryConfig(layerConfig.listOfLayerEntryConfig!);
         if (!layerConfig.listOfLayerEntryConfig.length) {
@@ -144,7 +143,7 @@ export class XYZTiles extends AbstractGeoViewRaster {
       // you can define them in the configuration section.
       if (Array.isArray(this.metadata?.listOfLayerEntryConfig)) {
         const metadataLayerList = Cast<TypeLayerEntryConfig[]>(this.metadata?.listOfLayerEntryConfig);
-        const foundEntry = metadataLayerList.find((layerMetadata) => layerMetadata.layerId === layerConfig.layerId);
+        const foundEntry = metadataLayerList.find((layerMetadata) => layerMetadata.getLayerId() === layerConfig.getLayerId());
         if (!foundEntry) {
           this.layerLoadError.push({
             layer: layerPath,
@@ -225,10 +224,10 @@ export class XYZTiles extends AbstractGeoViewRaster {
   protected processLayerMetadata(layerConfig: TypeLayerEntryConfig): Promise<TypeLayerEntryConfig> {
     if (this.metadata) {
       const metadataLayerConfigFound = Cast<XYZTilesLayerEntryConfig[]>(this.metadata?.listOfLayerEntryConfig).find(
-        (metadataLayerConfig) => metadataLayerConfig.layerId === layerConfig.layerId
+        (metadataLayerConfig) => metadataLayerConfig.getLayerId() === layerConfig.getLayerId()
       );
       // metadataLayerConfigFound can not be undefined because we have already validated the config exist
-      this.layerMetadata[layerConfig.layerPath] = toJsonObject(metadataLayerConfigFound);
+      this.layerMetadata[layerConfig.getLayerPath()] = toJsonObject(metadataLayerConfigFound);
       // eslint-disable-next-line no-param-reassign
       layerConfig.source = defaultsDeep(layerConfig.source, metadataLayerConfigFound!.source);
       // eslint-disable-next-line no-param-reassign

@@ -17,7 +17,7 @@ import { TileLayerEntryConfig } from '@/core/utils/config/validation-classes/til
 import { VectorHeatmapLayerEntryConfig } from '@/core/utils/config/validation-classes/heatmap-layer-entry-config';
 import { GroupLayerEntryConfig } from '@/core/utils/config/validation-classes/group-layer-entry-config';
 import { ConfigBaseClass } from '@/core/utils/config/validation-classes/config-base-class';
-import { TypeJsonValue } from '@/core/types/global-types';
+import { TypeJsonObject, TypeJsonValue } from '@/core/types/global-types';
 
 // #region UTILITIES TYPES
 
@@ -245,11 +245,11 @@ export const convertLayerTypeToEntry = (layerType: TypeGeoviewLayerType): TypeLa
  * type guard function that redefines a TypeLayerEntryConfig as a GroupLayerEntryConfig if the entryType attribute of the
  * verifyIfLayer parameter is CONST_LAYER_ENTRY_TYPES.GROUP. The type ascention applies only to the true block of the if clause that use this function.
  *
- * @param {TypeLayerEntryConfig} verifyIfLayer Polymorphic object to test in order to determine if the type ascention is valid.
+ * @param {TypeJsonObject | ConfigBaseClass} verifyIfLayer Polymorphic object to test in order to determine if the type ascention is valid.
  *
  * @returns {boolean} true if the type ascention is valid.
  */
-export const layerEntryIsGroupLayer = (verifyIfLayer: ConfigBaseClass): verifyIfLayer is GroupLayerEntryConfig => {
+export const layerEntryIsGroupLayer = (verifyIfLayer: TypeJsonObject | ConfigBaseClass): verifyIfLayer is GroupLayerEntryConfig => {
   return verifyIfLayer?.entryType === CONST_LAYER_ENTRY_TYPES.GROUP;
 };
 
@@ -432,7 +432,7 @@ export interface TypeSourceImageWmsInitialConfig extends TypeBaseSourceImageInit
 /** ******************************************************************************************************************************
  * Initial settings for static image sources.
  */
-export interface TypeSourceImageStaticInitialConfig extends Omit<TypeBaseSourceImageInitialConfig, 'featureInfo'> {
+export interface TypeSourceImageStaticInitialConfig extends TypeBaseSourceImageInitialConfig {
   /** Definition of the feature information structure that will be used by the getFeatureInfo method. We only use queryable and
    * it must be set to false if specified.
    */
@@ -480,7 +480,7 @@ export type TypeTileGrid = {
 /** ******************************************************************************************************************************
  * Initial settings for tile image sources.
  */
-export interface TypeSourceTileInitialConfig extends Omit<TypeBaseSourceImageInitialConfig, 'featureInfo'> {
+export interface TypeSourceTileInitialConfig extends TypeBaseSourceImageInitialConfig {
   /** Definition of the feature information structure that will be used by the getFeatureInfo method. We only use queryable and
    * it must be set to false if specified.
    */
@@ -523,37 +523,6 @@ export type TypeListOfLayerEntryConfig = TypeLayerEntryConfig[];
  */
 // TODO: Suggestion - Get rid of this type. Simply use TypeGeoviewLayerConfig[]. It'd simplify types management accross the source code.
 export type TypeListOfGeoviewLayerConfig = TypeGeoviewLayerConfig[];
-
-/** ******************************************************************************************************************************
- *  Definition of a single Geoview layer configuration.
- */
-export type TypeGeoviewLayerConfig = {
-  /** This attribute is not part of the schema. It is used to link the displayed layer to its layer entry config. */
-  olLayer?: Promise<BaseLayer>;
-  /** The GeoView layer identifier. */
-  geoviewLayerId: string;
-  /**
-   * The display name of the layer (English/French). If it is not present the viewer will make an attempt to scrape this
-   * information.
-   */
-  geoviewLayerName?: TypeLocalizedString;
-  /** The GeoView layer access path (English/French). */
-  metadataAccessPath?: TypeLocalizedString;
-  /** Type of GeoView layer. */
-  geoviewLayerType: TypeGeoviewLayerType;
-  /** Date format used by the service endpoint. */
-  serviceDateFormat?: string;
-  /** Date format used by the getFeatureInfo to output date variable. */
-  externalDateFormat?: string;
-  /**
-   * Initial settings to apply to the GeoView layer at creation time.
-   * This attribute is allowed only if listOfLayerEntryConfig.length > 1.
-   */
-  initialSettings?: TypeLayerInitialSettings;
-
-  /** The layer entries to use from the GeoView layer. */
-  listOfLayerEntryConfig: TypeListOfLayerEntryConfig;
-};
 
 /**
  * Definition of a GeoCore layer configuration

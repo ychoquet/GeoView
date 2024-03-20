@@ -1,15 +1,16 @@
 import { TypeSourceGeoPackageInitialConfig } from '@/geo/layer/geoview-layers/vector/geopackage';
 import { CONST_LAYER_ENTRY_TYPES, TypeLocalizedString } from '@/geo/map/map-schema-types';
 import { VectorLayerEntryConfig } from '../vector-layer-entry-config';
+import { TypeJsonObject } from '@/core/types/global-types';
 
 export class GeoPackageLayerEntryConfig extends VectorLayerEntryConfig {
   declare source: TypeSourceGeoPackageInitialConfig;
 
   /**
    * The class constructor.
-   * @param {GeoPackageLayerEntryConfig} layerConfig The layer configuration we want to instanciate.
+   * @param {TypeJsonObject} layerConfig The layer configuration we want to instanciate.
    */
-  constructor(layerConfig: GeoPackageLayerEntryConfig) {
+  constructor(layerConfig: TypeJsonObject) {
     super(layerConfig);
     Object.assign(this, layerConfig);
 

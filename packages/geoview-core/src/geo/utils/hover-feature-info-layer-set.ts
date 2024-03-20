@@ -94,7 +94,7 @@ export class HoverFeatureInfoLayerSet extends LayerSet {
         const layerConfig = this.layerApi.registeredLayers[layerPath];
         if (this?.resultSet?.[layerPath]?.data) {
           this.resultSet[layerPath].data.layerStatus = layerStatus;
-          FeatureInfoEventProcessor.propagateFeatureInfoToStore(this.mapId, layerConfig.layerPath, 'hover', this.resultSet);
+          FeatureInfoEventProcessor.propagateFeatureInfoToStore(this.mapId, layerConfig.getLayerPath(), 'hover', this.resultSet);
         }
       }
     }

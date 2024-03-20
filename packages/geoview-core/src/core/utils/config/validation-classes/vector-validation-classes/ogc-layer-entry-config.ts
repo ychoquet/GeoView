@@ -1,15 +1,16 @@
 import { TypeSourceOgcFeatureInitialConfig } from '@/geo/layer/geoview-layers/vector/ogc-feature';
 import { TypeLocalizedString } from '@/geo/map/map-schema-types';
 import { VectorLayerEntryConfig } from '../vector-layer-entry-config';
+import { TypeJsonObject } from '@/app';
 
 export class OgcFeatureLayerEntryConfig extends VectorLayerEntryConfig {
   declare source: TypeSourceOgcFeatureInitialConfig;
 
   /**
    * The class constructor.
-   * @param {OgcFeatureLayerEntryConfig} layerConfig The layer configuration we want to instanciate.
+   * @param {TypeJsonObject} layerConfig The layer configuration we want to instanciate.
    */
-  constructor(layerConfig: OgcFeatureLayerEntryConfig) {
+  constructor(layerConfig: TypeJsonObject) {
     super(layerConfig);
     Object.assign(this, layerConfig);
 

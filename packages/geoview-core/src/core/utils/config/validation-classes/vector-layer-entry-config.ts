@@ -1,5 +1,6 @@
 import { CONST_LAYER_ENTRY_TYPES, GeoviewChild, TypeStyleConfig, TypeVectorSourceInitialConfig } from '@/geo/map/map-schema-types';
 import { AbstractBaseLayerEntryConfig } from './abstract-base-layer-entry-config';
+import { TypeJsonObject } from '@/app';
 
 /** ******************************************************************************************************************************
  * Type used to define a GeoView vector layer to display on the map.
@@ -21,7 +22,7 @@ export class VectorLayerEntryConfig extends AbstractBaseLayerEntryConfig {
    * The class constructor.
    * @param {VectorLayerEntryConfig} layerConfig The layer configuration we want to instanciate.
    */
-  constructor(layerConfig: VectorLayerEntryConfig) {
+  constructor(layerConfig: TypeJsonObject) {
     super(layerConfig);
     Object.assign(this, layerConfig);
   }

@@ -3,7 +3,7 @@ import { AbstractGeoViewRaster } from './abstract-geoview-raster';
 import { VectorTilesLayerEntryConfig } from '@/core/utils/config/validation-classes/raster-validation-classes/vector-tiles-layer-entry-config';
 import { CONST_LAYER_TYPES } from '../abstract-geoview-layers';
 
-export interface TypeVectorTilesConfig extends Omit<TypeGeoviewLayerConfig, 'listOfLayerEntryConfig'> {
+export interface TypeVectorTilesConfig extends TypeGeoviewLayerConfig {
   geoviewLayerType: typeof CONST_LAYER_TYPES.VECTOR_TILES;
   listOfLayerEntryConfig: VectorTilesLayerEntryConfig[];
 }

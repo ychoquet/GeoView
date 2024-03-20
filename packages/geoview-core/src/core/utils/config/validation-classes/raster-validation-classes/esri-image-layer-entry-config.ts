@@ -7,6 +7,7 @@ import {
   TypeStyleConfig,
 } from '@/geo/map/map-schema-types';
 import { AbstractBaseLayerEntryConfig } from '../abstract-base-layer-entry-config';
+import { TypeJsonObject } from '@/app';
 
 /** ******************************************************************************************************************************
  * Type used to define a GeoView image layer to display on the map.
@@ -29,9 +30,9 @@ export class EsriImageLayerEntryConfig extends AbstractBaseLayerEntryConfig {
 
   /**
    * The class constructor.
-   * @param {EsriImageLayerEntryConfig} layerConfig The layer configuration we want to instanciate.
+   * @param {TypeJsonObject} layerConfig The layer configuration we want to instanciate.
    */
-  constructor(layerConfig: EsriImageLayerEntryConfig) {
+  constructor(layerConfig: TypeJsonObject) {
     super(layerConfig);
     Object.assign(this, layerConfig);
 

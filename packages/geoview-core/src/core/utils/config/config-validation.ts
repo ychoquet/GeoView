@@ -22,9 +22,7 @@ import { geoviewEntryIsCSV } from '@/geo/layer/geoview-layers/vector/csv';
 import { geoviewEntryIsGeoPackage } from '@/geo/layer/geoview-layers/vector/geopackage';
 import {
   layerEntryIsGroupLayer,
-  TypeGeoviewLayerConfig,
   TypeDisplayLanguage,
-  TypeLayerEntryConfig,
   TypeLocalizedString,
   TypeValidMapProjectionCodes,
   TypeValidVersions,
@@ -37,7 +35,14 @@ import {
   MapConfigLayerEntry,
   mapConfigLayerEntryIsGeoCore,
 } from '@/geo/map/map-schema-types';
-import { Cast, toJsonObject, TypeJsonObject, TypeMapFeaturesConfig } from '@/core/types/global-types';
+import {
+  Cast,
+  toJsonObject,
+  TypeGeoviewLayerConfig,
+  TypeJsonArray,
+  TypeJsonObject,
+  TypeMapFeaturesConfig,
+} from '@/core/types/global-types';
 import { CONST_GEOVIEW_SCHEMA_BY_TYPE, CONST_LAYER_TYPES, TypeGeoviewLayerType } from '@/geo/layer/geoview-layers/abstract-geoview-layers';
 import { geoviewEntryIsEsriImage } from '@/geo/layer/geoview-layers/raster/esri-image';
 import { logger } from '@/core/utils/logger';
@@ -601,24 +606,24 @@ export class ConfigValidation {
    */
   private processLayerEntryConfig(
     geoviewLayerConfig: TypeGeoviewLayerConfig,
-    listOfLayerEntryConfig: TypeListOfLayerEntryConfig,
-    parentLayerConfig?: GroupLayerEntryConfig
+    listOfLayerEntryConfig: TypeJsonArray,
+    parentLayerConfig?: TypeJsonObject
   ) {
-    listOfLayerEntryConfig.forEach((layerConfig: TypeLayerEntryConfig, i: number) => {
+    listOfLayerEntryConfig.forEach((layerConfig: TypeJsonObject, i: number) => {
       // links the entry to its GeoView layer config.
       layerConfig.geoviewLayerConfig = geoviewLayerConfig;
       // links the entry to its parent layer configuration.
-      layerConfig.parentLayerConfig = parentLayerConfig;
+      if (parentLayerConfig) layerConfig.parentLayerConfig = parentLayerConfig;
       // layerConfig.initialSettings attributes that are not defined inherits parent layer settings that are defined.
       layerConfig.initialSettings = defaultsDeep(
         layerConfig.initialSettings,
         layerConfig.parentLayerConfig?.initialSettings || layerConfig.geoviewLayerConfig?.initialSettings
       );
 
-      if (layerEntryIsGroupLayer(layerConfig as ConfigBaseClass)) {
+      if (layerEntryIsGroupLayer(layerConfig)) {
         // We must set the parents of all elements in the group.
         this.recursivelySetChildParent(geoviewLayerConfig, [layerConfig], parentLayerConfig);
-        const parent = new GroupLayerEntryConfig(layerConfig as GroupLayerEntryConfig);
+        const parent = new GroupLayerEntryConfig(layerConfig);
         listOfLayerEntryConfig[i] = parent;
         this.processLayerEntryConfig(geoviewLayerConfig, parent.listOfLayerEntryConfig, parent);
       } else if (geoviewEntryIsWMS(layerConfig)) {
@@ -630,7 +635,7 @@ export class ConfigValidation {
       } else if (geoviewEntryIsVectorTiles(layerConfig)) {
         listOfLayerEntryConfig[i] = new VectorTilesLayerEntryConfig(layerConfig);
       } else if (geoviewEntryIsEsriDynamic(layerConfig)) {
-        listOfLayerEntryConfig[i] = new EsriDynamicLayerEntryConfig(layerConfig as EsriDynamicLayerEntryConfig);
+        listOfLayerEntryConfig[i] = new EsriDynamicLayerEntryConfig(layerConfig);
       } else if (geoviewEntryIsEsriFeature(layerConfig)) {
         listOfLayerEntryConfig[i] = new EsriFeatureLayerEntryConfig(layerConfig);
       } else if (geoviewEntryIsEsriImage(layerConfig)) {
@@ -660,15 +665,15 @@ export class ConfigValidation {
    * layer configurations found in the list of layer entries.
    */
   private recursivelySetChildParent(
-    geoviewLayerConfig: TypeGeoviewLayerConfig,
-    listOfLayerEntryConfig: TypeListOfLayerEntryConfig,
-    parentLayerConfig?: GroupLayerEntryConfig
+    geoviewLayerConfig: TypeJsonObject,
+    listOfLayerEntryConfig: TypeJsonArray | TypeListOfLayerEntryConfig,
+    parentLayerConfig?: TypeJsonObject | GroupLayerEntryConfig
   ) {
     listOfLayerEntryConfig.forEach((layerConfig) => {
-      layerConfig.parentLayerConfig = parentLayerConfig;
+      if (parentLayerConfig) layerConfig.parentLayerConfig = parentLayerConfig;
       layerConfig.geoviewLayerConfig = geoviewLayerConfig;
       if (layerEntryIsGroupLayer(layerConfig))
-        this.recursivelySetChildParent(geoviewLayerConfig, layerConfig.listOfLayerEntryConfig!, layerConfig as GroupLayerEntryConfig);
+        this.recursivelySetChildParent(geoviewLayerConfig, layerConfig.listOfLayerEntryConfig, layerConfig);
     });
   }
 
