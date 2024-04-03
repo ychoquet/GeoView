@@ -127,7 +127,9 @@ export class GeoJSON extends AbstractGeoViewVector {
         const metadataLayerList = Cast<TypeLayerEntryConfig[]>(this.metadata?.listOfLayerEntryConfig);
         const foundEntry = metadataLayerList.find(
           (layerMetadata) =>
-            layerMetadata.layerId === layerConfig.layerId && layerMetadata.layerIdExtension === layerConfig.layerIdExtension
+            layerMetadata.layerId === layerConfig.layerId &&
+            (layerMetadata as AbstractBaseLayerEntryConfig).layerIdExtension ===
+              (layerConfig as AbstractBaseLayerEntryConfig).layerIdExtension
         );
         if (!foundEntry) {
           this.layerLoadError.push({

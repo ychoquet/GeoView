@@ -18,6 +18,8 @@ import { TypeLegendResultSetEntry } from '@/geo/utils/legends-layer-set';
 import { api, getLocalizedValue, ILayerState } from '@/app';
 
 import { AbstractEventProcessor } from '../abstract-event-processor';
+import { AbstractBaseLayerEntryConfig } from '@/core/utils/config/validation-classes/abstract-base-layer-entry-config';
+import { GroupLayerEntryConfig } from '@/core/utils/config/validation-classes/group-layer-entry-config';
 
 export class LegendEventProcessor extends AbstractEventProcessor {
   // **********************************************************
@@ -132,7 +134,7 @@ export class LegendEventProcessor extends AbstractEventProcessor {
    */
   public static propagateLegendToStore(mapId: string, layerPath: string, legendResultSetEntry: TypeLegendResultSetEntry) {
     const layerPathNodes = layerPath.split('/');
-    const setLayerControls = (layerConfig: TypeLayerEntryConfig): TypeLayerControls => {
+    const setLayerControls = (layerConfig: AbstractBaseLayerEntryConfig | GroupLayerEntryConfig): TypeLayerControls => {
       const controls: TypeLayerControls = {
         highlight: layerConfig.initialSettings?.controls?.highlight !== undefined ? layerConfig.initialSettings?.controls?.highlight : true,
         hover: layerConfig.initialSettings?.controls?.hover !== undefined ? layerConfig.initialSettings?.controls?.hover : true,
@@ -177,7 +179,7 @@ export class LegendEventProcessor extends AbstractEventProcessor {
         else existingEntries[entryIndex].layerStatus = layerConfig.layerStatus;
         createNewLegendEntries(entryLayerPath, currentLevel + 1, existingEntries[entryIndex].children);
       } else if (layerConfig) {
-        const controls: TypeLayerControls = setLayerControls(layerConfig);
+        const controls: TypeLayerControls = setLayerControls(layerConfig as AbstractBaseLayerEntryConfig);
         const newLegendLayer: TypeLegendLayer = {
           bounds: undefined,
           controls,
@@ -193,7 +195,7 @@ export class LegendEventProcessor extends AbstractEventProcessor {
           styleConfig: legendResultSetEntry.data?.styleConfig,
           type: legendResultSetEntry.data?.type,
           canToggle: legendResultSetEntry.data?.type !== CONST_LAYER_TYPES.ESRI_IMAGE,
-          opacity: layerConfig.initialSettings?.states?.opacity || 1,
+          opacity: (layerConfig as AbstractBaseLayerEntryConfig).initialSettings?.states?.opacity || 1,
           items: [] as TypeLegendItem[],
           children: [] as TypeLegendLayer[],
           icons: LegendEventProcessor.getLayerIconImage(mapId, layerPath, legendResultSetEntry.data!),

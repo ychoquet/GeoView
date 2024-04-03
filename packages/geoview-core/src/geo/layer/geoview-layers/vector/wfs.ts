@@ -166,20 +166,20 @@ export class WFS extends AbstractGeoViewVector {
    */
   protected validateListOfLayerEntryConfig(listOfLayerEntryConfig: TypeListOfLayerEntryConfig) {
     listOfLayerEntryConfig.forEach((layerConfig: TypeLayerEntryConfig) => {
-      const { layerPath } = layerConfig;
-      if (layerEntryIsGroupLayer(layerConfig)) {
-        this.validateListOfLayerEntryConfig(layerConfig.listOfLayerEntryConfig!);
-        if (!layerConfig.listOfLayerEntryConfig.length) {
+      const castLayerConfig = layerConfig as AbstractBaseLayerEntryConfig;
+      const { layerPath } = castLayerConfig;
+      if (layerEntryIsGroupLayer(castLayerConfig)) {
+        this.validateListOfLayerEntryConfig(castLayerConfig.listOfLayerEntryConfig!);
+        if (!layerEntryIsGroupLayer(castLayerConfig)) {
           this.layerLoadError.push({
             layer: layerPath,
             loggerMessage: `Empty layer group (mapId:  ${this.mapId}, layerPath: ${layerPath})`,
           });
-          layerConfig.layerStatus = 'error';
           return;
         }
       }
 
-      layerConfig.layerStatus = 'processing';
+      castLayerConfig.layerStatus = 'processing';
 
       // Note that the code assumes wfs feature type list does not contains metadata layer group. If you need layer group,
       // you can define them in the configuration section.
@@ -191,7 +191,7 @@ export class WFS extends AbstractGeoViewVector {
         const metadataLayerList = this.metadata?.FeatureTypeList.FeatureType as Array<TypeJsonObject>;
         const foundMetadata = metadataLayerList.find((layerMetadata) => {
           const metadataLayerId = (layerMetadata.Name && layerMetadata.Name['#text']) as string;
-          return metadataLayerId.includes(layerConfig.layerId!);
+          return metadataLayerId.includes(castLayerConfig.layerId!);
         });
 
         if (!foundMetadata) {
@@ -199,24 +199,24 @@ export class WFS extends AbstractGeoViewVector {
             layer: layerPath,
             loggerMessage: `WFS feature layer not found (mapId:  ${this.mapId}, layerPath: ${layerPath})`,
           });
-          layerConfig.layerStatus = 'error';
+          castLayerConfig.layerStatus = 'error';
           return;
         }
 
         const { currentProjection } = MapEventProcessor.getMapState(this.mapId);
-        if (layerConfig.initialSettings?.extent)
-          layerConfig.initialSettings.extent = api.projection.transformExtent(
-            layerConfig.initialSettings.extent,
+        if (castLayerConfig.initialSettings?.extent)
+          castLayerConfig.initialSettings.extent = api.projection.transformExtent(
+            castLayerConfig.initialSettings.extent,
             'EPSG:4326',
             `EPSG:${currentProjection}`
           );
 
-        if (!layerConfig.initialSettings?.bounds && foundMetadata['ows:WGS84BoundingBox']) {
+        if (!castLayerConfig.initialSettings?.bounds && foundMetadata['ows:WGS84BoundingBox']) {
           const lowerCorner = (foundMetadata['ows:WGS84BoundingBox']['ows:LowerCorner']['#text'] as string).split(' ');
           const upperCorner = (foundMetadata['ows:WGS84BoundingBox']['ows:UpperCorner']['#text'] as string).split(' ');
           const bounds = [Number(lowerCorner[0]), Number(lowerCorner[1]), Number(upperCorner[0]), Number(upperCorner[1])];
-          // layerConfig.initialSettings cannot be undefined because config-validation set it to {} if it is undefined.
-          layerConfig.initialSettings!.bounds = api.projection.transformExtent(bounds, 'EPSG:4326', `EPSG:${currentProjection}`);
+          // castLayerConfig.initialSettings cannot be undefined because config-validation set it to {} if it is undefined.
+          castLayerConfig.initialSettings!.bounds = api.projection.transformExtent(bounds, 'EPSG:4326', `EPSG:${currentProjection}`);
         }
       }
     });

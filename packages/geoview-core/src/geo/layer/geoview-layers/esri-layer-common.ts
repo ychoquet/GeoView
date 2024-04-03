@@ -124,7 +124,7 @@ export function commonValidateListOfLayerEntryConfig(this: EsriDynamic | EsriFea
         const subLayerEntryConfig: TypeLayerEntryConfig = geoviewEntryIsEsriDynamic(layerConfig)
           ? new EsriDynamicLayerEntryConfig(layerConfig as EsriDynamicLayerEntryConfig)
           : new EsriFeatureLayerEntryConfig(layerConfig as EsriFeatureLayerEntryConfig);
-        subLayerEntryConfig.parentLayerConfig = groupLayerConfig;
+        subLayerEntryConfig.parentLayerConfig = groupLayerConfig.layerPath;
         subLayerEntryConfig.layerId = `${layerId}`;
         subLayerEntryConfig.layerName = {
           en: this.metadata!.layers[layerId as number].name as string,

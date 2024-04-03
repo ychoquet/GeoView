@@ -12,7 +12,7 @@ import initSqlJs, { SqlValue } from 'sql.js';
 import * as SLDReader from '@nieuwlandgeo/sldreader';
 
 import { cloneDeep } from 'lodash';
-import { Cast, TypeJsonObject } from '@/core/types/global-types';
+import { TypeJsonObject } from '@/core/types/global-types';
 import { AbstractGeoViewLayer, CONST_LAYER_TYPES } from '../abstract-geoview-layers';
 import { AbstractGeoViewVector } from './abstract-geoview-vector';
 import {
@@ -192,8 +192,8 @@ export class GeoPackage extends AbstractGeoViewVector {
       } else if (listOfLayerEntryConfig.length > 1) {
         if (!layerGroup)
           layerGroup = this.createLayerGroup(
-            listOfLayerEntryConfig[0].parentLayerConfig as TypeLayerEntryConfig,
-            listOfLayerEntryConfig[0].initialSettings!
+            listOfLayerEntryConfig[0].geoviewLayerInstance?.getParentConfig(listOfLayerEntryConfig[0].layerPath) as TypeLayerEntryConfig,
+            (listOfLayerEntryConfig[0] as AbstractBaseLayerEntryConfig).initialSettings!
           );
 
         listOfLayerEntryConfig.forEach((layerConfig) => {
@@ -566,14 +566,14 @@ export class GeoPackage extends AbstractGeoViewVector {
           });
         } else {
           layerConfig.entryType = CONST_LAYER_ENTRY_TYPES.GROUP;
-          (layerConfig as TypeLayerEntryConfig).listOfLayerEntryConfig = [];
+          (layerConfig as GroupLayerEntryConfig).listOfLayerEntryConfig = [];
           const newLayerGroup = this.createLayerGroup(layerConfig, layerConfig.initialSettings!);
           for (let i = 0; i < layers.length; i++) {
             const newLayerEntryConfig = cloneDeep(layerConfig) as AbstractBaseLayerEntryConfig;
             newLayerEntryConfig.layerId = layers[i].name;
             newLayerEntryConfig.layerName = createLocalizedString(layers[i].name);
             newLayerEntryConfig.entryType = CONST_LAYER_ENTRY_TYPES.VECTOR;
-            newLayerEntryConfig.parentLayerConfig = Cast<GroupLayerEntryConfig>(layerConfig);
+            newLayerEntryConfig.parentLayerConfig = layerConfig.layerPath;
 
             this.processOneGeopackageLayer(newLayerEntryConfig, layers[i], slds).then((baseLayer) => {
               if (baseLayer) {
