@@ -145,7 +145,21 @@
       // =======================================================================================================================
       var configOutput = document.getElementById('LYR1-config');
       cgpv.api.configApi.getMapConfig(getMapElement('LYR1')).then((mapConfig) => {
-        configOutput.innerHTML = JSON.stringify(mapConfig, null, 2);
+        let jsonString;
+        const serialize = (objectToSerialize) => {
+          try {
+            const jsonString = JSON.stringify(objectToSerialize, (key, value) => {
+              if (['geoviewLayerConfig', 'layerStatusWeight', '_olLayer', '_layerStatus', 'waitForProcessedBeforeSendingLoaded'].includes(key)) {
+                return undefined;
+              }
+              return value;
+            }, 2);
+          console.log(jsonString);
+          } catch (error) {
+              console.error("Erreur lors de la sérialisation JSON :", error);
+          }
+        }
+        jsonString = serialize(mapConfig);
       });
 
       // =======================================================================================================================
