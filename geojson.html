@@ -143,6 +143,7 @@
       });
 
       // =======================================================================================================================
+      // GV: This is a temporary section for testing the API
       var configOutput = document.getElementById('LYR1-config');
       cgpv.api.configApi.getMapConfig(getMapElement('LYR1')).then((mapConfig) => {
         let jsonString;
@@ -154,7 +155,7 @@
               }
               return value;
             }, 2);
-          console.log(jsonString);
+          configOutput.innerText = jsonString;
           } catch (error) {
               console.error("Erreur lors de la sérialisation JSON :", error);
           }
