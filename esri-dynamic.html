@@ -1041,7 +1041,26 @@
         // =======================================================================================================================
           // GV: This is a temporary section for testing the API
           var configOutput = document.getElementById('LYR1-config');
-          cgpv.api.configApi.getMapConfig(document.getElementById('LYR1').getAttribute('data-config')).then((mapConfig) => {
+          // Erase comments in the config file.
+          let newJsonStringMapConfig = document.getElementById('LYR1').getAttribute('data-config')
+             .split(/(?<!\\)'/gm)
+            .map((fragment, index) => {
+              if (index % 2) return fragment.replaceAll(/\/\*/gm, String.fromCharCode(1)).replaceAll(/\*\//gm, String.fromCharCode(2));
+              return fragment;
+            })
+            .join("'")
+            .replaceAll(/\/\*(?<=\/\*)((?:.|\n|\r)*?)(?=\*\/)\*\//gm, '')
+            .replaceAll(String.fromCharCode(1), '/*')
+            .replaceAll(String.fromCharCode(2), '*/');
+;
+
+          // If you want to use quotes in your JSON string, write \&quot or escape it using a backslash;
+          // First, replace apostrophes not preceded by a backslash with quotes
+          newJsonStringMapConfig = newJsonStringMapConfig.replace(/(?<!\\)'/gm, '"');
+          // Then, replace apostrophes preceded by a backslash with a single apostrophe
+          newJsonStringMapConfig = newJsonStringMapConfig.replace(/\\'/gm, "'");
+
+          cgpv.api.configApi.getMapConfig(JSON.parse(newJsonStringMapConfig)).then((mapConfig) => {
             let jsonString;
             const serialize = (objectToSerialize) => {
               try {
