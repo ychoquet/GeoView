@@ -93,7 +93,7 @@
           // get config and test if JSON is valid
           const configArea = document.getElementById('configGeoview');
           cgpv.api.configApi.getMapConfig(configArea.value).then((mapConfig) => {
-            configArea.value = mapConfig.indentedJsonString();
+            configArea.value = mapConfig.indentedJsonString().replaceAll('gvMap', 'map');
 
             // set class and message
             message.classList.add('config-json-valid');
