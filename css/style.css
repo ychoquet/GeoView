@@ -112,10 +112,10 @@ img.header-logo {
 }
 
 .geoview-map {
-  height: 800px;
   border: gray 1px solid;
   width: calc(100%);
   margin-bottom: 30px;
+  height: 800px;
 }
 
 
