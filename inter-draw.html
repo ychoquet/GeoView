@@ -13,81 +13,80 @@
                 }
             },
             'theme': 'geo.ca',
-            'corePackages': [],
-            'suportedLanguages': ['en']
+            'corePackages': []
           }"></div></div><hr/><button type="button" class="collapsible">Code Snippet</button><pre id="codeSnippet" class="panel"></pre><script>let map1;
-    let draw1;
-    function initMap1(map) {
-      // Keep reference
-      map1 = map;
-    }
-
-    function btnClearGroup1(groupKey) {
-      // Delete the geometries from the group
-      map1.layer.geometry.deleteGeometriesFromGroup(groupKey);
-    }
-
-    function selDrawChanged1(groupKey) {
-      // Redirect
-      startDrawing1(groupKey, event.currentTarget.value);
-    }
-
-    function btnDrawStop1(groupKey) {
-      // Redirect
-      stopDrawing1();
-
-      // Set None in the drop down
-      document.getElementById(groupKey).options[0].selected = true;
-    }
-
-    function startDrawing1(groupKey, geomType) {
-      // Stop if any
-      stopDrawing1();
-
-      // Start drawing interaction
-      draw1 = map1.initDrawInteractions(groupKey, geomType);
-
-      // Wire handler
-      draw1.onDrawStart((sender, payload) => {
-        // Log the event
-        addLog('LOGS1', 'drawStart');
-        console.log(payload);
-      });
-
-      // Wire handler
-      draw1.onDrawEnd((sender, payload) => {
-        // Log the event
-        addLog('LOGS1', 'drawEnd');
-        console.log(payload);
-      });
-
-      // Wire handler
-      draw1.onDrawAbort((sender, payload) => {
-        // Log the event
-        addLog('LOGS1', 'drawAbort');
-        console.log(payload);
-      });
-    }
-
-    function stopDrawing1() {
-      // If drawing
-      if (draw1) {
-        // Stop drawing interaction
-        draw1.stopInteraction();
+      let draw1;
+      function initMap1(map) {
+        // Keep reference
+        map1 = map;
       }
-    }
 
-    // initialize cgpv and api events, a callback is optional, used if calling api's after the rendering is ready
-    cgpv.init((mapId) => {
-      // If all maps initialized
-      if (mapId === 'MAP1') {
-        // Init map
-        initMap1(cgpv.api.maps['MAP1']);
+      function btnClearGroup1(groupKey) {
+        // Delete the geometries from the group
+        map1.layer.geometry.deleteGeometriesFromGroup(groupKey);
       }
-    });
 
-    // create snippets
-    window.addEventListener('load', () => {
-      createCodeSnippet();
-      createConfigSnippet();
-    });</script></body></html>
+      function selDrawChanged1(groupKey) {
+        // Redirect
+        startDrawing1(groupKey, event.currentTarget.value);
+      }
+
+      function btnDrawStop1(groupKey) {
+        // Redirect
+        stopDrawing1();
+
+        // Set None in the drop down
+        document.getElementById(groupKey).options[0].selected = true;
+      }
+
+      function startDrawing1(groupKey, geomType) {
+        // Stop if any
+        stopDrawing1();
+
+        // Start drawing interaction
+        draw1 = map1.initDrawInteractions(groupKey, geomType);
+
+        // Wire handler
+        draw1.onDrawStart((sender, payload) => {
+          // Log the event
+          addLog('LOGS1', 'drawStart');
+          console.log(payload);
+        });
+
+        // Wire handler
+        draw1.onDrawEnd((sender, payload) => {
+          // Log the event
+          addLog('LOGS1', 'drawEnd');
+          console.log(payload);
+        });
+
+        // Wire handler
+        draw1.onDrawAbort((sender, payload) => {
+          // Log the event
+          addLog('LOGS1', 'drawAbort');
+          console.log(payload);
+        });
+      }
+
+      function stopDrawing1() {
+        // If drawing
+        if (draw1) {
+          // Stop drawing interaction
+          draw1.stopInteraction();
+        }
+      }
+
+      // initialize cgpv and api events, a callback is optional, used if calling api's after the rendering is ready
+      cgpv.init((mapId) => {
+        // If all maps initialized
+        if (mapId === 'MAP1') {
+          // Init map
+          initMap1(cgpv.api.maps['MAP1']);
+        }
+      });
+
+      // create snippets
+      window.addEventListener('load', () => {
+        createCodeSnippet();
+        createConfigSnippet();
+      });</script></body></html>
