@@ -89,7 +89,6 @@ p=3857&z=4&c=-100,40&l=en&t=dark&b=basemapId:transport,shaded:false,labeled:true
       // get config and test if JSON is valid
       const mapConfig = cgpv.api.configApi.getMapConfig(configArea.value.replaceAll('"', "'").replaceAll("\\'", "\'"), langue);
       configOutput.textContent = mapConfig.getIndentedJsonString();
-      console.log(configOutput.textContent);
 
       // Generate line numbers
       (() => {
