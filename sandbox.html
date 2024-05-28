@@ -51,7 +51,6 @@
   'map': {
     'interaction': 'dynamic',
     'viewSettings': {
-      'initialView': { 'zoomAndCenter': [2, [-110, 70]]},
       'projection': 3978
     },
     'basemapOptions': {
@@ -143,7 +142,7 @@
 
         // create map
         // TODO: the delete has a timeout so we need to wait before trying to recreate the map...
-        // TD.CONT: this should be cleaner
+        // TO.DOCONT: this should be cleaner
         setTimeout(() => {
           cgpv.api.createMapFromConfig('sandboxMap', document.getElementById('configGeoview').value);
         }, 1500);
@@ -226,7 +225,6 @@
               'map': {
                 'interaction': 'dynamic',
                 'viewSettings': {
-                  'initialView': {'zoomAndCenter': [5, [-110, 70]]},
                   'projection': 3978
                 },
                 'basemapOptions': {
