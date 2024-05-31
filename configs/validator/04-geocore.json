@@ -13,7 +13,7 @@
     "listOfGeoviewLayerConfig": [
       {
         "geoviewLayerId": "12acd145-626a-49eb-b850-0a59c9bc7506",
-        "geoviewLayerType": "geocore"
+        "geoviewLayerType": "geoCore"
       },
       {
         "geoviewLayerId": "LYR1",
@@ -48,7 +48,7 @@
       },
       {
         "geoviewLayerId": "ccc75c12-5acc-4a6a-959f-ef6f621147b9",
-        "geoviewLayerType": "geocore"
+        "geoviewLayerType": "geoCore"
       }
     ],
     "highlightColor": "black",
