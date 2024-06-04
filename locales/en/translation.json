@@ -10,7 +10,9 @@
     "view": "View",
     "openFullscreen": "Open in fullscreen",
     "closeFullscreen": "Close fullscreen",
-    "openGuide": "Open Guide"
+    "openGuide": "Open Guide",
+    "guide": "Guide",
+    "fullScreen": "Full Screen"
   },
   "mapnav": {
     "arianavbar": "vertical button group for map navigation",
@@ -73,11 +75,13 @@
     "highlightLayer": "Highlight layer",
     "subLayersCount": "{count} sub-layers",
     "itemsCount": "{count} of {totalCount} items",
-    "legendInstructions": "Legend Instructions"
+    "legendInstructions": "Legend Instructions",
+    "noLayersAdded": "No layers added to the map",
+    "noLayersAddedDescription": "Add layers to the map by clicking on the 'Layers' button and adding the layers you want to display."
   },
   "layers": {
     "title": "Layers",
-    "subLayersList": "Sub-Layers List",
+    "subLayersList": "Sublayers List",
     "removingLayers": "Removing Layers",
     "reArrangeLayers": "Re-arrange Layers",
     "addingNewLayer": "Adding a new layer",
