@@ -105,7 +105,9 @@
           if (!mapConfig.errorDetected) {
             message.innerHTML = 'Config is valid, waiting for all service metadata to be read...';
 
-            mapConfig.promiseAllLayersProcessed().then(() => {
+            // TODO: Change the code below using the schema provided during our last meating. This change must be done in the next PR
+            // Start reading the metadata
+            mapConfig.fetchAllServiceMetadata().then(() => {
               configOutput.value = mapConfig?.serialize();
               generateLineNumbers('configOutput', 'outputLineNumbers');
               message.innerHTML = 'Config is valid, reading of all service metadata is complete';
@@ -156,10 +158,10 @@
           // set class and message
           message.classList.add('config-json-valid');
           message.classList.remove('config-error');
-          if (mapConfig) {
+          if (mapConfig && !mapConfig.errorDetected) {
             message.innerHTML = 'URL is valid, waiting for service metadata to be read...';
 
-            mapConfig.promiseLayerProcessed.then(() => {
+            mapConfig.fetchServiceMetadata().then(() => {
               mapConfig.listOfLayerEntryConfig = mapConfig.metadataLayerTree;
               configOutput.value = mapConfig?.serialize();
               generateLineNumbers('configOutput', 'outputLineNumbers');
