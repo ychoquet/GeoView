@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Add Layers Panel - Canadian Geospatial Platform Viewer</title><link rel="shortcut icon" href="./favicon.ico"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="msapplication-config" content="./img/browserconfig.xml"/><meta name="theme-color" content="#ffffff"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="theme-color" content="#ffffff"/><link rel="stylesheet" href="css/style.css"/><style>li.source-link {
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Important Layers Test Panel - Canadian Geospatial Platform Viewer</title><link rel="shortcut icon" href="./favicon.ico"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="msapplication-config" content="./img/browserconfig.xml"/><meta name="theme-color" content="#ffffff"/><meta name="msapplication-TileColor" content="#da532c"/><meta name="theme-color" content="#ffffff"/><link rel="stylesheet" href="css/style.css"/><style>li.source-link {
         cursor: pointer;
         color: #6082b6;
       }
@@ -20,7 +20,7 @@
       .container {
         display: flex;
         flex-direction: row;
-        gap: 20px; /* Espacement entre les éléments */
+        gap: 20px;
       }
 
       .selector {
@@ -63,12 +63,14 @@
         const geoviewConfig = await cgpv.api.configApi.convertGeocoreToGeoview('en', {
           geoviewLayerType: 'geoCore',
           geoviewLayerId: uuid
-        })
+        });
         document.getElementById('type-field').innerText = geoviewConfig ? `geoCore converted to ${geoviewConfig.geoviewLayerType}` : 'geocore conversion error';
         document.getElementById('access-path-field').innerText = geoviewConfig ? geoviewConfig.metadataAccessPath.en : '';
 
         cgpv.api.maps['mapWM'].layer.addGeoviewLayerByGeoCoreUUID(uuid);
-      }</script><script>async function addGeoviewLayer(geoviewLayerType, metadataAccessPath, layerId) {
+      }
+
+      async function addGeoviewLayer(geoviewLayerType, metadataAccessPath, layerId) {
         // adding a geojson layer requires a type of geojson and url
         const addResult = cgpv.api.maps['mapWM'].layer.addGeoviewLayer(
           {
@@ -84,20 +86,22 @@
           },
           ['en', 'fr']
         );
-      }</script><script>function isValidUUID(uuid) {
-        const regex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-        return regex.test(uuid);
       }
+
       async function addLayer() {
         const geoviewLayerType =  document.getElementById('type-field').innerText;
         const metadataAccessPath = document.getElementById('access-path-field').innerText;
         const layerId = document.getElementById('layer-id-field').innerText;
 
-        if (isValidUUID(layerId)) addGeocore(layerId);
+        if (cgpv.api.configApi.isValidUUID(layerId)) addGeocore(layerId);
         else addGeoviewLayer(geoviewLayerType, metadataAccessPath, layerId);
-      }</script><script>function reloadMap() {
+      }
+
+      function reloadMap() {
         cgpv.api.maps['mapWM'].setProjection(Number(document.getElementById('projections').value));
-      }</script><script>function initServiceDropDown(groupHasChanged) {
+      }
+
+      function initServiceDropDown(groupHasChanged) {
         const groupDropDown = document.getElementById('selectGroup');
         const subGroupDropDown = document.getElementById('selectSubGroup');
         if (groupHasChanged) {
@@ -129,7 +133,9 @@
         document.getElementById('type-field').innerText = serviceInfo.type;
         document.getElementById('access-path-field').innerText = serviceInfo.accessPath;
         document.getElementById('layer-id-field').innerText = serviceInfo.layerId;
-      }</script><script>var importantLayersData;
+      }
+
+      let importantLayersData;
       // initialize cgpv and api events, a callback is optional, used if calling api's after the rendering is ready
       cgpv.init((mapId) => {
         // fetch JSON config file to show in the text are section
@@ -157,7 +163,7 @@
         document.getElementById('selectService').addEventListener('change', (e) => {
           initTableFields();
         });
-        
+
       });
 
       // create snippets
