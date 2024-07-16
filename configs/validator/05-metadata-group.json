@@ -14,6 +14,23 @@
       {
         "geoviewLayerId": "LYR1",
         "geoviewLayerName": {
+          "en": "Temporal Test Bed",
+          "fr": "Banc d\\'essai temporel"
+        },
+        "metadataAccessPath": {
+          "en": "https://maps-cartes.services.geo.ca/server_serveur/rest/services/NRCan/Temporal_Test_Bed_en/MapServer/",
+          "fr": "https://maps-cartes.services.geo.ca/server_serveur/rest/services/NRCan/Temporal_Test_Bed_fr/MapServer/"
+        },
+        "geoviewLayerType": "esriFeature",
+        "listOfLayerEntryConfig": [
+          {
+            "layerId": "0"
+          }
+        ]
+      },
+      {
+        "geoviewLayerId": "LYR2",
+        "geoviewLayerName": {
           "en": "Metadata Group",
           "fr": "Groupe défini dans les métadonnées"
         },
