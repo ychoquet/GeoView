@@ -396,9 +396,10 @@
       // Get the output textarea object used to display the GeoView Layer Config.
       const outputTextAreaTab2 = document.getElementById('outputTextAreaTab2');
       // get the layer list
-      const layerListTab2 = document.getElementById('layerListTab2').value.split(',').map((item) => {
+      const csvLayers = document.getElementById('layerListTab2').value
+      const layerListTab2 = csvLayers ? csvLayers.split(',').map((item) => {
         return item.trim();
-      });
+      }) : [];
 
       // get the start time
       const startTimeTab2 = new Date();
@@ -590,11 +591,12 @@
         languageTab4
       );
       // Output instanciation result
-      outputTextAreaTab4.value = `${JSON.stringify(metadataLayerTree, undefined, 2)}\n`;
-      generateLineNumbers('outputTextAreaTab4', 'outputLineNumbersTab4');
+      metadataLayerTreeString = `${JSON.stringify(metadataLayerTree, undefined, 2)}\n`;
 
       if (metadataLayerTree) printMessage(messageTab4, 'Layer tree is valid');
-      else printMessage(messageTab4, 'Cannot generate layer tree, see console for details...', 'error')
+      else printMessage(messageTab4, 'Cannot generate layer tree, see console for details...', 'error');
+
+      elementSelectorTab4.dispatchEvent(new Event('change'));
     });
 
     // create snippets
