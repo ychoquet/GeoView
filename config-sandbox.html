@@ -306,6 +306,7 @@
         // fetch service metadata for all map layers.
         try {
           await mapConfig.fetchAllServiceMetadata();
+          mapConfig.applyUserConfigToGeoviewLayers();
           displayExecutionTime(startTimeTab1, 'executionTimeTab1');
           displayMapConfig(mapConfig, 'Tab1');
           elementSelectorTab1.dispatchEvent(new Event('change'));

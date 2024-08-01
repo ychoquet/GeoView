@@ -16,8 +16,7 @@ Implementation: Use private and protected access modifiers to restrict access to
 
 ```
    /**
-    * The getter method that returns the serviceMetadata private property. The benifit of using a setter/getter with a
-    * private #serviceMetadata is that it is invisible to the schema validation and JSON serialization.
+    * The getter method that returns the serviceMetadata private property.
     *
     * @returns {TypeJsonObject} The GeoView service metadata.
     */
