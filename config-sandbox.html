@@ -612,23 +612,31 @@
         return item.trim();
       }) : [];
 
-      // Call the ConfigApi to get the Layer Tree
-      const metadataLayerTree = await cgpv.api.config.createMetadataLayerTree(
-        serviceUrlAreaTab4.value.trim(),
-        layerTypeTab4,
-        layerListTab4,
-        languageTab4
-      );
-      // Output instanciation result
-      metadataLayerTreeString = `${JSON.stringify(metadataLayerTree, (key, value) => {
-        if (['', 'layerId', 'layerName', 'isLayerGroup', 'listOfLayerEntryConfig'].includes(key)) return value;
-        if (/^\d+$/.test(key)) return value;
-        return undefined;
-      }, 2)}\n`;
-      layerPathErrorFlag = generateLayerPathErrorFlag(metadataLayerTree);
+      try {
+        // Call the ConfigApi to get the Layer Tree
+        const metadataLayerTree = await cgpv.api.config.createMetadataLayerTree(
+          serviceUrlAreaTab4.value.trim(),
+          layerTypeTab4,
+          layerListTab4,
+          languageTab4
+        );
 
-      if (metadataLayerTree) printMessage(messageTab4, 'Layer tree is valid');
-      else printMessage(messageTab4, 'Cannot generate layer tree, see console for details...', 'error');
+        // Output instanciation result
+        metadataLayerTreeString = `${JSON.stringify(metadataLayerTree, (key, value) => {
+          // Only display essential information
+          if (['', 'layerId', 'layerName', 'isLayerGroup', 'listOfLayerEntryConfig'].includes(key)) return value;
+          if (/^\d+$/.test(key)) return value;
+          return undefined;
+        }, 2)}\n`;
+        layerPathErrorFlag = generateLayerPathErrorFlag(metadataLayerTree);
+
+        printMessage(messageTab4, 'Layer tree is valid');
+      } catch (error) {
+        metadataLayerTreeString = '';
+        layerPathErrorFlag = generateLayerPathErrorFlag([]);
+        printMessage(messageTab4, 'Cannot generate layer tree, see console for details...', 'error');
+        cgpv.logger.logError('Cannot generate layer tree, see console for details...', error);
+      }
 
       elementSelectorTab4.dispatchEvent(new Event('change'));
     });
